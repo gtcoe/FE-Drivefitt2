@@ -1,0 +1,21 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.6">
+    <!-- Hourglass frame -->
+    <path d="M25 20h70c2.76 0 5-2.24 5-5s-2.24-5-5-5H25c-2.76 0-5 2.24-5 5s2.24 5 5 5z" fill="#666666"/>
+    <path d="M25 110h70c2.76 0 5-2.24 5-5s-2.24-5-5-5H25c-2.76 0-5 2.24-5 5s2.24 5 5 5z" fill="#666666"/>
+    
+    <!-- Hourglass body -->
+    <path d="M30 20v25c0 11.05 8.95 20 20 20h20c11.05 0 20-8.95 20-20V20H30z" fill="none" stroke="#666666" stroke-width="3"/>
+    <path d="M30 100V75c0-11.05 8.95-20 20-20h20c11.05 0 20 8.95 20 20v25H30z" fill="none" stroke="#666666" stroke-width="3"/>
+    
+    <!-- Center constraint -->
+    <circle cx="60" cy="60" r="8" fill="none" stroke="#666666" stroke-width="3"/>
+    
+    <!-- Sand particles -->
+    <circle cx="60" cy="80" r="2" fill="#666666"/>
+    <circle cx="55" cy="85" r="1.5" fill="#666666"/>
+    <circle cx="65" cy="82" r="1.5" fill="#666666"/>
+    <circle cx="58" cy="88" r="1" fill="#666666"/>
+    <circle cx="62" cy="87" r="1" fill="#666666"/>
+  </g>
+</svg> 

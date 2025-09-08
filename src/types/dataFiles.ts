@@ -1,0 +1,31 @@
+export enum DataFileType {
+  HOME = 1,
+  RUNNING = 2,
+  CONTACT_US = 3,
+  CRICKET = 4,
+  FITNESS = 5,
+  FRANCHISE = 6,
+  RECOVERY = 7,
+  COMING_SOON = 8,
+  ERROR_404 = 9,
+  LICENSES = 10,
+  PRIVACY = 11,
+  TERMS = 12,
+  NAVBAR = 13,
+}
+
+export const DataFileMap: Record<DataFileType, string> = {
+  [DataFileType.HOME]: "home",
+  [DataFileType.RUNNING]: "running",
+  [DataFileType.CONTACT_US]: "contactUs",
+  [DataFileType.CRICKET]: "cricket",
+  [DataFileType.FITNESS]: "fitness",
+  [DataFileType.FRANCHISE]: "franchise",
+  [DataFileType.RECOVERY]: "recovery",
+  [DataFileType.COMING_SOON]: "comingSoon",
+  [DataFileType.ERROR_404]: "error404",
+  [DataFileType.LICENSES]: "licenses",
+  [DataFileType.PRIVACY]: "privacy",
+  [DataFileType.TERMS]: "terms",
+  [DataFileType.NAVBAR]: "navbar",
+};
