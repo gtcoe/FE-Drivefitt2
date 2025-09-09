@@ -76,49 +76,6 @@ export const personalTrainingData: StaticPageData = {
       },
     ],
   },
-  meetYourCoachesSection: {
-    title: "Meet Your Coaches",
-    seeMoreText: "See more",
-    coaches: [
-      {
-        id: "aisha",
-        name: "Aisha",
-        description: "Strength & Tone Specialist",
-        image:
-          "https://da8nru77lsio9.cloudfront.net/images/personal-training-c/coach1.jpg",
-      },
-      {
-        id: "riya-awasthi",
-        name: "Riya Awasthi",
-        description: "Strength & Tone Specialist",
-        image: "/images/member-section/member-2.svg",
-      },
-      {
-        id: "sikha-kapoor",
-        name: "Sikha Kapoor",
-        description: "Strength & Tone Specialist",
-        image: "/images/member-section/member-3.svg",
-      },
-      {
-        id: "aisha-2",
-        name: "Aisha",
-        description: "Strength & Tone Specialist",
-        image: "/images/member-section/member-1.svg",
-      },
-      {
-        id: "riya-awasthi-2",
-        name: "Riya Awasthi",
-        description: "Strength & Tone Specialist",
-        image: "/images/member-section/member-2.svg",
-      },
-      {
-        id: "sikha-kapoor-2",
-        name: "Sikha Kapoor",
-        description: "Strength & Tone Specialist",
-        image: "/images/member-section/member-3.svg",
-      },
-    ],
-  },
   chooseYourPathSection: {
     title: "Choose Your Path",
     buttonText: "Book Your Class Today",
@@ -170,7 +127,7 @@ export const personalTrainingData: StaticPageData = {
     title:
       "Book your free consult and feel the difference of Drive FIIT’s one-on-one coaching.",
     description: "",
-    btnLabel: "Book Your Class Today",
+    btnLabel: "Join Now",
     desktopImage:
       "https://da8nru77lsio9.cloudfront.net/images/personal-training-c/bannerCta.webp",
     mobileImage:

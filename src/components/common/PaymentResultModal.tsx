@@ -43,7 +43,13 @@ export default function PaymentResultModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+      className="fixed inset-0 flex items-center justify-center z-50 p-4"
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        backdropFilter: "blur(4px)",
+      }}
+    >
       <div
         className="bg-black rounded-[40px] p-6 md:p-10 flex flex-col items-center gap-6 md:gap-10 relative w-full max-w-[541px] mx-4"
         style={{
@@ -75,7 +81,7 @@ export default function PaymentResultModal({
         {/* Sub-heading */}
         <p className="text-white text-center font-inter font-light text-sm md:text-base leading-5 md:leading-6">
           {isSuccess
-            ? "Welcome to DriveFitt – Your membership is now active."
+            ? "Welcome to Drive FITT - Your membership is now active. Voucher Receipt will be sent on your email."
             : "Unfortunately, your payment could not be processed."}
         </p>
 

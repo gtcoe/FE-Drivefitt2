@@ -2,6 +2,9 @@
 import ScrollAnimation from "@/components/common/ScrollAnimation";
 import { GallerySectionProps } from "@/types/staticPages";
 import Image from "next/image";
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import PhoneNumberModal from "@/components/common/Modal/PhoneNumberModal";
 
 const BannerCTA = ({
   data,
@@ -20,8 +23,15 @@ const BannerCTA = ({
     mobileImageUp = false,
   } = data;
 
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+
   const handleButtonClick = () => {
-    window.location.href = "/contact-us";
+    if (isAuthenticated) {
+      window.location.href = "/membership";
+    } else {
+      setIsPhoneModalOpen(true);
+    }
   };
 
   return (
@@ -73,6 +83,13 @@ const BannerCTA = ({
           </div>
         </div>
       </div>
+
+      {/* Phone Number Modal */}
+      <PhoneNumberModal
+        isOpen={isPhoneModalOpen}
+        onClose={() => setIsPhoneModalOpen(false)}
+        isMobile={isMobile}
+      />
     </div>
   );
 };

@@ -19,7 +19,7 @@ export const runningData: StaticPageData = {
       "https://da8nru77lsio9.cloudfront.net/images/running-compressed/hero.webp",
     mobileImage:
       "https://da8nru77lsio9.cloudfront.net/images/running-compressed/mobile-hero.webp",
-    btnPrimaryText: "Join the Waitlist",
+    btnPrimaryText: "Join Now",
   },
   cardSection5: {
     title: "Why You'll Love It Here",

@@ -18,7 +18,7 @@ export const cricketData: StaticPageData = {
       "https://da8nru77lsio9.cloudfront.net/images/cricket-compressed/hero.webp",
     mobileImage:
       "https://da8nru77lsio9.cloudfront.net/images/cricket-compressed/mobile-hero.webp",
-    btnPrimaryText: "Join the Waitlist",
+    btnPrimaryText: "Join Now",
   },
   cardSection5: {
     title: "The Edge You Need",

@@ -374,7 +374,7 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
               return (
                 <div
                   key={key}
-                  className="w-full bg-center bg-no-repeat h-full md:mb-[-60px] -mt-[60px] md:-mt-[105px]"
+                  className="w-screen bg-center bg-no-repeat h-full md:mb-[-60px] -mt-[60px] md:-mt-[105px] relative left-1/2 right-1/2 -mx-[50vw]"
                   style={{
                     background: `url(${
                       isMobile
@@ -382,8 +382,10 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
                         : (value as Hero).desktopImage
                     })`,
                     backgroundPosition: "top center",
-                    backgroundSize: isMobile ? "100% auto" : "cover",
+                    backgroundSize: isMobile ? "100% auto" : "100% auto",
                     backgroundRepeat: "no-repeat",
+                    minHeight: isMobile ? "auto" : "100vh",
+                    backgroundAttachment: "scroll",
                   }}
                 >
                   <div className="pt-[84px] md:pt-[140px]">{component}</div>

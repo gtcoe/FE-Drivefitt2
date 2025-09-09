@@ -258,6 +258,7 @@ export async function POST(request: NextRequest) {
               invoiceDate: new Date().toLocaleDateString("en-IN"),
               customerName: `${user.first_name} ${user.last_name}`.trim(),
               customerEmail: user.email,
+              customerPhone: user.phone,
               amount: 999.0,
               membershipType:
                 membership.membership_type === 1
@@ -271,6 +272,7 @@ export async function POST(request: NextRequest) {
               invoiceNumber: invoiceData.invoiceNumber,
               customerName: invoiceData.customerName,
               customerEmail: invoiceData.customerEmail,
+              customerPhone: invoiceData.customerPhone,
               amount: invoiceData.amount,
               membershipType: invoiceData.membershipType,
             });

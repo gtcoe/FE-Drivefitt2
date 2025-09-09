@@ -15,7 +15,7 @@ export const recoveryData: StaticPageData = {
       "https://da8nru77lsio9.cloudfront.net/images/recovery-compressed/hero.svg",
     mobileImage:
       "https://da8nru77lsio9.cloudfront.net/images/recovery-compressed/mobile-hero.svg",
-    btnPrimaryText: "Join the Waitlist",
+    btnPrimaryText: "Join Now",
   },
   cardSection5: {
     title: "Not Just Rest. Recovery Tech.",

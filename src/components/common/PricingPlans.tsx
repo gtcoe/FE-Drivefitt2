@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import ScrollAnimation from "@/components/common/ScrollAnimation";
 import PaymentModal from "./PaymentModal";
 import PaymentResultModal, { PaymentResultType } from "./PaymentResultModal";
+import PaymentLoader from "./PaymentLoader";
+import MembershipAlertModal from "./MembershipAlertModal";
 import PhoneNumberModal from "./Modal/PhoneNumberModal";
 import UserInfoModal from "./Modal/UserInfoModal";
 import { useAuth } from "@/hooks/useAuth";
@@ -43,6 +45,9 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
   const [showUserInfoModal, setShowUserInfoModal] = useState(false);
   const [tempPhoneNumber, setTempPhoneNumber] = useState<string>("");
   const [waitingForUserData, setWaitingForUserData] = useState(false);
+  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
+  const [showMembershipAlertModal, setShowMembershipAlertModal] =
+    useState(false);
 
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
@@ -157,9 +162,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
           hasMembership: boolean;
         };
         if (membershipData.hasMembership) {
-          alert(
-            "You already have an active membership! Please check your profile."
-          );
+          setShowMembershipAlertModal(true);
           return;
         }
       }
@@ -201,6 +204,10 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
       membershipData
     );
 
+    // Show loader while processing
+    setIsPaymentProcessing(true);
+    setShowPaymentModal(false);
+
     try {
       if (membershipData) {
         // ✅ OPTIMIZATION: Update Redux state directly with membership data
@@ -221,10 +228,8 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
         await fetchProfile();
       }
 
-      // Close payment modal
-      setShowPaymentModal(false);
-
-      // Show success modal with payment details
+      // Hide loader and show success modal
+      setIsPaymentProcessing(false);
       setPaymentResultType("success");
       setPaymentResultData({
         transactionId: paymentId,
@@ -240,8 +245,8 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     } catch (error) {
       console.error("❌ Error handling payment success:", error);
 
-      // Even if updating fails, still show success modal
-      setShowPaymentModal(false);
+      // Hide loader and still show success modal even if there's an error updating state
+      setIsPaymentProcessing(false);
       setPaymentResultType("success");
       setPaymentResultData({
         transactionId: paymentId,
@@ -258,7 +263,8 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
   const handlePaymentError = (error: string) => {
     console.error("Payment failed:", error);
 
-    // Close payment modal
+    // Hide loader and close payment modal
+    setIsPaymentProcessing(false);
     setShowPaymentModal(false);
 
     // Show failure modal
@@ -306,6 +312,14 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     setPaymentResultData(null);
     setSelectedPlan(null); // Clear selected plan when going home
     router.push("/");
+  };
+
+  const handleMembershipAlertModalClose = () => {
+    setShowMembershipAlertModal(false);
+  };
+
+  const handleGoToProfile = () => {
+    router.push("/profile");
   };
 
   const handlePhoneModalSuccess = (
@@ -544,7 +558,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
         {plans.map((plan, index) => (
           <ScrollAnimation key={index} delay={0.2 + index * 0.1} direction="up">
             <div
-              className="w-full lg:w-[580px] h-auto min-h-[400px] md:min-h-[500px] lg:h-[554px] rounded-[20px] md:rounded-[30px] lg:rounded-[40px] p-[2px]"
+              className="w-full lg:w-[580px] h-auto min-h-[400px] rounded-[20px] md:rounded-[30px] lg:rounded-[40px] p-[2px]"
               style={{
                 background:
                   "linear-gradient(180deg, #333333 29.36%, #00DBDC 120.13%)",
@@ -616,18 +630,20 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                     </span>
                   </button>
 
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/images/plans/clock.svg"
-                      alt="Clock"
-                      width={20}
-                      height={20}
-                      className="w-4 md:w-5 h-4 md:h-5"
-                    />
-                    <span className="text-sm md:text-base font-light leading-4 md:leading-5 tracking-[0px] text-center text-[#0BFFB6]">
-                      {plan.seatsLeft}
-                    </span>
-                  </div>
+                  {plan.seatsLeft && (
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/images/plans/clock.svg"
+                        alt="Clock"
+                        width={20}
+                        height={20}
+                        className="w-4 md:w-5 h-4 md:h-5"
+                      />
+                      <span className="text-sm md:text-base font-light leading-4 md:leading-5 tracking-[0px] text-center text-[#0BFFB6]">
+                        {plan.seatsLeft}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -678,6 +694,19 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
           onGoHome={handleGoHome}
         />
       )}
+
+      <PaymentLoader
+        isVisible={isPaymentProcessing}
+        message="Processing your payment..."
+      />
+
+      {/* Membership Alert Modal */}
+      <MembershipAlertModal
+        isOpen={showMembershipAlertModal}
+        onClose={handleMembershipAlertModalClose}
+        onGoToProfile={handleGoToProfile}
+        onGoHome={handleGoHome}
+      />
     </section>
   );
 };

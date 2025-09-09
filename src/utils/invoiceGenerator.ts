@@ -13,6 +13,7 @@ export interface InvoiceData {
   invoiceDate: string;
   customerName: string;
   customerEmail: string;
+  customerPhone: string;
   amount: number;
   membershipType: string;
   paymentId: string;
@@ -59,21 +60,11 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
     doc.text("Drive FITT", 20, 30);
   }
 
-  // Additional company information block (below logo)
-  // 24-7 Cricket Group India Private Limited
+  // Company Information (existing block) - start below the logo
   const headerStartY = logoY + logoH + 10; // start below the logo
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.text("24-7 Cricket Group India Private Limited", 20, headerStartY);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.text("Registered Address: 5th Floor,", 20, headerStartY + 4);
-  doc.text("DLF Centre, Savitri Cinema Complex,", 20, headerStartY + 8);
-  doc.text("Greater Kailash-2, New Delhi - 110048", 20, headerStartY + 12);
-  // Company Information (existing block) shifted down to avoid overlap
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  const companyBlockStartY = headerStartY + 20;
+  const companyBlockStartY = headerStartY;
   doc.text("NM/Block-2/R2 LG", 20, companyBlockStartY);
   doc.text("11-18,46-57,UG 06-17,46-57", 20, companyBlockStartY + 4);
   doc.text("M3M 65th Avenue Sector-65", 20, companyBlockStartY + 8);
@@ -99,18 +90,29 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
 
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text(`Invoice Number: ${data.invoiceNumber}`, rightX, idsStartY + 3, {
-    align: "right",
-  });
+  doc.text(
+    `Receipt Voucher Number: ${data.invoiceNumber}`,
+    rightX,
+    idsStartY + 3,
+    {
+      align: "right",
+    }
+  );
   doc.text(`Date: ${data.invoiceDate}`, rightX, idsStartY + 7, {
     align: "right",
   });
   doc.text(`Customer Name: ${data.customerName}`, rightX, idsStartY + 11, {
     align: "right",
   });
+  doc.text(`Customer Number: ${data.customerPhone}`, rightX, idsStartY + 15, {
+    align: "right",
+  });
+  doc.text(`Customer Email: ${data.customerEmail}`, rightX, idsStartY + 19, {
+    align: "right",
+  });
 
   // Itemized Details Table
-  const tableY = idsStartY + 25;
+  const tableY = idsStartY + 29;
 
   // Table headers
   const headers = [["Description", "Quantity", "Rate (Rs.)", "Amount (Rs.)"]];
@@ -141,16 +143,16 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
     theme: "grid",
     styles: {
       fontSize: 9,
-      cellPadding: 4,
+      cellPadding: 2,
       lineWidth: 0.3,
       lineColor: [180, 180, 180],
     },
     headStyles: {
-      fillColor: [41, 128, 185],
+      fillColor: [128, 128, 128],
       textColor: 255,
       fontStyle: "bold",
       fontSize: 10,
-      cellPadding: 6,
+      cellPadding: 3,
     },
     columnStyles: {
       0: { cellWidth: 70, halign: "left" }, // Description - wider for text
@@ -197,9 +199,25 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
   doc.text(
-    "*This invoice is computer-generated; no signature is required.",
+    "*This receipt voucher is computer-generated; no signature is required.",
     20,
-    amountWordsY + 84
+    amountWordsY + 38
+  );
+  doc.setFont("helvetica", "bold");
+  doc.text(
+    "24-7 Cricket Group India Private Limited",
+    105,
+    amountWordsY + 135,
+    {
+      align: "center",
+    }
+  );
+  doc.setFont("helvetica", "normal");
+  doc.text(
+    "Registered Address: 5th Floor, DLF Centre, Savitri Cinema Complex, Greater Kailash-2, New Delhi - 110048",
+    105,
+    amountWordsY + 139,
+    { align: "center" }
   );
 
   return doc;

@@ -44,7 +44,7 @@ export const homeData: StaticPageData = {
   },
   countdownSection: {
     title: "Your Premium Sports Club. Opening Soon at ",
-    date: "2025-11-15T11:00:00",
+    date: "2025-12-15T11:00:00",
     bgImage: "/images/counterbg.svg",
     mobileBgImage: "/images/counterbg-mobile.svg",
     location: "M3M 65th Ave., Golf Course Extn Road, Gurugram",
@@ -59,7 +59,7 @@ export const homeData: StaticPageData = {
   carouselBanner: [
     {
       title: "Experience Premium Club. Launching in GURUGRAM",
-      countdownEnd: "2025-11-15",
+      countdownEnd: "2025-12-15",
       backgroundImage:
         "https://da8nru77lsio9.cloudfront.net/images/carouselBanner/banner-1.svg",
     },

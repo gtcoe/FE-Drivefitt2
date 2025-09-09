@@ -48,7 +48,7 @@ const SignatureClassesSection = ({
   const canGoNext = scrollPosition < maxScrollPosition;
 
   return (
-    <section className="w-full max-w-full overflow-hidden">
+    <section className="w-full max-w-full overflow-x-hidden">
       <div className="md:pl-[120px] px-6 flex flex-col">
         <ScrollAnimation delay={0.2} direction="up">
           <TitleDescription title={title} />
@@ -129,8 +129,8 @@ const SignatureClassesSection = ({
               ))}
             </div>
           ) : (
-            <div className="flex flex-col gap-10 w-full">
-              <div className="relative w-full overflow-hidden">
+            <div className="flex flex-col gap-10 w-full pb-20">
+              <div className="relative w-full">
                 <div
                   className="flex gap-10 transition-transform duration-500 ease-in-out"
                   style={{
@@ -140,7 +140,7 @@ const SignatureClassesSection = ({
                   {cardList.map((card, index) => (
                     <div
                       key={index}
-                      className={`relative flex-shrink-0 w-64 h-64 rounded-[40px] overflow-hidden group cursor-pointer transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-2xl ${
+                      className={`relative flex-shrink-0 w-64 min-h-64 group-hover:h-80 rounded-[40px] overflow-hidden group cursor-pointer transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-2xl ${
                         animatedCards.includes(index)
                           ? "opacity-100 translate-y-0 scale-100"
                           : "opacity-0 translate-y-12 scale-95"
@@ -165,7 +165,7 @@ const SignatureClassesSection = ({
                   ))}
                 </div>
               </div>
-              <div className="relative w-full overflow-hidden">
+              <div className="relative w-full">
                 <div
                   className="flex gap-10 transition-transform duration-500 ease-in-out"
                   style={{
@@ -175,7 +175,7 @@ const SignatureClassesSection = ({
                   {cardList2.map((card, index) => (
                     <div
                       key={index}
-                      className={`relative flex-shrink-0 w-64 h-64 rounded-[40px] overflow-hidden group cursor-pointer transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-2xl ${
+                      className={`relative flex-shrink-0 w-64 min-h-64 group-hover:h-80 rounded-[40px] overflow-hidden group cursor-pointer transition-all duration-700 ease-out transform hover:scale-105 hover:shadow-2xl ${
                         animatedCards.includes(index + cardList.length)
                           ? "opacity-100 translate-y-0 scale-100"
                           : "opacity-0 translate-y-12 scale-95"

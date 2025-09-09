@@ -16,6 +16,7 @@ async function main() {
     invoiceDate: new Date().toLocaleDateString("en-IN"),
     customerName: "Test User",
     customerEmail: "test@example.com",
+    customerPhone: "+91 9876543210",
     amount: 999,
     membershipType: "Individual Annual Plan",
     paymentId: "pay_TEST123",

@@ -126,6 +126,7 @@ export async function GET() {
         invoiceDate: new Date().toLocaleDateString("en-IN"),
         customerName: "Test User",
         customerEmail: "test@example.com",
+        customerPhone: "9876543210",
         amount: 999.0,
         membershipType: "Individual Annual Plan",
         paymentId: "test_payment_123",

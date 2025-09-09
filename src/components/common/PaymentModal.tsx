@@ -1,8 +1,9 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PaymentService } from "@/lib/paymentService";
 import { RootState } from "@/store";
+import PaymentLoader from "./PaymentLoader";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export default function PaymentModal({
   onError,
 }: PaymentModalProps) {
   const { user } = useSelector((state: RootState) => state.auth);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Since user is already authenticated and has complete profile (verified in PricingPlans),
   // we can directly use the user data from Redux
@@ -58,8 +59,7 @@ export default function PaymentModal({
       userDetailsContact: userDetails.contact,
     });
 
-    const hasCompleteProfile =
-      user?.name && user?.email && user?.phone;
+    const hasCompleteProfile = user?.name && user?.email && user?.phone;
 
     console.log("PaymentModal: Profile completeness check", {
       hasCompleteProfile,
@@ -101,8 +101,7 @@ export default function PaymentModal({
   ]);
 
   const handlePayment = async () => {
-    // Skip form validation since user is already authenticated and validated
-    // setIsLoading(true);
+    setIsProcessing(true);
 
     try {
       if (!user?.id) {
@@ -128,67 +127,18 @@ export default function PaymentModal({
       console.error("Payment failed:", error);
       onError?.(error instanceof Error ? error.message : "Payment failed");
     } finally {
-      // setIsLoading(false);
+      setIsProcessing(false);
     }
   };
 
   if (!isOpen) return null;
 
-  // return (
-  //   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-  //     <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-xl">
-  //       <div className="flex justify-between items-center mb-4">
-  //         <h2 className="text-xl font-bold text-gray-800">
-  //           {membershipType} Membership
-  //         </h2>
-  //         <button
-  //           onClick={onClose}
-  //           className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
-  //           disabled={isLoading}
-  //         >
-  //           ×
-  //         </button>
-  //       </div>
-
-  //       <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-  //         <p className="text-lg font-semibold text-blue-800">
-  //           Amount: ₹{amount.toLocaleString()}
-  //         </p>
-  //         <p className="text-sm text-blue-600">
-  //           Complete your payment to activate membership
-  //         </p>
-  //       </div>
-
-  //       <div className="text-center py-8">
-  //         <div className="flex flex-col items-center space-y-4">
-  //           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-  //           <div>
-  //             <h3 className="text-lg font-semibold text-gray-800 mb-2">
-  //               Opening Payment Gateway...
-  //             </h3>
-  //             <p className="text-sm text-gray-600">
-  //               Please wait while we redirect you to complete your payment
-  //             </p>
-  //           </div>
-  //         </div>
-  //       </div>
-
-  //       <div className="flex justify-center mt-6">
-  //         <button
-  //           onClick={onClose}
-  //           className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-  //           disabled={isLoading}
-  //         >
-  //           Cancel
-  //         </button>
-  //       </div>
-
-  //       <div className="mt-4 text-xs text-gray-500 text-center">
-  //         Your payment is secured by Razorpay. We never store your payment
-  //         details.
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-  return null;
+  return (
+    <>
+      <PaymentLoader
+        isVisible={isProcessing}
+        message="Processing your payment..."
+      />
+    </>
+  );
 }
