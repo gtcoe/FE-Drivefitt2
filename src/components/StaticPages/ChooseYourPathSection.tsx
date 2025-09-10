@@ -19,7 +19,7 @@ interface ChooseYourPathSectionProps {
 const ChooseYourPathSection = ({
   title,
   packages,
-  buttonText = "Book Your Class Today",
+  buttonText = "Join Now",
   isMobile = false,
 }: ChooseYourPathSectionProps) => {
   const handleBookClass = () => {

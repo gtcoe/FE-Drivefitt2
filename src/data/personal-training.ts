@@ -78,7 +78,7 @@ export const personalTrainingData: StaticPageData = {
   },
   chooseYourPathSection: {
     title: "Choose Your Path",
-    buttonText: "Book Your Class Today",
+    buttonText: "Join Now",
     packages: [
       {
         name: "Starter",

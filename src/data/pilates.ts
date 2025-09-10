@@ -93,7 +93,7 @@ export const pilatesData: StaticPageData = {
     title: "Find Your Center. Build Your Edge.",
     description:
       "Book your class today and discover the transformative power of Pilates - only at Drive FITT.",
-    btnLabel: "Book Your Class Today",
+    btnLabel: "Join Now",
     desktopImage:
       "https://da8nru77lsio9.cloudfront.net/images/pilates-c/bannerCTASectionDesktop-embedded.svg",
     mobileImage:
