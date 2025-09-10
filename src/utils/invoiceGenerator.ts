@@ -90,14 +90,9 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
 
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text(
-    `Receipt Voucher Number: ${data.invoiceNumber}`,
-    rightX,
-    idsStartY + 3,
-    {
-      align: "right",
-    }
-  );
+  doc.text(`Receipt Number: ${data.invoiceNumber}`, rightX, idsStartY + 3, {
+    align: "right",
+  });
   doc.text(`Date: ${data.invoiceDate}`, rightX, idsStartY + 7, {
     align: "right",
   });
@@ -173,37 +168,39 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
-  doc.text("Amount in Words:", 20, amountWordsY);
+  const amountWordsText = "Amount in Words:";
+  doc.text(amountWordsText, 20, amountWordsY);
+  const amountWordsWidth = doc.getTextWidth(amountWordsText);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
-  doc.text("Nine Hundred Ninety-Nine Rupees Only.", 20, amountWordsY + 6);
+  doc.text(
+    "  Nine Hundred Ninety-Nine Rupees Only.",
+    20 + amountWordsWidth,
+    amountWordsY
+  );
 
   // Payment Terms - positioned below amount in words with minimal spacing
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
-  doc.text("Payment Terms:", 20, amountWordsY + 18);
+  const paymentTermsText = "Payment Terms:";
+  doc.text(paymentTermsText, 20, amountWordsY + 10);
+  const paymentTermsWidth = doc.getTextWidth(paymentTermsText);
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.text(
-    "Payment is due upon receipt of this invoice. This invoice is issued upon",
-    20,
-    amountWordsY + 24
-  );
-  doc.text(
-    "successful pre-booking of your spot at Drive FITT Sports Club.",
-    20,
-    amountWordsY + 30
-  );
+  doc.text("  Immediate", 20 + paymentTermsWidth, amountWordsY + 10);
 
   // Footer note (as requested)
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
+  doc.setFontSize(10);
   doc.text(
-    "*This receipt voucher is computer-generated; no signature is required.",
-    20,
-    amountWordsY + 38
+    "*This receipt voucher is computer-generated; no signature is required. Terms and Conditions apply.",
+    105,
+    amountWordsY + 115,
+    {
+      align: "center",
+    }
   );
   doc.setFont("helvetica", "bold");
+  doc.setFontSize(11);
   doc.text(
     "24-7 Cricket Group India Private Limited",
     105,
@@ -216,7 +213,7 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
   doc.text(
     "Registered Address: 5th Floor, DLF Centre, Savitri Cinema Complex, Greater Kailash-2, New Delhi - 110048",
     105,
-    amountWordsY + 139,
+    amountWordsY + 141,
     { align: "center" }
   );
 

@@ -10,7 +10,8 @@ export const plansData: StaticPageData = {
   aboutUsHeroSection: {
     title: "Plans & Pricing",
     subTitle: "",
-    description: "For our Flagship - M3M 65th Avenue, Golf Course Extension Road, Gurugram",
+    description:
+      "For our Flagship club - M3M 65th Avenue, Golf Course Extension Road, Gurugram",
     roiTag: "",
     roiIcon: "https://da8nru77lsio9.cloudfront.net/images/roi-icon.svg",
     desktopImage: "https://da8nru77lsio9.cloudfront.net/images/plans/hero.svg",
