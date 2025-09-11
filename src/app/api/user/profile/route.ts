@@ -82,7 +82,6 @@ export async function GET(request: NextRequest) {
         AND m.status = 'active' 
         AND m.end_date > NOW()
       ORDER BY m.created_at DESC
-      LIMIT 1
     `;
 
     const membershipResult = await executeQuery<
@@ -98,7 +97,8 @@ export async function GET(request: NextRequest) {
         invoice_number: string;
       }>
     >(membershipQuery, [decoded.user_id]);
-    const membership = membershipResult?.[0];
+    const memberships = membershipResult || [];
+    const latestMembership = memberships[0]; // For backward compatibility
 
     const fullName =
       `${user.first_name || ""} ${user.last_name || ""}`.trim() || "User";
@@ -109,23 +109,38 @@ export async function GET(request: NextRequest) {
       email: user.email,
       phone: user.phone,
       dateOfBirth: user.date_of_birth,
-      hasMembership: !!membership,
-      membershipInfo: membership
+      hasMembership: memberships.length > 0,
+      membershipInfo: latestMembership
         ? {
-            id: membership.id,
-            membershipType: membership.membership_type,
-            status: membership.status as
+            id: latestMembership.id,
+            membershipType: latestMembership.membership_type,
+            status: latestMembership.status as
               | "active"
               | "expired"
               | "cancelled"
               | "suspended",
-            startDate: membership.start_date,
-            expiresAt: membership.end_date,
-            invoiceNumber: membership.invoice_number,
-            orderId: membership.order_id,
-            paymentId: membership.payment_id,
+            startDate: latestMembership.start_date,
+            expiresAt: latestMembership.end_date,
+            invoiceNumber: latestMembership.invoice_number,
+            orderId: latestMembership.order_id,
+            paymentId: latestMembership.payment_id,
           }
         : undefined,
+      // Add all memberships
+      memberships: memberships.map((membership) => ({
+        id: membership.id,
+        membershipType: membership.membership_type,
+        status: membership.status as
+          | "active"
+          | "expired"
+          | "cancelled"
+          | "suspended",
+        startDate: membership.start_date,
+        expiresAt: membership.end_date,
+        invoiceNumber: membership.invoice_number,
+        orderId: membership.order_id,
+        paymentId: membership.payment_id,
+      })),
     };
 
     return NextResponse.json(

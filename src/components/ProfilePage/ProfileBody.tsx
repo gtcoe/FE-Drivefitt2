@@ -19,6 +19,18 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
   const { user, updateUserProfile, updateUserData, fetchProfile } = useAuth();
   const router = useRouter();
 
+  // Helper function to get plan name from membership type
+  const getPlanName = (membershipType: number): string => {
+    switch (membershipType) {
+      case 1:
+        return "Individual Annual Plan";
+      case 2:
+        return "Family Annual Plan";
+      default:
+        return "Unknown Plan";
+    }
+  };
+
   // Initialize edit state
   const [editState, setEditState] = useState<ProfileEditState>({
     editingField: null,
@@ -41,10 +53,21 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
 
   // Fetch user profile data when component mounts
   useEffect(() => {
-    if (user?.id && (!user.membershipInfo || !user.hasMembership)) {
+    if (user?.id) {
+      // Always fetch profile to ensure we have the latest membership data
       fetchProfile();
     }
-  }, [user?.id, user?.membershipInfo, user?.hasMembership, fetchProfile]);
+  }, [user?.id, fetchProfile]);
+
+  // Debug: Log user data to see what we're getting
+  useEffect(() => {
+    console.log("ProfileBody: User data:", {
+      hasMembership: user?.hasMembership,
+      membershipInfo: user?.membershipInfo,
+      memberships: user?.memberships,
+      membershipsLength: user?.memberships?.length,
+    });
+  }, [user]);
 
   // Update field values when user data changes
   useEffect(() => {
@@ -163,7 +186,7 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
       return (
         <button
           onClick={() => handleAction(actionType)}
-          className="bg-[#00DBDC] text-black font-normal text-sm leading-5 px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-200 self-start"
+          className="bg-[#00DBDC] text-black font-normal text-sm leading-5 px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-200 self-start md:mt-[15px]"
         >
           {action.text}
         </button>
@@ -197,7 +220,7 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
       return (
         <button
           onClick={() => handleAction(actionType)}
-          className="bg-[#00DBDC] text-black font-normal text-xs leading-5 px-3 py-1.5 rounded-lg hover:bg-opacity-90 transition-all duration-200 self-start"
+          className="bg-[#00DBDC] text-black font-normal text-xs leading-5 px-3 py-1.5 rounded-lg hover:bg-opacity-90 transition-all duration-200 self-start mt-[15px]"
         >
           {action.text}
         </button>
@@ -291,31 +314,63 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
 
               <div className="flex flex-col md:mt-[50px]">
                 <span className="font-light text-xs leading-4 mb-1 text-[#8A8A8A]">
-                  Plan expires
+                  {user?.memberships && user.memberships.length > 1
+                    ? "Plans expire"
+                    : "Plan expires"}
                 </span>
-                <span className="font-normal text-xl leading-7 mb-2 text-white">
-                  {user?.membershipInfo?.expiresAt
-                    ? new Date(
+                <div className="flex flex-col gap-1">
+                  {user?.memberships && user.memberships.length > 0 ? (
+                    user.memberships.map((membership) => (
+                      <div key={membership.id} className="flex flex-col">
+                        <span className="font-normal text-sm leading-5 text-[#CCCCCC]">
+                          {getPlanName(membership.membershipType)}
+                        </span>
+                        <span className="font-normal text-xl leading-7 text-white">
+                          {new Date(membership.expiresAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    ))
+                  ) : user?.membershipInfo?.expiresAt ? (
+                    <span className="font-normal text-xl leading-7 text-white">
+                      {new Date(
                         user.membershipInfo.expiresAt
-                      ).toLocaleDateString()
-                    : "No active plan"}
-                </span>
+                      ).toLocaleDateString()}
+                    </span>
+                  ) : (
+                    <span className="font-normal text-xl leading-7 text-white">
+                      No active plan
+                    </span>
+                  )}
+                </div>
                 {/* Renew plan functionality removed - not available in actions */}
               </div>
 
               <div className="flex flex-col">
                 <span className="font-light text-xs leading-4 mb-1 text-[#8A8A8A]">
-                  Active plan
+                  {user?.memberships && user.memberships.length > 1
+                    ? "Active plans"
+                    : "Active plan"}
                 </span>
-                <span className="font-normal text-xl leading-7 mb-2 text-white">
-                  {user?.membershipInfo?.membershipType
-                    ? user.membershipInfo.membershipType === 1
-                      ? "Individual Annual Plan"
-                      : user.membershipInfo.membershipType === 2
-                      ? "Family Annual Plan"
-                      : "Unknown Plan"
-                    : "No active plan"}
-                </span>
+                <div className="flex flex-col gap-1">
+                  {user?.memberships && user.memberships.length > 0 ? (
+                    user.memberships.map((membership) => (
+                      <span
+                        key={membership.id}
+                        className="font-normal text-xl leading-7 text-white"
+                      >
+                        {getPlanName(membership.membershipType)}
+                      </span>
+                    ))
+                  ) : user?.membershipInfo?.membershipType ? (
+                    <span className="font-normal text-xl leading-7 text-white">
+                      {getPlanName(user.membershipInfo.membershipType)}
+                    </span>
+                  ) : (
+                    <span className="font-normal text-xl leading-7 text-white">
+                      No active plan
+                    </span>
+                  )}
+                </div>
                 {renderMobileActionButton(actions.viewPlan, "viewPlan")}
               </div>
             </div>
@@ -371,17 +426,30 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
 
               <div className="flex flex-col">
                 <span className="font-light text-base leading-5 mb-2 text-[#8A8A8A]">
-                  Active plan
+                  {user?.memberships && user.memberships.length > 1
+                    ? "Active plans"
+                    : "Active plan"}
                 </span>
-                <span className="font-normal text-2xl leading-7 mb-5 text-white">
-                  {user?.membershipInfo?.membershipType
-                    ? user.membershipInfo.membershipType === 1
-                      ? "Individual Annual Plan"
-                      : user.membershipInfo.membershipType === 2
-                      ? "Family Annual Plan"
-                      : "Unknown Plan"
-                    : "No active plan"}
-                </span>
+                <div className="flex flex-col gap-2">
+                  {user?.memberships && user.memberships.length > 0 ? (
+                    user.memberships.map((membership) => (
+                      <span
+                        key={membership.id}
+                        className="font-normal text-2xl leading-7 text-white"
+                      >
+                        {getPlanName(membership.membershipType)}
+                      </span>
+                    ))
+                  ) : user?.membershipInfo?.membershipType ? (
+                    <span className="font-normal text-2xl leading-7 text-white">
+                      {getPlanName(user.membershipInfo.membershipType)}
+                    </span>
+                  ) : (
+                    <span className="font-normal text-2xl leading-7 text-white">
+                      No active plan
+                    </span>
+                  )}
+                </div>
                 {renderActionButton(actions.viewPlan, "viewPlan")}
               </div>
             </div>
@@ -415,15 +483,34 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
 
               <div className="flex flex-col md:!mt-[50px]">
                 <span className="font-light text-base leading-5 mb-2 text-[#8A8A8A]">
-                  Plan expires
+                  {user?.memberships && user.memberships.length > 1
+                    ? "Plans expire"
+                    : "Plan expires"}
                 </span>
-                <span className="font-normal text-2xl leading-7 mb-5 text-white">
-                  {user?.membershipInfo?.expiresAt
-                    ? new Date(
+                <div className="flex flex-col gap-3">
+                  {user?.memberships && user.memberships.length > 0 ? (
+                    user.memberships.map((membership) => (
+                      <div key={membership.id} className="flex flex-col">
+                        <span className="font-normal text-base leading-5 text-[#CCCCCC]">
+                          {getPlanName(membership.membershipType)}
+                        </span>
+                        <span className="font-normal text-2xl leading-7 text-white">
+                          {new Date(membership.expiresAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    ))
+                  ) : user?.membershipInfo?.expiresAt ? (
+                    <span className="font-normal text-2xl leading-7 text-white">
+                      {new Date(
                         user.membershipInfo.expiresAt
-                      ).toLocaleDateString()
-                    : "No active plan"}
-                </span>
+                      ).toLocaleDateString()}
+                    </span>
+                  ) : (
+                    <span className="font-normal text-2xl leading-7 text-white">
+                      No active plan
+                    </span>
+                  )}
+                </div>
                 {/* Renew plan functionality removed - not available in actions */}
               </div>
             </div>

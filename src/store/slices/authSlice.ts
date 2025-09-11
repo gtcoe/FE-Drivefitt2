@@ -298,6 +298,8 @@ const authSlice = createSlice({
         if (state.user && action.payload) {
           state.user.hasMembership = action.payload.hasMembership;
           state.user.membershipInfo = action.payload.membershipInfo;
+          // Add support for multiple memberships
+          state.user.memberships = action.payload.memberships;
 
           // Update session storage
           sessionStorage.setItem("user_data", JSON.stringify(state.user));

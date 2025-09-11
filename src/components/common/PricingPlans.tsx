@@ -6,7 +6,7 @@ import ScrollAnimation from "@/components/common/ScrollAnimation";
 import PaymentModal from "./PaymentModal";
 import PaymentResultModal, { PaymentResultType } from "./PaymentResultModal";
 import PaymentLoader from "./PaymentLoader";
-import MembershipAlertModal from "./MembershipAlertModal";
+// import MembershipAlertModal from "./MembershipAlertModal"; // Removed - no longer blocking purchases
 import PhoneNumberModal from "./Modal/PhoneNumberModal";
 import UserInfoModal from "./Modal/UserInfoModal";
 import { useAuth } from "@/hooks/useAuth";
@@ -46,14 +46,59 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
   const [tempPhoneNumber, setTempPhoneNumber] = useState<string>("");
   const [waitingForUserData, setWaitingForUserData] = useState(false);
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
-  const [showMembershipAlertModal, setShowMembershipAlertModal] =
-    useState(false);
+  const [userMembershipTypes, setUserMembershipTypes] = useState<number[]>([]);
 
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
   );
   const { checkUserMembership, fetchProfile, updateUserData } = useAuth();
   const router = useRouter();
+
+  // Check user's current membership on component mount
+  useEffect(() => {
+    if (isAuthenticated && user?.id) {
+      const fetchUserMembership = async () => {
+        try {
+          const membershipResult = await checkUserMembership(user.id);
+          if (membershipResult.type === "auth/checkMembership/fulfilled") {
+            const membershipData = membershipResult.payload as {
+              hasMembership: boolean;
+              memberships?: Array<{
+                membershipType: number;
+              }>;
+              membershipInfo?: {
+                membershipType: number;
+              };
+            };
+            if (membershipData.hasMembership && membershipData.memberships) {
+              // New API structure with multiple memberships
+              const membershipTypes = membershipData.memberships.map(
+                (m) => m.membershipType
+              );
+              setUserMembershipTypes(membershipTypes);
+            } else if (
+              membershipData.hasMembership &&
+              membershipData.membershipInfo
+            ) {
+              // Fallback to old API structure for backward compatibility
+              setUserMembershipTypes([
+                membershipData.membershipInfo.membershipType,
+              ]);
+            } else {
+              setUserMembershipTypes([]);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user membership:", error);
+          setUserMembershipTypes([]);
+        }
+      };
+
+      fetchUserMembership();
+    } else {
+      setUserMembershipTypes([]);
+    }
+  }, [isAuthenticated, user?.id, checkUserMembership]);
 
   // Watch for user data changes and open payment modal when ready
   useEffect(() => {
@@ -113,6 +158,28 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     return 1; // default to Individual
   };
 
+  // Helper function to get button text and state for a plan
+  const getButtonConfig = (plan: PricingPlan) => {
+    const planMembershipType = getMembershipType(plan.title);
+    const isUserCurrentPlan = userMembershipTypes.includes(planMembershipType);
+
+    if (isUserCurrentPlan) {
+      return {
+        text: "Your Existing Plan",
+        disabled: true,
+        className:
+          "w-full h-12 md:h-14 lg:h-[56px] rounded-lg bg-[#666666] px-4 md:px-[60px] lg:px-[60px] py-3 md:py-4 mb-3 md:mb-4 cursor-not-allowed",
+      };
+    }
+
+    return {
+      text: plan.buttonText,
+      disabled: false,
+      className:
+        "w-full h-12 md:h-14 lg:h-[56px] rounded-lg bg-[#00DBDC] px-4 md:px-[60px] lg:px-[60px] py-3 md:py-4 mb-3 md:mb-4 hover:bg-[#00DBDC]/90 transition-colors",
+    };
+  };
+
   const handlePlanSwitch = (index: number) => {
     setActivePlanIndex(index);
   };
@@ -154,24 +221,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
       return;
     }
 
-    // Step 3: Check if user already has an active membership
-    try {
-      const membershipResult = await checkUserMembership(user.id);
-      if (membershipResult.type === "auth/checkMembership/fulfilled") {
-        const membershipData = membershipResult.payload as {
-          hasMembership: boolean;
-        };
-        if (membershipData.hasMembership) {
-          setShowMembershipAlertModal(true);
-          return;
-        }
-      }
-    } catch (error) {
-      console.error("Error checking membership:", error);
-      // Continue with payment flow even if membership check fails
-    }
-
-    // Step 4: All checks passed, proceed to payment
+    // Step 3: All checks passed, proceed to payment
     console.log("PricingPlans: All checks passed, opening payment modal");
     console.log("PricingPlans: Final user data:", user);
     setShowPaymentModal(true);
@@ -314,13 +364,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     router.push("/");
   };
 
-  const handleMembershipAlertModalClose = () => {
-    setShowMembershipAlertModal(false);
-  };
 
-  const handleGoToProfile = () => {
-    router.push("/profile");
-  };
 
   const handlePhoneModalSuccess = (
     phoneNumber: string,
@@ -496,37 +540,52 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                       className="w-full mx-6"
                     >
                       <button
-                        className="w-full h-12 rounded-lg bg-[#00DBDC] py-[10px] mb-4 hover:bg-[#00DBDC]/90 transition-colors"
+                        className={getButtonConfig(
+                          plans[activePlanIndex]
+                        ).className.replace("md:h-14 lg:h-[56px]", "h-12")}
                         onClick={() =>
-                          handlePaymentClick(plans[activePlanIndex])
+                          getButtonConfig(plans[activePlanIndex]).disabled
+                            ? undefined
+                            : handlePaymentClick(plans[activePlanIndex])
+                        }
+                        disabled={
+                          getButtonConfig(plans[activePlanIndex]).disabled
                         }
                       >
-                        <span className="text-base font-medium leading-[100%] tracking-[-5%] text-[#0D0D0D]">
-                          {plans[activePlanIndex].buttonText}
+                        <span
+                          className={`text-base font-medium leading-[100%] tracking-[-5%] ${
+                            getButtonConfig(plans[activePlanIndex]).disabled
+                              ? "text-[#CCCCCC]"
+                              : "text-[#0D0D0D]"
+                          }`}
+                        >
+                          {getButtonConfig(plans[activePlanIndex]).text}
                         </span>
                       </button>
                     </ScrollAnimation>
 
                     {/* Seats Left */}
-                    <ScrollAnimation
-                      key={`seats-${activePlanIndex}`}
-                      delay={0.5}
-                      direction="up"
-                      distance={15}
-                    >
-                      <div className="flex items-center gap-2 mb-[16px]">
-                        <Image
-                          src="/images/plans/clock.svg"
-                          alt="Clock"
-                          width={20}
-                          height={20}
-                          className="w-5 h-5"
-                        />
-                        <span className="text-sm font-light leading-5 tracking-[0px] text-center text-[#0BFFB6]">
-                          {plans[activePlanIndex].seatsLeft}
-                        </span>
-                      </div>
-                    </ScrollAnimation>
+                    {plans[activePlanIndex].seatsLeft && (
+                      <ScrollAnimation
+                        key={`seats-${activePlanIndex}`}
+                        delay={0.5}
+                        direction="up"
+                        distance={15}
+                      >
+                        <div className="flex items-center gap-2 mb-[16px]">
+                          <Image
+                            src="/images/plans/clock.svg"
+                            alt="Clock"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5"
+                          />
+                          <span className="text-sm font-light leading-5 tracking-[0px] text-center text-[#0BFFB6]">
+                            {plans[activePlanIndex].seatsLeft}
+                          </span>
+                        </div>
+                      </ScrollAnimation>
+                    )}
                   </div>
                 </div>
               </div>
@@ -622,11 +681,22 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                   </ScrollAnimation>
 
                   <button
-                    className="w-full h-12 md:h-14 lg:h-[56px] rounded-lg bg-[#00DBDC] px-4 md:px-[60px] lg:px-[60px] py-3 md:py-4 mb-3 md:mb-4 hover:bg-[#00DBDC]/90 transition-colors"
-                    onClick={() => handlePaymentClick(plan)}
+                    className={getButtonConfig(plan).className}
+                    onClick={() =>
+                      getButtonConfig(plan).disabled
+                        ? undefined
+                        : handlePaymentClick(plan)
+                    }
+                    disabled={getButtonConfig(plan).disabled}
                   >
-                    <span className="text-sm md:text-lg lg:text-xl font-medium leading-[100%] tracking-[-5%] text-[#0D0D0D]">
-                      {plan.buttonText}
+                    <span
+                      className={`text-sm md:text-lg lg:text-xl font-medium leading-[100%] tracking-[-5%] ${
+                        getButtonConfig(plan).disabled
+                          ? "text-[#CCCCCC]"
+                          : "text-[#0D0D0D]"
+                      }`}
+                    >
+                      {getButtonConfig(plan).text}
                     </span>
                   </button>
 
@@ -700,13 +770,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
         message="Processing your payment..."
       />
 
-      {/* Membership Alert Modal */}
-      <MembershipAlertModal
-        isOpen={showMembershipAlertModal}
-        onClose={handleMembershipAlertModalClose}
-        onGoToProfile={handleGoToProfile}
-        onGoHome={handleGoHome}
-      />
+      {/* Membership Alert Modal - Removed: Users can now purchase multiple plans */}
     </section>
   );
 };

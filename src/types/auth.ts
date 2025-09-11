@@ -20,6 +20,17 @@ export interface User {
     orderId: number;
     paymentId: number;
   };
+  // New field for multiple memberships
+  memberships?: Array<{
+    id: number;
+    membershipType: number; // 1 = Individual Annual Plan, 2 = Family Annual Plan
+    status: "active" | "expired" | "cancelled" | "suspended";
+    startDate: string;
+    expiresAt: string;
+    invoiceNumber?: string;
+    orderId: number;
+    paymentId: number;
+  }>;
 }
 
 export interface AuthState {

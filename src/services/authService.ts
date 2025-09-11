@@ -87,6 +87,7 @@ class AuthService {
   async checkUserMembership(userId: number): Promise<{
     hasMembership: boolean;
     membershipInfo?: MembershipInfo;
+    memberships?: MembershipInfo[];
   }> {
     const token = sessionStorage.getItem("auth_token");
     if (!token) {

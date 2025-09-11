@@ -15,7 +15,7 @@ import {
 import { executeQuery } from "@/lib/database";
 import { razorpayApiClient } from "@/lib/razorpayApiClient";
 import { generateInvoiceBuffer } from "@/utils/invoiceGenerator";
-import { sendMembershipSuccessEmail } from "@/utils/brevo";
+// import { sendMembershipSuccessEmail } from "@/utils/brevo"; // Disabled
 
 export async function POST(request: NextRequest) {
   try {
@@ -286,40 +286,10 @@ export async function POST(request: NextRequest) {
               "bytes"
             );
 
-            // Send email with invoice attachment synchronously (removed setImmediate)
-            if (membershipData) {
-              console.log(
-                "📤 Sending email immediately (removed setImmediate wrapper)..."
-              );
-              try {
-                console.log("🚀 Executing email sending...");
-                await sendMembershipSuccessEmail(
-                  {
-                    name: invoiceData.customerName,
-                    email: invoiceData.customerEmail,
-                    phone: user.phone,
-                  },
-                  membershipData!,
-                  invoiceBuffer
-                );
-                console.log(
-                  "✅ Invoice email sent successfully for user:",
-                  user.email
-                );
-              } catch (emailError) {
-                console.error("❌ Failed to send invoice email:", emailError);
-                console.error("Email error details:", {
-                  userEmail: user.email,
-                  userName: invoiceData.customerName,
-                  error:
-                    emailError instanceof Error
-                      ? emailError.message
-                      : String(emailError),
-                });
-              }
-            } else {
-              console.warn("⚠️ membershipData is null, skipping email sending");
-            }
+            // Email sending disabled
+            console.log(
+              "📧 Email sending disabled - invoice generated successfully"
+            );
           } else {
             console.error(
               "❌ User not found for invoice generation, user_id:",
