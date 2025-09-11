@@ -15,7 +15,7 @@ import {
 import { executeQuery } from "@/lib/database";
 import { razorpayApiClient } from "@/lib/razorpayApiClient";
 import { generateInvoiceBuffer } from "@/utils/invoiceGenerator";
-// import { sendMembershipSuccessEmail } from "@/utils/brevo"; // Disabled
+import { sendMembershipSuccessEmail } from "@/utils/brevo";
 
 export async function POST(request: NextRequest) {
   try {
@@ -286,10 +286,35 @@ export async function POST(request: NextRequest) {
               "bytes"
             );
 
-            // Email sending disabled
-            console.log(
-              "📧 Email sending disabled - invoice generated successfully"
-            );
+            // Send membership success email with invoice
+            try {
+              console.log("📧 Sending membership success email...");
+              await sendMembershipSuccessEmail(
+                {
+                  name: invoiceData.customerName,
+                  email: invoiceData.customerEmail,
+                  phone: invoiceData.customerPhone,
+                },
+                {
+                  id: membership.id,
+                  membershipType: membership.membership_type,
+                  status: membership.status,
+                  startDate: membership.start_date,
+                  expiresAt: membership.end_date,
+                  invoiceNumber: invoiceData.invoiceNumber,
+                  orderId: membership.order_id,
+                  paymentId: membership.payment_id,
+                },
+                invoiceBuffer
+              );
+              console.log("✅ Membership success email sent successfully");
+            } catch (emailError) {
+              console.error(
+                "❌ Failed to send membership success email:",
+                emailError
+              );
+              // Don't fail the payment verification if email sending fails
+            }
           } else {
             console.error(
               "❌ User not found for invoice generation, user_id:",
