@@ -120,7 +120,7 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
   // Table data
   const tableData = [
     [
-      "Pre-booking advance with respect to membership at Drive FITT Club",
+      `Pre-booking advance with respect to membership at Drive FITT Club\n- ${data.membershipType}`,
       "1",
       "846.61",
       "846.61",

@@ -38,6 +38,7 @@ export const plansData: StaticPageData = {
         discountPercentage: "30%",
         buttonText: "Lock this Price @ ₹999",
         seatsLeft: "",
+        limitedOfferCountText: "100 members",
       },
       {
         title: "Family Annual Plan",
@@ -47,6 +48,7 @@ export const plansData: StaticPageData = {
         discountPercentage: "30%",
         buttonText: "Lock this Price @ ₹999",
         seatsLeft: "",
+        limitedOfferCountText: "100 families",
       },
     ],
   },

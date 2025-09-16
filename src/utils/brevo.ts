@@ -448,7 +448,9 @@ export async function sendMembershipSuccessEmail(
     }
   ).attachment = [
     {
-      name: `Invoice-${membershipData.invoiceNumber || "DriveFITT"}.pdf`,
+      name: `receipt voucher ${
+        membershipData.invoiceNumber || "DriveFITT"
+      }.pdf`,
       content: invoiceBuffer.toString("base64"),
       type: "application/pdf",
     },

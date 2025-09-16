@@ -525,6 +525,7 @@ export interface PricingPlan {
   discountPercentage: string;
   buttonText: string;
   seatsLeft: string;
+  limitedOfferCountText?: string; // e.g., "100 members" or "100 families"
 }
 
 export interface PricingPlansSection {

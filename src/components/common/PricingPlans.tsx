@@ -21,6 +21,7 @@ interface PricingPlan {
   discountPercentage: string;
   buttonText: string;
   seatsLeft: string;
+  limitedOfferCountText?: string;
 }
 
 interface PricingPlansProps {
@@ -364,8 +365,6 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     router.push("/");
   };
 
-
-
   const handlePhoneModalSuccess = (
     phoneNumber: string,
     userData?: {
@@ -485,8 +484,12 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                       direction="up"
                       distance={15}
                     >
-                      <div className="text-[40px] font-semibold leading-[100%] tracking-[0px] text-center text-[#00DBDC] mb-5">
+                      <div className="text-[40px] font-semibold leading-[100%] tracking-[0px] text-center text-[#00DBDC] mb-1">
                         {plans[activePlanIndex].discountedPrice}
+                      </div>
+                      {/* Exclusive of taxes - mobile */}
+                      <div className="text-[12px] font-normal leading-4 tracking-[0px] text-center text-[#6A6A6A] mb-4 md:mt-[2px]">
+                        Exclusive of taxes
                       </div>
                     </ScrollAnimation>
 
@@ -497,7 +500,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                       direction="up"
                       distance={15}
                     >
-                      <div className="flex items-center justify-center gap-3 mb-[47px]">
+                      <div className="flex items-center justify-center gap-3 mb-4">
                         <span className="text-base font-normal leading-[100%] tracking-[0px] text-center text-[#6A6A6A]">
                           <span className="line-through">
                             {plans[activePlanIndex].originalPrice}
@@ -526,7 +529,8 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                       <p className="text-sm font-light leading-5 tracking-[0px] text-center text-white mb-4">
                         Limited period offer for first{" "}
                         <span className="font-bold text-sm leading-5 tracking-[0px] text-center text-white">
-                          100 members
+                          {plans[activePlanIndex].limitedOfferCountText ||
+                            "100 members"}
                         </span>
                       </p>
                     </ScrollAnimation>
@@ -563,6 +567,11 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                         </span>
                       </button>
                     </ScrollAnimation>
+
+                    {/* Terms & conditions - mobile */}
+                    <div className="text-[12px] font-normal leading-4 tracking-[0px] text-center underline text-[#6A6A6A] mt-[8px]">
+                      *Terms & conditions apply
+                    </div>
 
                     {/* Seats Left */}
                     {plans[activePlanIndex].seatsLeft && (
@@ -647,11 +656,15 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                     </div>
                   )}
 
-                  <div className="text-3xl md:text-4xl lg:text-[60px] font-semibold leading-[100%] tracking-[0px] text-center text-[#00DBDC] mb-4 md:mb-6">
+                  <div className="text-3xl md:text-4xl lg:text-[60px] font-semibold leading-[100%] tracking-[0px] text-center text-[#00DBDC] mb-1 md:mb-[2px]">
                     {plan.discountedPrice}
                   </div>
+                  {/* Exclusive of taxes - desktop */}
+                  <div className="text-xs md:text-sm lg:text-base font-normal md:font-normal leading-4 md:leading-5 lg:leading-5 tracking-[0px] text-center text-[#6A6A6A] mb-4 md:mb-6 lg:mb-6 mt-[12px]">
+                    Exclusive of taxes
+                  </div>
 
-                  <div className="flex items-center justify-center gap-2 md:gap-3 mb-6 md:mb-8 lg:mb-10">
+                  <div className="flex items-center justify-center gap-2 md:gap-3 mb-6 md:mb-8 lg:mb-[24px]">
                     <span className="text-lg md:text-xl lg:text-2xl font-normal leading-[100%] tracking-[0px] text-center text-[#6A6A6A]">
                       <span className="line-through">{plan.originalPrice}</span>
                     </span>
@@ -675,7 +688,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                     <p className="text-sm md:text-base font-light leading-4 md:leading-5 tracking-[0px] text-center text-white mb-3 md:mb-4 px-2">
                       Limited period offer for first{" "}
                       <span className="font-bold text-sm md:text-base leading-4 md:leading-5 tracking-[0px] text-center text-white">
-                        100 members
+                        {plan.limitedOfferCountText || "100 members"}
                       </span>
                     </p>
                   </ScrollAnimation>
@@ -699,6 +712,11 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
                       {getButtonConfig(plan).text}
                     </span>
                   </button>
+
+                  {/* Terms & conditions - desktop */}
+                  <div className="text-xs md:text-sm lg:text-base font-normal leading-4 md:leading-5 lg:leading-5 tracking-[0px] text-center text-[#6A6A6A] underline mt-6 md:mt-[26px] lg:mt-[26px]">
+                    *Terms & conditions apply
+                  </div>
 
                   {plan.seatsLeft && (
                     <div className="flex items-center gap-2">
