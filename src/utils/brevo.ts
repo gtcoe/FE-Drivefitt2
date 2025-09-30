@@ -2,6 +2,8 @@ import * as SibApiV3Sdk from "@getbrevo/brevo";
 import { ContactUsFormData, FranchiseFormData } from "@/types/database";
 import https from "https";
 import http from "http";
+import fs from "fs";
+import path from "path";
 
 // Define types for API instance
 type ApiInstance = SibApiV3Sdk.TransactionalEmailsApi & {
@@ -452,6 +454,15 @@ export async function sendMembershipSuccessEmail(
         membershipData.invoiceNumber || "DriveFITT"
       }.pdf`,
       content: invoiceBuffer.toString("base64"),
+      type: "application/pdf",
+    },
+    {
+      name: "Terms and Conditions.pdf",
+      content: fs
+        .readFileSync(
+          path.join(process.cwd(), "public", "Terms and Conditions.pdf")
+        )
+        .toString("base64"),
       type: "application/pdf",
     },
   ];
