@@ -16,6 +16,8 @@ import { executeQuery } from "@/lib/database";
 import { razorpayApiClient } from "@/lib/razorpayApiClient";
 import { generateInvoiceBuffer } from "@/utils/invoiceGenerator";
 import { sendMembershipSuccessEmail } from "@/utils/brevo";
+import { s3Service } from "@/lib/s3Service";
+import { whatsappService } from "@/lib/whatsappService";
 
 export async function POST(request: NextRequest) {
   try {
@@ -286,6 +288,28 @@ export async function POST(request: NextRequest) {
               "bytes"
             );
 
+            // Upload invoice to S3
+            let invoiceUrl: string | undefined;
+            try {
+              console.log("☁️ Uploading invoice to S3...");
+              const s3Result = await s3Service.uploadInvoice(
+                invoiceBuffer,
+                invoiceData.invoiceNumber
+              );
+
+              if (s3Result.success && s3Result.url) {
+                invoiceUrl = s3Result.url;
+                console.log(
+                  "✅ Invoice uploaded to S3 successfully:",
+                  invoiceUrl
+                );
+              } else {
+                console.error("❌ S3 upload failed:", s3Result.error);
+              }
+            } catch (s3Error) {
+              console.error("❌ S3 upload error:", s3Error);
+            }
+
             // Send membership success email with invoice
             try {
               console.log("📧 Sending membership success email...");
@@ -314,6 +338,37 @@ export async function POST(request: NextRequest) {
                 emailError
               );
               // Don't fail the payment verification if email sending fails
+            }
+
+            // Send WhatsApp message with invoice document
+            if (invoiceUrl) {
+              try {
+                console.log("📱 Sending WhatsApp invoice document...");
+                const whatsappResult =
+                  await whatsappService.sendInvoiceDocument({
+                    customerName: invoiceData.customerName,
+                    customerPhone: invoiceData.customerPhone,
+                    invoiceUrl: invoiceUrl,
+                    receiptNumber: invoiceData.invoiceNumber,
+                    membershipType: invoiceData.membershipType,
+                    balancePaymentDate: "29th Dec 2025", // You can make this dynamic
+                  });
+
+                if (whatsappResult.success) {
+                  console.log("✅ WhatsApp invoice document sent successfully");
+                } else {
+                  console.error(
+                    "❌ WhatsApp sending failed:",
+                    whatsappResult.error
+                  );
+                }
+              } catch (whatsappError) {
+                console.error("❌ WhatsApp service error:", whatsappError);
+              }
+            } else {
+              console.warn(
+                "⚠️ Skipping WhatsApp message - no invoice URL available"
+              );
             }
           } else {
             console.error(

@@ -570,7 +570,9 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
 
                     {/* Terms & conditions - mobile */}
                     <div className="text-[12px] font-normal leading-4 tracking-[0px] text-center underline text-[#6A6A6A] mt-[8px]">
-                      *Terms & conditions apply
+                      <a href="/api/download/terms" rel="noopener noreferrer">
+                        *Terms & conditions apply
+                      </a>
                     </div>
 
                     {/* Seats Left */}
@@ -715,7 +717,9 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
 
                   {/* Terms & conditions - desktop */}
                   <div className="text-xs md:text-sm lg:text-base font-normal leading-4 md:leading-5 lg:leading-5 tracking-[0px] text-center text-[#6A6A6A] underline mt-6 md:mt-[26px] lg:mt-[26px]">
-                    *Terms & conditions apply
+                    <a href="/api/download/terms" rel="noopener noreferrer">
+                      *Terms & conditions apply
+                    </a>
                   </div>
 
                   {plan.seatsLeft && (

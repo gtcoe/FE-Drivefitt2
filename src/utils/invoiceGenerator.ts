@@ -113,8 +113,8 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
   const headers = [["Description", "Quantity", "Rate (Rs.)", "Amount (Rs.)"]];
 
   // Calculate GST values
-  const subtotal = 846.61; // Before GST
-  const gstAmount = 152.39; // 18% GST
+  const subtotal = 951.43; // Before GST
+  const gstAmount = 47.53; // 18% GST
   const totalAmount = 999.0;
 
   // Table data
@@ -122,11 +122,11 @@ export function generateInvoicePDF(data: InvoiceData): ExtendedJsPDF {
     [
       `Pre-booking advance with respect to membership at Drive FITT Club\n- ${data.membershipType}`,
       "1",
-      "846.61",
-      "846.61",
+      "951.43",
+      "951.43",
     ],
     ["Subtotal (before GST)", "", "", subtotal.toFixed(2)],
-    ["GST @18% (IGST/CGST+SGST)", "", "", gstAmount.toFixed(2)],
+    ["GST @5% (IGST/CGST+SGST)", "", "", gstAmount.toFixed(2)],
     ["Total Amount (Rs.)", "", "", totalAmount.toFixed(2)],
   ];
 
