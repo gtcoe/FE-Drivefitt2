@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
   const cdnUrl =
     "https://da8nru77lsio9.cloudfront.net/Terms+and+Conditions.pdf";
 

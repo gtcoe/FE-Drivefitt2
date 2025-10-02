@@ -25,13 +25,7 @@ class WhatsAppService {
   }
 
   private formatMessage(data: WhatsAppMessageData): string {
-    const {
-      customerName,
-      invoiceUrl,
-      receiptNumber,
-      membershipType,
-      balancePaymentDate,
-    } = data;
+    const { customerName, balancePaymentDate } = data;
 
     // Create the message with proper formatting
     const message = `Hi ${customerName},
