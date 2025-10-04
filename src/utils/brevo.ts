@@ -411,7 +411,10 @@ export async function sendMembershipSuccessEmail(
               ✅ You'll enjoy all included benefits once your membership is fully active
             </p>
             <p style="margin: 10px 0; font-size: 16px;">
-              ⏳ Complete your balance payment within 90 days or before the club opens, whichever is earlier, to keep this price effective
+              ✅ You will be contacted about your onboarding day 14 days prior to club opening
+            </p>
+            <p style="margin: 10px 0; font-size: 16px;">
+              ⏳ Complete your balance payment by 29th Dec 2025 to keep this price effective
             </p>
           </div>
           
@@ -420,7 +423,7 @@ export async function sendMembershipSuccessEmail(
           </p>
           
           <p style="font-size: 16px; margin-bottom: 20px;">
-            We can't wait to see you <strong>Drive. Strive. Thrive.</strong> with us at the club! 🏏✨
+            We can't wait to see you <strong>Drive. Strive. Thrive. Revive</strong> with us at the club! 🏏✨
           </p>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
