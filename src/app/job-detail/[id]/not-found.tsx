@@ -28,8 +28,8 @@ export default function JobNotFound() {
           Job Not Found
         </h1>
         <p className="text-[#BFBFBF] mb-8 leading-relaxed">
-          The job posting you&apos;re looking for doesn&apos;t exist, has been removed, or
-          is no longer available.
+          The job posting you&apos;re looking for doesn&apos;t exist, has been
+          removed, or is no longer available.
         </p>
 
         {/* Action Buttons */}

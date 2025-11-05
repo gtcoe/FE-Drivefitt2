@@ -11,12 +11,7 @@ import { blogCategoryAPI } from "@/services/blogCategoryAPI";
 import { uploadAPI } from "@/services/uploadAPI";
 import { generateSlug, validateSlug, sanitizeSlug } from "@/utils/slugUtils";
 
-const BlogModal = ({
-  isOpen,
-  onClose,
-  onSave,
-  blog,
-}: BlogModalProps) => {
+const BlogModal = ({ isOpen, onClose, onSave, blog }: BlogModalProps) => {
   const [formData, setFormData] = useState<BlogFormData>({
     title: "",
     description: "",
