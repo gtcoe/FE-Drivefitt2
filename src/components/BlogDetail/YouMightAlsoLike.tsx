@@ -19,7 +19,7 @@ const YouMightAlsoLike = ({ blogs, isMobile }: YouMightAlsoLikeProps) => {
         month: "short",
         day: "numeric",
       });
-    } catch (error) {
+    } catch {
       return dateString;
     }
   };

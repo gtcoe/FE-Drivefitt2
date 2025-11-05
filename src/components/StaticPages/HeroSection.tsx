@@ -1,5 +1,5 @@
 "use client";
-import { Hero, TitleWord } from "@/types/staticPages";
+import { Hero } from "@/types/staticPages";
 import { homeData } from "@/data/home";
 import CountdownTimer from "./CountdownTimer";
 import { useState } from "react";

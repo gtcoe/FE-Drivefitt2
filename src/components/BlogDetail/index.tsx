@@ -12,8 +12,24 @@ import { BlogEntry } from "@/types/adminPortal";
 import { LoginModalType } from "@/types/staticPages";
 
 interface BlogDetailProps {
-  blog: any; // Raw blog data from API
+  blog: RawBlog;
   isMobile: boolean;
+}
+
+interface RawBlog {
+  id: number;
+  title: string;
+  description?: string;
+  slug: string;
+  date?: string;
+  image?: string;
+  html?: string;
+  category_id?: number;
+  category_heading?: string;
+  status?: number;
+  is_featured?: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 const navbarData = {
@@ -179,7 +195,7 @@ const BlogDetailContent = ({ blog: rawBlog, isMobile }: BlogDetailProps) => {
           );
           if (relatedResponse.ok) {
             const { data } = await relatedResponse.json();
-            const transformedRelated = data.map((b: any) => ({
+            const transformedRelated = (data as RawBlog[]).map((b) => ({
               id: b.id,
               title: b.title,
               description: b.description,
@@ -206,7 +222,7 @@ const BlogDetailContent = ({ blog: rawBlog, isMobile }: BlogDetailProps) => {
         );
         if (otherResponse.ok) {
           const { data } = await otherResponse.json();
-          const transformedOther = data.map((b: any) => ({
+          const transformedOther = (data as RawBlog[]).map((b) => ({
             id: b.id,
             title: b.title,
             description: b.description,

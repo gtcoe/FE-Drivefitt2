@@ -18,7 +18,7 @@ const BlogBanner = ({ blog, isMobile }: BlogBannerProps) => {
         month: "short",
         day: "numeric",
       });
-    } catch (error) {
+    } catch {
       return dateString;
     }
   };

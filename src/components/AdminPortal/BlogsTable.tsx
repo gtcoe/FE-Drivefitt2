@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { BlogsTableProps, BlogEntry, BlogCategory } from "@/types/adminPortal";
+import { BlogsTableProps, BlogEntry } from "@/types/adminPortal";
 import { BlogStatus } from "@/constants/enums";
 import ColumnFilter from "./ColumnFilter";
 
@@ -17,7 +17,7 @@ const formatDateTime = (timestamp: string): string => {
     const minutes = date.getMinutes().toString().padStart(2, "0");
 
     return `${day}/${month}/${year} ${hours}:${minutes}`;
-  } catch (error) {
+  } catch {
     return timestamp; // Return original if parsing fails
   }
 };

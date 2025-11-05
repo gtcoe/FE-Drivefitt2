@@ -14,9 +14,9 @@ export const blogAPI = {
     if (!res.ok || json?.status === false) {
       throw new Error(json?.error || "Failed to fetch blogs");
     }
-    const blogs = json.data || json;
+    const blogs = (json.data || json) as BlogServer[];
     // Transform snake_case to camelCase
-    return blogs.map((blog: any) => ({
+    return blogs.map((blog: BlogServer) => ({
       ...blog,
       categoryId: blog.category_id,
       categoryHeading: blog.category_heading,
@@ -39,7 +39,7 @@ export const blogAPI = {
     if (!res.ok || json?.status === false) {
       throw new Error(json?.error || "Failed to create blog");
     }
-    const blog = json.data || json;
+    const blog = (json.data || json) as BlogServer;
     return {
       ...blog,
       categoryId: blog.category_id,
@@ -66,7 +66,7 @@ export const blogAPI = {
     if (!res.ok || json?.status === false) {
       throw new Error(json?.error || "Failed to update blog");
     }
-    const blog = json.data || json;
+    const blog = (json.data || json) as BlogServer;
     return {
       ...blog,
       categoryId: blog.category_id,
@@ -112,4 +112,22 @@ export const blogAPI = {
       edited: blog.updated_at,
     };
   },
+};
+
+type BlogServer = {
+  id?: number | string;
+  title?: string;
+  description?: string;
+  slug?: string;
+  date?: string;
+  image_url?: string;
+  image?: string;
+  html?: string;
+  category_id?: number;
+  category_heading?: string;
+  status?: number;
+  is_featured?: number;
+  created_at?: string;
+  updated_at?: string;
+  [key: string]: unknown;
 };

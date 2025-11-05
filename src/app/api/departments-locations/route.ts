@@ -18,9 +18,11 @@ export async function GET(request: NextRequest) {
       ORDER BY city ASC, full_location ASC
     `;
 
-    const [departmentsResult, locationsResult] = await Promise.all([
-      executeQuery<any[]>(departmentsQuery),
-      executeQuery<any[]>(locationsQuery),
+    const [departmentsResult, locationsResult] = await Promise.all<
+      [Department[], Location[]]
+    >([
+      executeQuery<Department[]>(departmentsQuery),
+      executeQuery<Location[]>(locationsQuery),
     ]);
 
     const departments: Department[] = departmentsResult.map((row) => ({
@@ -54,10 +56,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Error fetching departments and locations:", error);
     return NextResponse.json(
-      { 
+      {
         status: false,
         data: null,
-        error: "Internal server error" 
+        error: "Internal server error",
       },
       { status: 500 }
     );

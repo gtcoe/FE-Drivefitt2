@@ -1,4 +1,4 @@
-import { JobPosting } from "@/types/database";
+import { JobPosting, Department, Location } from "@/types/database";
 
 // Get the base URL for API requests
 // In server-side rendering, we need an absolute URL
@@ -104,8 +104,8 @@ export const jobAPI = {
   },
 
   async getDepartmentsLocations(): Promise<{
-    departments: any[];
-    locations: any[];
+    departments: Department[];
+    locations: Location[];
   }> {
     const res = await fetch(`${getBaseUrl()}/api/departments-locations`, {
       cache: "no-store",
@@ -113,7 +113,7 @@ export const jobAPI = {
     const json = await res.json();
     if (!res.ok || !json?.status)
       throw new Error(json?.error || "Fetch failed");
-    return json.data as { departments: any[]; locations: any[] };
+    return json.data as { departments: Department[]; locations: Location[] };
   },
 
   async delete(id: number) {

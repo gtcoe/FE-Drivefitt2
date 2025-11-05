@@ -153,7 +153,7 @@ const LeftSidebar = ({
             isFormSubmission && (isSelected || isFormSubmissionSubPage);
 
           // For form-submission, check if any sub-page is active
-          const isFormSubmissionActive =
+          const _isFormSubmissionActive =
             isFormSubmission && (isSelected || isFormSubmissionSubPage);
 
           return (

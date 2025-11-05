@@ -30,7 +30,7 @@ export async function GET(
       WHERE b.status = ?
     `;
 
-    const queryParams: any[] = [BlogStatus.PUBLISHED];
+    const queryParams: Array<number | string> = [BlogStatus.PUBLISHED];
 
     // Exclude current category and current blog
     if (params.categoryId !== "0") {
@@ -47,7 +47,21 @@ export async function GET(
     // Don't use parameterized LIMIT - it causes MySQL driver issues
     query += ` ORDER BY b.created_at DESC LIMIT ${limit}`;
 
-    const rows = await executeQuery<any[]>(query, queryParams);
+    type BlogRow = {
+      id: number;
+      title: string;
+      description: string;
+      slug: string;
+      date: string;
+      image: string;
+      category_id: number | null;
+      is_featured: number;
+      status: number;
+      created_at: string;
+      updated_at: string;
+      category_heading: string | null;
+    };
+    const rows = await executeQuery<BlogRow[]>(query, queryParams);
 
     return NextResponse.json({ status: true, data: rows });
   } catch (error) {

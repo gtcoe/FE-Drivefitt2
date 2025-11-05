@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
     const locationId = searchParams.get("location_id");
     const admin = searchParams.get("admin");
 
-    let whereConditions: string[] = [];
-    let queryParams: any[] = [];
+    const whereConditions: string[] = [];
+    const queryParams: Array<string | number> = [];
 
     // For admin access, don't filter by is_visible unless explicitly requested
     // For public access, only show visible job postings
@@ -86,7 +86,34 @@ export async function GET(request: NextRequest) {
       ORDER BY jp.created_at DESC
     `;
 
-    const result = await executeQuery<any[]>(query, queryParams);
+    type DbRow = {
+      id: number;
+      title: string;
+      job_type: number;
+      application_deadline: string | null;
+      job_description: string | null;
+      skills_required: string | null;
+      role: string | string[] | null;
+      qualifications: string | string[] | null;
+      status: number;
+      years_of_experience: string | null;
+      is_visible: number;
+      created_at: string;
+      updated_at: string;
+      dept_id: number | null;
+      dept_name: string | null;
+      dept_title: string | null;
+      dept_status: number | null;
+      dept_created_at: string | null;
+      dept_updated_at: string | null;
+      loc_id: number | null;
+      full_location: string | null;
+      city: string | null;
+      loc_status: number | null;
+      loc_created_at: string | null;
+      loc_updated_at: string | null;
+    };
+    const result = await executeQuery<DbRow[]>(query, queryParams);
 
     const jobPostings: JobPosting[] = result.map((row) => ({
       id: row.id,

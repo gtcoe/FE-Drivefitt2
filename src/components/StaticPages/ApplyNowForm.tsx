@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent, KeyboardEvent } from "react";
+import React, { useState } from "react";
 import { uploadAPI } from "@/services/uploadAPI";
 import { applicationAPI } from "@/services/applicationAPI";
 
@@ -23,8 +23,6 @@ const ApplyNowForm: React.FC<ApplyNowFormProps> = ({ jobId, isMobile }) => {
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  console.log("isMobile: ", isMobile);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -43,7 +41,7 @@ const ApplyNowForm: React.FC<ApplyNowFormProps> = ({ jobId, isMobile }) => {
         );
         await uploadAPI.putFileToS3(presign.uploadUrl, file);
         setFormData((prev) => ({ ...prev, resumeUrl: presign.cdnUrl }));
-      } catch (_) {
+      } catch {
         setFormData((prev) => ({ ...prev, resume: null, resumeUrl: "" }));
       } finally {
         setUploading(false);

@@ -31,7 +31,7 @@ export async function GET(
       FROM blogs 
       WHERE category_id = ? AND status = 1
     `;
-    let queryParams: any[] = [categoryIdInt];
+    const queryParams: Array<number> = [categoryIdInt];
 
     if (excludeIdInt) {
       query += " AND id != ?";
@@ -41,7 +41,21 @@ export async function GET(
     // Don't use parameterized LIMIT - it causes MySQL driver issues
     query += ` ORDER BY created_at DESC LIMIT ${limit}`;
 
-    const rows = await executeQuery<any[]>(query, queryParams);
+    type BlogRow = {
+      id: number;
+      title: string;
+      description: string;
+      slug: string;
+      date: string;
+      image: string;
+      category_id: number | null;
+      is_featured: number;
+      status: number;
+      created_at: string;
+      updated_at: string;
+      category_heading: string | null;
+    };
+    const rows = await executeQuery<BlogRow[]>(query, queryParams);
 
     return NextResponse.json({ status: true, data: rows });
   } catch (error) {
@@ -50,7 +64,7 @@ export async function GET(
       {
         status: false,
         error: "Failed to fetch related blogs",
-        details: error.message,
+        details: (error as Error).message,
       },
       { status: 500 }
     );

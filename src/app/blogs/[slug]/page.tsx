@@ -47,7 +47,7 @@ export async function generateMetadata({
         images: [blog.image],
       },
     };
-  } catch (error) {
+  } catch {
     return {
       title: "Blog Not Found",
       description: "The requested blog post could not be found.",
@@ -77,7 +77,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     const { data: blog } = await response.json();
 
     return <BlogDetailContent blog={blog} isMobile={isMobile} />;
-  } catch (error) {
+  } catch {
     notFound();
   }
 }

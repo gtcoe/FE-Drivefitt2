@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
-import {
-  Application,
-  ApplicationStatus,
-  ApplicationFormData,
-} from "@/types/database";
+import { Application, ApplicationStatus } from "@/types/database";
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,8 +8,8 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
     const jobId = searchParams.get("job_id");
 
-    let whereConditions = ["1=1"];
-    let queryParams: any[] = [];
+    const whereConditions: string[] = ["1=1"];
+    const queryParams: Array<string | number> = [];
 
     if (status !== null) {
       whereConditions.push("a.status = ?");
@@ -49,7 +45,24 @@ export async function GET(request: NextRequest) {
       ORDER BY a.created_at DESC
     `;
 
-    const result = await executeQuery<any[]>(query, queryParams);
+    type AppRow = {
+      id: number;
+      candidate_name: string;
+      email: string;
+      phone: string | null;
+      job_id: number;
+      status: number;
+      current_location: string | null;
+      work_exprience: string | null;
+      expected_salary: string | null;
+      resume: string | null;
+      created_at: string;
+      updated_at: string;
+      job_title: string | null;
+      dept_id: number | null;
+      dept_name: string | null;
+    };
+    const result = await executeQuery<AppRow[]>(query, queryParams);
 
     const applications: Application[] = result.map((row) => ({
       id: row.id,

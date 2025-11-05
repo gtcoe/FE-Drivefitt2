@@ -294,16 +294,6 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
   };
 
   const renderGeneralQueriesTable = () => {
-    const headers = [
-      "Name",
-      "Email",
-      "Phone number",
-      "Message",
-      "Date",
-      "Status",
-      "Action",
-    ];
-
     return (
       <div className="border-b border-[#333333]">
         {/* Headers */}
@@ -462,17 +452,6 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
   };
 
   const renderFranchiseApplicationsTable = () => {
-    const headers = [
-      "Name",
-      "Email",
-      "Phone number",
-      "Message",
-      "Date",
-      "Location",
-      "Investment",
-      "Status",
-    ];
-
     return (
       <div>
         {/* Headers */}
@@ -614,17 +593,6 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
   };
 
   const renderLeadSubmissionsTable = () => {
-    const headers = [
-      "Name",
-      "Phone number",
-      "Interested in",
-      "Message",
-      "Date",
-      "Location",
-      "Investment",
-      "Status",
-    ];
-
     return (
       <div>
         {/* Headers */}
