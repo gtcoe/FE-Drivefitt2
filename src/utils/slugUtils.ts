@@ -101,7 +101,7 @@ export const generateUniqueSlug = async (
   baseSlug: string,
   excludeId?: string | number
 ): Promise<string> => {
-  let slug = sanitizeSlug(baseSlug);
+  const slug = sanitizeSlug(baseSlug);
   let counter = 1;
 
   // Check if base slug is unique

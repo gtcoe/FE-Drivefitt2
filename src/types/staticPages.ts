@@ -16,10 +16,13 @@ export interface NavbarProps {
 }
 
 export interface Hero {
-  title: string;
-  description: string;
-  desktopImage: string;
-  mobileImage: string;
+  title?: string;
+  titleWords?: Array<{ text: string; color: string }>;
+  description?: string;
+  desktopImage?: string;
+  originalDesktopImage?: string;
+  mobileImage?: string;
+  originalMobileImage?: string;
   btnPrimaryText?: string;
   btnPrimaryLink?: string;
 }
@@ -27,7 +30,8 @@ export interface Hero {
 export interface CardSection {
   title: string;
   description: string;
-  cards: any[];
+  cards?: unknown[];
+  cardSection?: unknown[];
 }
 
 export interface CarouselBanner {
@@ -39,18 +43,25 @@ export interface CarouselBanner {
 export interface StaticCardProps {
   title: string;
   description: string;
-  cards: any[];
+  cards?: unknown[];
+  cardSection?: unknown[];
 }
 
 export interface InnovationCommunitySectionProps {
   title: string;
   description: string;
+  infoSection?: Array<{
+    title: string;
+    list: Array<{ image: string; description: string }>;
+  }>;
 }
 
 export interface GallerySectionProps {
   title: string;
   description: string;
-  images: string[];
+  images?: string[];
+  btnLabel?: string;
+  imageList?: number[];
 }
 
 export interface SportsClubSectionProps {
@@ -69,15 +80,34 @@ export interface AppDownloadProps {
 }
 
 export interface FooterInfoProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  footerInfoList?: Array<{
+    title: string;
+    description: string;
+    email: string;
+    image: string;
+  }>;
+  socialLinkList?: Array<{ image: string; link: string }>;
+  contactFormSection?: {
+    title: string;
+    description: string;
+    submitButtonText: string;
+    fields: {
+      firstName: { label: string; placeholder: string };
+      lastName: { label: string; placeholder: string };
+      email: { label: string; placeholder: string };
+      phone: { label: string; placeholder: string };
+      message: { label: string; placeholder: string };
+    };
+  };
 }
 
 export interface FooterProps {
   logo: string;
   description: string;
-  sections: any[];
-  socialLinks: any[];
+  sections: unknown[];
+  socialLinks: unknown[];
   copyright: string;
 }
 
@@ -88,17 +118,23 @@ export interface EvolutionSectionProps {
 
 export interface FaqSectionProps {
   title: string;
-  faqs: any[];
+  faqs: unknown[];
 }
 
 export interface ScrollingCardSection {
   title: string;
-  cards: any[];
+  cards: unknown[];
 }
 
 export interface CountdownSection {
-  title: string;
-  endDate: string;
+  title?: string;
+  date?: string;
+  endDate?: string;
+  bgImage?: string;
+  mobileBgImage?: string;
+  location?: string;
+  openingText?: string;
+  labels?: { days: string; hours: string; minutes: string; seconds: string };
 }
 
 export interface ComingSoonSection {
@@ -138,13 +174,13 @@ export interface EcosystemGifSectionProps {
 
 export interface MeetYourCoachesSectionProps {
   title: string;
-  coaches: any[];
+  coaches: unknown[];
   seeMoreText: string;
 }
 
 export interface ChooseYourPathSectionProps {
   title: string;
-  packages: any[];
+  packages: unknown[];
   buttonText: string;
 }
 
@@ -169,7 +205,7 @@ export interface Banner2WithImageProps {
 
 export interface CardsParallaxProps {
   title: string;
-  cards: any[];
+  cards: unknown[];
 }
 
 export interface SignatureClassCard {
@@ -180,7 +216,7 @@ export interface SignatureClassCard {
 
 export interface SignatureClassesSection {
   title: string;
-  classes: any[];
+  classes: unknown[];
   cardList: SignatureClassCard[];
   cardList2: SignatureClassCard[];
 }
@@ -197,7 +233,7 @@ export interface PricingPlan {
 }
 
 export interface PricingPlansSection {
-  plans: any[];
+  plans: unknown[];
 }
 
 export interface IncludedPlansSection {
@@ -208,11 +244,11 @@ export interface IncludedPlansSection {
 
 export interface JobSearchSection {
   title: string;
-  jobs: any[];
+  jobs: unknown[];
 }
 
 export interface JobDetailSection {
-  job: any;
+  job: unknown;
 }
 
 export interface ApplyNowFormSection {
@@ -224,9 +260,15 @@ export interface StaticPageData {
   description?: string;
   seoTitle?: string;
   seoDescription?: string;
+  navbar?: NavbarProps;
   hero?: Hero;
-  franchiseHeroSection?: any;
-  aboutUsHeroSection?: any;
+  franchiseHeroSection?: unknown;
+  aboutUsHeroSection?: unknown;
+  carouselBanner?: Array<{
+    title: string;
+    countdownEnd?: string;
+    backgroundImage: string;
+  }>;
   cardSection4?: CardSection;
   cardSection3?: CardSection;
   cardSection5?: CardSection;
@@ -234,6 +276,7 @@ export interface StaticPageData {
   innovationCommunitySection?: InnovationCommunitySectionProps;
   evolutionSection?: EvolutionSectionProps;
   gallerySection?: GallerySectionProps;
+  countdownSection?: CountdownSection;
   faqSection?: FaqSectionProps;
   sportsClubSection?: SportsClubSectionProps;
   bannerSection?: SportsClubSectionProps;

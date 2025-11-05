@@ -102,7 +102,7 @@ export const contactUsData: ContactUsPageData = {
           { title: "About us", link: "/about-us" },
           { title: "Our services", link: "/services" },
           { title: "Blogs", link: "/blogs" },
-          { title: "Career", link: "/career" },
+          { title: "Career", link: "/careers" },
           { title: "Partner with us", link: "/partner" },
         ],
       },
