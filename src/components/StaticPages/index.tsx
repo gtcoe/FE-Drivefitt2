@@ -39,6 +39,9 @@ import {
   SignatureClassesSection as SignatureClassesSectionType,
   PricingPlansSection,
   IncludedPlansSection,
+  JobSearchSection as JobSearchSectionType,
+  JobDetailSection as JobDetailSectionType,
+  ApplyNowFormSection,
 } from "@/types/staticPages";
 import CardSection4 from "@/components/StaticPages/CardSection4";
 import CardSection5 from "@/components/StaticPages/CardSection5";
@@ -80,6 +83,9 @@ import Banner3JoinUs from "./Banner3JoinUs";
 import SignatureClassesSection from "./SignatureClassesSection";
 import PricingPlans from "@/components/common/PricingPlans";
 import IncludedPlans from "@/components/common/IncludedPlans";
+import JobSearchSection from "./JobSearchSection";
+import JobDetailSection from "./JobDetailSection";
+import ApplyNowForm from "./ApplyNowForm";
 
 interface StaticPageProps {
   data: StaticPageData;
@@ -116,6 +122,9 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
       | CardsParallaxProps
       | SignatureClassesSectionType
       | PricingPlansSection
+      | JobSearchSectionType
+      | JobDetailSectionType
+      | ApplyNowFormSection
   ) => {
     switch (key) {
       case "hero":
@@ -245,18 +254,14 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
       case "meetYourCoachesSection":
         return (
           <MeetYourCoachesSection
-            title={(value as MeetYourCoachesSectionProps).title}
-            coaches={(value as MeetYourCoachesSectionProps).coaches}
-            seeMoreText={(value as MeetYourCoachesSectionProps).seeMoreText}
+            {...(value as unknown as MeetYourCoachesSectionProps)}
             isMobile={isMobile}
           />
         );
       case "chooseYourPathSection":
         return (
           <ChooseYourPathSection
-            title={(value as ChooseYourPathSectionProps).title}
-            packages={(value as ChooseYourPathSectionProps).packages}
-            buttonText={(value as ChooseYourPathSectionProps).buttonText}
+            {...(value as unknown as ChooseYourPathSectionProps)}
             isMobile={isMobile}
           />
         );
@@ -284,14 +289,17 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
       case "includedPlansSection":
         return (
           <IncludedPlans
-            data={value as IncludedPlansSection}
+            data={value as unknown as IncludedPlansSection}
             isMobile={isMobile}
           />
         );
 
       case "banner1Section":
         return (
-          <Banner1Section data={value as BannerSection} isMobile={isMobile} />
+          <Banner1Section
+            data={value as unknown as BannerSection}
+            isMobile={isMobile}
+          />
         );
       case "banner2Section":
         return (
@@ -354,6 +362,27 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
         return (
           <SignatureClassesSection
             data={value as SignatureClassesSectionType}
+            isMobile={isMobile}
+          />
+        );
+      case "jobSearchSection":
+        return (
+          <JobSearchSection
+            data={value as JobSearchSectionType}
+            isMobile={isMobile}
+          />
+        );
+      case "jobDetailSection":
+        return (
+          <JobDetailSection
+            data={value as JobDetailSectionType}
+            isMobile={isMobile}
+          />
+        );
+      case "applyNowForm":
+        return (
+          <ApplyNowForm
+            jobId={(value as ApplyNowFormSection).jobId}
             isMobile={isMobile}
           />
         );

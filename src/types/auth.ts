@@ -3,6 +3,14 @@ export enum OTPPurpose {
   REGISTRATION = "registration",
 }
 
+export enum MembershipStatus {
+  INACTIVE = 0,
+  ACTIVE = 1,
+  EXPIRED = 2,
+  CANCELLED = 3,
+  SUSPENDED = 4,
+}
+
 export interface User {
   id: number;
   name: string;
@@ -13,7 +21,7 @@ export interface User {
   membershipInfo?: {
     id: number;
     membershipType: number; // 1 = Individual Annual Plan, 2 = Family Annual Plan
-    status: "active" | "expired" | "cancelled" | "suspended";
+    status: number; // 0 = inactive, 1 = active, 2 = expired, 3 = cancelled, 4 = suspended
     startDate: string;
     expiresAt: string;
     invoiceNumber?: string;
@@ -24,7 +32,7 @@ export interface User {
   memberships?: Array<{
     id: number;
     membershipType: number; // 1 = Individual Annual Plan, 2 = Family Annual Plan
-    status: "active" | "expired" | "cancelled" | "suspended";
+    status: number; // 0 = inactive, 1 = active, 2 = expired, 3 = cancelled, 4 = suspended
     startDate: string;
     expiresAt: string;
     invoiceNumber?: string;
@@ -83,7 +91,7 @@ export interface MembershipInfo {
   orderId: number; // Now auto increment ID
   paymentId: number; // Now auto increment ID
   membershipType: number; // 1 = Individual Annual Plan, 2 = Family Annual Plan
-  status: "active" | "expired" | "cancelled" | "suspended";
+  status: number; // 0 = inactive, 1 = active, 2 = expired, 3 = cancelled, 4 = suspended
   startDate: string;
   expiresAt: string;
   invoiceNumber?: string;

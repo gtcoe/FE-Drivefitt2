@@ -12,6 +12,7 @@ import UserInfoModal from "./Modal/UserInfoModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { MembershipStatus } from "@/types/auth";
 
 interface PricingPlan {
   title: string;
@@ -101,6 +102,14 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     }
   }, [isAuthenticated, user?.id, checkUserMembership]);
 
+  // Debug: Monitor showPhoneModal state changes
+  // useEffect(() => {
+  //   console.log(
+  //     "PricingPlans: showPhoneModal state changed to:",
+  //     showPhoneModal
+  //   );
+  // }, [showPhoneModal]);
+
   // Watch for user data changes and open payment modal when ready
   useEffect(() => {
     console.log("PricingPlans: useEffect triggered", {
@@ -129,11 +138,57 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
           hasPhone: !!user?.phone,
           hasDateOfBirth: !!user?.dateOfBirth,
           userData: user,
+          userMemberships: user?.memberships,
+          userMembershipsType: typeof user?.memberships,
+          userMembershipsArray: Array.isArray(user?.memberships),
         }
       );
 
       if (hasCompleteProfile) {
-        console.log("PricingPlans: Profile complete, opening payment modal");
+        // Step 1: Check if user already has active membership of same type (before opening payment modal)
+        console.log("🔍 USEEFFECT DEBUG - Checking duplicate membership:", {
+          selectedPlan: selectedPlan?.title,
+          userMemberships: user?.memberships,
+          userMembershipsCount: user?.memberships?.length || 0,
+          userMembershipsExists: !!user?.memberships,
+          conditionMet: !!(selectedPlan && user?.memberships),
+        });
+
+        if (selectedPlan && user?.memberships) {
+          const planMembershipType = getMembershipType(selectedPlan.title);
+          const hasExistingActivePlan = hasActiveMembershipOfType(
+            planMembershipType,
+            user.memberships
+          );
+
+          console.log("🔍 USEEFFECT DUPLICATE CHECK:", {
+            planMembershipType,
+            hasExistingActivePlan,
+            memberships: user.memberships.map((m) => ({
+              type: m.membershipType,
+              status: m.status,
+              matches:
+                m.membershipType === planMembershipType &&
+                m.status === MembershipStatus.ACTIVE,
+            })),
+          });
+
+          if (hasExistingActivePlan) {
+            console.log(
+              "🚫 PricingPlans: User already has active membership of type:",
+              planMembershipType,
+              "in useEffect. Staying on membership page."
+            );
+            // Clear selected plan and stay on membership page
+            setWaitingForUserData(false);
+            setSelectedPlan(null);
+            return;
+          }
+        }
+
+        console.log(
+          "PricingPlans: Profile complete and no duplicate membership, opening payment modal"
+        );
         setWaitingForUserData(false);
         setShowPaymentModal(true);
       } else {
@@ -157,6 +212,19 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     if (title.includes("Individual")) return 1;
     if (title.includes("Family")) return 2;
     return 1; // default to Individual
+  };
+
+  // Helper function to check if user has active membership of specific type
+  const hasActiveMembershipOfType = (
+    membershipType: number,
+    userMemberships?: Array<{ membershipType: number; status: number }>
+  ): boolean => {
+    if (!userMemberships) return false;
+    return userMemberships.some(
+      (membership) =>
+        membership.membershipType === membershipType &&
+        membership.status === MembershipStatus.ACTIVE
+    );
   };
 
   // Helper function to get button text and state for a plan
@@ -202,11 +270,53 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     // Step 1: Check if user is authenticated
     if (!isAuthenticated) {
       console.log("PricingPlans: User not authenticated, opening phone modal");
-      setShowPhoneModal(true);
+      console.log(
+        "PricingPlans: Before setShowPhoneModal(true), current state:",
+        {
+          showPhoneModal,
+          showPaymentModal,
+          showUserInfoModal,
+          selectedPlan: !!selectedPlan,
+        }
+      );
+
+      // Force a clean state before opening phone modal
+      setShowPaymentModal(false);
+      setShowUserInfoModal(false);
+
+      // Use callback pattern to ensure state updates
+      setShowPhoneModal((prev) => {
+        console.log(
+          "PricingPlans: setShowPhoneModal callback, prev:",
+          prev,
+          "setting to: true"
+        );
+        return true;
+      });
+
       return;
     }
 
-    // Step 2: Check if user has complete profile (name, email, phone, dateOfBirth)
+    // Step 2: Check if user already has active membership of same type
+    if (isAuthenticated && user?.memberships) {
+      const planMembershipType = getMembershipType(plan.title);
+      const hasExistingActivePlan = hasActiveMembershipOfType(
+        planMembershipType,
+        user.memberships
+      );
+
+      if (hasExistingActivePlan) {
+        console.log(
+          "PricingPlans: User already has active membership of type:",
+          planMembershipType,
+          "Blocking payment"
+        );
+        // Don't proceed to payment - user already has this type of membership
+        return;
+      }
+    }
+
+    // Step 3: Check if user has complete profile (name, email, phone)
     const hasCompleteProfile = user?.name && user?.email && user?.phone;
     if (!hasCompleteProfile) {
       console.log(
@@ -238,7 +348,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
     membershipData?: {
       id: number;
       membershipType: number;
-      status: "active" | "expired" | "cancelled" | "suspended";
+      status: number; // Using integer status
       startDate: string;
       expiresAt: string;
       invoiceNumber?: string;
@@ -368,10 +478,12 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
   const handlePhoneModalSuccess = (
     phoneNumber: string,
     userData?: {
+      id?: number;
       name?: string;
       email?: string;
       phone?: string;
       dateOfBirth?: string;
+      memberships?: Array<{ membershipType: number; status: number }>;
     }
   ) => {
     setTempPhoneNumber(phoneNumber);
@@ -379,11 +491,51 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
 
     // Use user data from callback instead of Redux state to avoid timing issues
     const userToCheck = userData || user;
+
+    // Step 1: Check if user already has active membership of same type
+    if (selectedPlan && userToCheck?.memberships) {
+      const planMembershipType = getMembershipType(selectedPlan.title);
+
+      console.log("🔍 DUPLICATE VALIDATION DEBUG:", {
+        selectedPlan: selectedPlan.title,
+        planMembershipType,
+        userMemberships: userToCheck.memberships,
+        userMembershipsCount: userToCheck.memberships.length,
+      });
+
+      const hasExistingActivePlan = hasActiveMembershipOfType(
+        planMembershipType,
+        userToCheck.memberships
+      );
+
+      console.log("🔍 DUPLICATE CHECK RESULT:", {
+        hasExistingActivePlan,
+        planMembershipType,
+        memberships: userToCheck.memberships.map((m) => ({
+          type: m.membershipType,
+          status: m.status,
+          matches:
+            m.membershipType === planMembershipType &&
+            m.status === MembershipStatus.ACTIVE,
+        })),
+      });
+
+      if (hasExistingActivePlan) {
+        console.log(
+          "🚫 PricingPlans: User already has active membership of type:",
+          planMembershipType,
+          "after OTP verification. Staying on membership page."
+        );
+        // Clear selected plan and stay on membership page
+        setSelectedPlan(null);
+        return;
+      }
+    }
+
+    // Step 2: Check profile completeness
+    // Align profile completeness check with desktop flow: only name, email, phone are mandatory
     const hasCompleteProfile =
-      userToCheck?.name &&
-      userToCheck?.email &&
-      userToCheck?.phone &&
-      userToCheck?.dateOfBirth;
+      userToCheck?.name && userToCheck?.email && userToCheck?.phone;
 
     console.log("PricingPlans: Profile completeness check with user data:", {
       userData: userData,
@@ -420,9 +572,31 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
       console.log(
         "PricingPlans: Checking if we can proceed immediately after UserInfoModal success"
       );
-      if (user && user.name && user.email && user.phone && user.dateOfBirth) {
+
+      if (user && user.name && user.email && user.phone) {
+        // Step 1: Check if user already has active membership of same type (before opening payment modal)
+        if (selectedPlan && user?.memberships) {
+          const planMembershipType = getMembershipType(selectedPlan.title);
+          const hasExistingActivePlan = hasActiveMembershipOfType(
+            planMembershipType,
+            user.memberships
+          );
+
+          if (hasExistingActivePlan) {
+            console.log(
+              "🚫 PricingPlans: User already has active membership of type:",
+              planMembershipType,
+              "after profile completion. Staying on membership page."
+            );
+            // Clear selected plan and stay on membership page
+            setWaitingForUserData(false);
+            setSelectedPlan(null);
+            return;
+          }
+        }
+
         console.log(
-          "PricingPlans: User data already complete, opening payment modal immediately"
+          "PricingPlans: User data complete and no duplicate membership, opening payment modal"
         );
         setWaitingForUserData(false);
         setShowPaymentModal(true);
@@ -605,16 +779,24 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
         </div>
 
         {/* Payment Modal */}
-        {selectedPlan && (
+        {selectedPlan && showPaymentModal && (
           <PaymentModal
             isOpen={showPaymentModal}
             onClose={handlePaymentClose}
             membershipType={getMembershipType(selectedPlan.title)}
-            amount={1} // 1 rupee for testing
+            amount={999} // Lock-in price for pre-booking advance
             onSuccess={handlePaymentSuccess}
             onError={handlePaymentError}
           />
         )}
+
+        <PhoneNumberModal
+          key={`mobile-phone-modal-${showPhoneModal}`}
+          isOpen={showPhoneModal}
+          onClose={handlePhoneModalClose}
+          isMobile={true}
+          onSuccess={handlePhoneModalSuccess}
+        />
       </section>
     );
   }
@@ -744,19 +926,19 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
       </div>
 
       {/* Payment Modal */}
-      {selectedPlan && (
+      {selectedPlan && showPaymentModal && (
         <PaymentModal
           isOpen={showPaymentModal}
           onClose={handlePaymentClose}
           membershipType={getMembershipType(selectedPlan.title)}
-          amount={1} // 1 rupee for testing
+          amount={999} // Lock-in price for pre-booking advance
           onSuccess={handlePaymentSuccess}
           onError={handlePaymentError}
         />
       )}
 
-      {/* Phone Number Modal */}
       <PhoneNumberModal
+        key={`phone-modal-${showPhoneModal}`}
         isOpen={showPhoneModal}
         onClose={handlePhoneModalClose}
         isMobile={isMobile}

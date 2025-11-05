@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PaymentService } from "@/lib/paymentService";
@@ -15,7 +14,7 @@ interface PaymentModalProps {
     membershipData?: {
       id: number;
       membershipType: number;
-      status: "active" | "expired" | "cancelled" | "suspended";
+      status: number; // Using integer status
       startDate: string;
       expiresAt: string;
       invoiceNumber?: string;

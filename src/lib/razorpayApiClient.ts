@@ -128,11 +128,11 @@ class RazorpayApiClient {
     console.log("🚀 createOrder called with:", orderData);
 
     // Validate required fields
-    if (!orderData.amount || orderData.amount < 10) {
+    if (!orderData.amount || orderData.amount < 0.1) {
       console.error("❌ Amount validation failed:", orderData.amount);
       return {
         success: false,
-        error: "Amount must be at least 10 paise (₹0.10)",
+        error: "Amount must be at least ₹0.10",
       };
     }
 
@@ -144,7 +144,7 @@ class RazorpayApiClient {
     });
 
     const requestData = {
-      amount: 100,
+      amount: amount,
       currency: orderData.currency || "INR",
       receipt: orderData.receipt || `receipt_${Date.now()}`,
       notes: orderData.notes || {},

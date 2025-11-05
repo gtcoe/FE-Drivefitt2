@@ -1,16 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import {
   getOrderDetails,
   getOrderPayments,
   verifyPaymentCompletion,
 } from "@/lib/razorpayUtils";
 
-// Force this route to be dynamic since it uses request parameters
-export const dynamic = "force-dynamic";
-
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   try {
-    const { searchParams } = request.nextUrl;
+    const { searchParams } = new URL(request.url);
     const orderId = searchParams.get("orderId");
     const paymentId = searchParams.get("paymentId");
 

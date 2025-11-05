@@ -325,7 +325,6 @@ const PhoneNumberModal = ({
   const [isFocused, setIsFocused] = useState(false);
   const [otpValues, setOtpValues] = useState<string[]>(["", "", "", ""]);
   const [timeLeft, setTimeLeft] = useState(59);
-  const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isUserInfoModalOpen, setIsUserInfoModalOpen] = useState(false);
@@ -335,10 +334,15 @@ const PhoneNumberModal = ({
   const { login } = useAuth();
   const router = useRouter();
 
-  // Check if component is mounted (client-side)
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // Debug: Log when isOpen prop changes
+  // useEffect(() => {
+  //   console.log("PhoneNumberModal: isOpen prop changed:", {
+  //     isOpen,
+  //     isMounted,
+  //     modalState,
+  //     phoneNumber,
+  //   });
+  // }, [isOpen, isMounted, modalState, phoneNumber]);
 
   // Handle click outside
   useEffect(() => {
@@ -352,12 +356,19 @@ const PhoneNumberModal = ({
     };
 
     if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      // Defer listener registration to next tick to avoid closing immediately
+      // from the same click that opened the modal (especially on mobile)
+      const timer = setTimeout(() => {
+        document.addEventListener("click", handleClickOutside);
+      }, 0);
+
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener("click", handleClickOutside);
+      };
     }
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => undefined;
   }, [isOpen, onClose]);
 
   // Disable/enable body scroll when modal opens/closes
@@ -538,8 +549,7 @@ const PhoneNumberModal = ({
 
           if (loginResult.type === "auth/loginUser/fulfilled") {
             // Check if user has complete profile data
-            const hasCompleteProfile =
-              user.name && user.email && user.phone;
+            const hasCompleteProfile = user.name && user.email && user.phone;
 
             console.log("PhoneNumberModal: User data after login:", {
               id: user.id,
@@ -560,13 +570,34 @@ const PhoneNumberModal = ({
             }
 
             // If onSuccess callback is provided, use it instead of redirecting
+            console.log("🔍 PHONE MODAL DEBUG - onSuccess prop:", !!onSuccess);
+            console.log(
+              "🔍 PHONE MODAL DEBUG - user.hasMembership:",
+              user.hasMembership
+            );
+            console.log(
+              "🔍 PHONE MODAL DEBUG - user.memberships:",
+              user?.memberships
+            );
             if (onSuccess) {
+              console.log(
+                "🔍 PHONE MODAL DEBUG - Calling onSuccess with user data:",
+                {
+                  phoneNumber,
+                  userData: user,
+                  userMemberships: user?.memberships,
+                  userMembershipsCount: user?.memberships?.length || 0,
+                }
+              );
               onSuccess(phoneNumber, user);
               onClose();
               return;
             }
 
             // Default behavior: Use membership data from OTP verification response
+            console.log(
+              "🔍 PHONE MODAL DEBUG - No onSuccess callback, using default behavior"
+            );
             if (user.hasMembership) {
               // User has membership, redirect to profile
               console.log(
@@ -656,7 +687,21 @@ const PhoneNumberModal = ({
     }
   }, [phoneNumber]);
 
-  if (!isOpen || !isMounted) return null;
+  if (!isOpen) {
+    // console.log("PhoneNumberModal: Not rendering because:", {
+    //   isOpen,
+    //   isMounted,
+    //   reason: "isOpen is false",
+    // });
+    return null;
+  }
+
+  // console.log("PhoneNumberModal: Rendering modal content");
+
+  // Add a simple test div to verify the modal can render
+  // if (process.env.NODE_ENV === "development") {
+  //   console.log("PhoneNumberModal: About to render with createPortal");
+  // }
 
   const modalContent = (
     <div

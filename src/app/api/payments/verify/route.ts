@@ -341,34 +341,33 @@ export async function POST(request: NextRequest) {
             }
 
             // Send WhatsApp message with invoice document
-            if (invoiceUrl) {
-              try {
-                console.log("📱 Sending WhatsApp invoice document...");
-                const whatsappResult =
-                  await whatsappService.sendInvoiceDocument({
-                    customerName: invoiceData.customerName,
-                    customerPhone: invoiceData.customerPhone,
-                    invoiceUrl: invoiceUrl,
-                    receiptNumber: invoiceData.invoiceNumber,
-                    membershipType: invoiceData.membershipType,
-                    balancePaymentDate: "29th Dec 2025", // You can make this dynamic
-                  });
+            try {
+              console.log("📱 Sending WhatsApp invoice document...");
 
-                if (whatsappResult.success) {
-                  console.log("✅ WhatsApp invoice document sent successfully");
-                } else {
-                  console.error(
-                    "❌ WhatsApp sending failed:",
-                    whatsappResult.error
-                  );
-                }
-              } catch (whatsappError) {
-                console.error("❌ WhatsApp service error:", whatsappError);
+              // Use invoice URL if available, otherwise use a fallback URL
+              const finalInvoiceUrl =
+                invoiceUrl ||
+                "https://da8nru77lsio9.cloudfront.net/invoices/test-invoice-2025-09-10T14-52-28-810Z.pdf";
+
+              const whatsappResult = await whatsappService.sendInvoiceDocument({
+                customerName: invoiceData.customerName,
+                customerPhone: invoiceData.customerPhone,
+                invoiceUrl: finalInvoiceUrl,
+                receiptNumber: invoiceData.invoiceNumber,
+                membershipType: invoiceData.membershipType,
+                balancePaymentDate: "29th Dec 2025", // You can make this dynamic
+              });
+
+              if (whatsappResult.success) {
+                console.log("✅ WhatsApp invoice document sent successfully");
+              } else {
+                console.error(
+                  "❌ WhatsApp sending failed:",
+                  whatsappResult.error
+                );
               }
-            } else {
-              console.warn(
-                "⚠️ Skipping WhatsApp message - no invoice URL available"
-              );
+            } catch (whatsappError) {
+              console.error("❌ WhatsApp service error:", whatsappError);
             }
           } else {
             console.error(

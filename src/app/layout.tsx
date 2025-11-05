@@ -8,6 +8,7 @@ import WebVitals from "@/components/common/WebVitals";
 import WebAnalytics from "@/components/common/WebAnalytics";
 import { ReduxProvider } from "@/components/common/ReduxProvider";
 import RazorpayScript from "@/components/common/RazorpayScript";
+import MetaPixel from "@/components/common/MetaPixel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
         <ReduxProvider>
           <GoogleAnalytics />
           <GoogleAnalyticsTracker />
+          <MetaPixel />
           <SpeedInsightsComponent />
           <WebVitals />
           <WebAnalytics />

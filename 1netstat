@@ -1,0 +1,58 @@
+Note: Unnecessary use of -X or --request, POST is already inferred.
+Note: Unnecessary use of -X or --request, POST is already inferred.
+* Couldn't find host localhost in the .netrc file; using defaults
+* Host localhost:3000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+* Couldn't find host localhost in the .netrc file; using defaults
+* Host localhost:3000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+  % Total    % Total    % Received %  % Received % Xferd  Averag Xferd  Average Speede Speed   Time      Time    Time     Ti Time     Time  Currenme  Current
+           t
+                                              Dload         Dload  Upload   Upload   Total   Spe  Total   Spent    Left  Snt    Left  Speed
+  0 peed
+  0     0    0     0      0    0     0    0     0   0     0      0         0      0 --:--:--  0 --:--:-- --:--:-- -- --:--:-- --:--:--    :--:--     0 0*   Trying [::1]:3000...
+*   Trying [::1]:3000...
+* Connected to localhost (::1) port 3000
+* Connected to localhost (::1) port 3000
+> POST /api/test-email HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 2
+> 
+} [> POST /api/test-email HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 2
+> 
+} [2 bytes data]
+* upload completely sent off: 2 bytes
+2 bytes data]
+* upload completely sent off: 2 bytes
+100     2    0     0  100 100     2    0     0  100     2      0      9 --:--:-- --:--:-- --:--:--     9    2      0      9 --:--:-- --:--:-- --:--:--     9100     2  100     2    0     0  100     2      0      1  0:00:02  0:00:01  0:00:01     1  0     0  100     2      0      1  0:00:02  0:00:01  0:00:01     1100     2    0   100     2    0     0    0     2      0      0 --:--:--  0:00:02 --:--:--     0  0    0     2      0      0 --:--:--  0:00:02 --:--:--     0100     2  100     2    0     0    0     2      0      0 --:--:--  0:00:03 --:--:--     0  0     0    0     2      0      0 --:--:--  0:00:03 --:--:--     0< HTTP/1.1 200 OK
+< HTTP/1.1 200 OK
+< vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+< content-type: application/json
+< Date: Tue, 30 Sep 2025 05:01:54 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< Transfer-Encoding: chunked
+< 
+< vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+< content-type: application/json
+< Date: Tue, 30 Sep 2025 05:01:54 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< Transfer-Encoding: chunked
+< 
+{ { [190 bytes data]
+[190 bytes data]
+10100   181    0 0   181    0   179    0      179    0     2     47      0  2     47      0 --:--:--  0:00:03--:--:--  0:00:03 --:--:--    47
+ --:--:--    47
+* Connection #0 to host localhost left intact
+* Connection #0 to host localhost left intact

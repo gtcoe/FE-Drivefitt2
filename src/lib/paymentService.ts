@@ -21,7 +21,7 @@ export interface PaymentResponse {
   membershipData?: {
     id: number;
     membershipType: number;
-    status: "active" | "expired" | "cancelled" | "suspended";
+    status: number; // Using integer status
     startDate: string;
     expiresAt: string;
     invoiceNumber?: string;
@@ -111,7 +111,7 @@ export class PaymentService {
     membershipData?: {
       id: number;
       membershipType: number;
-      status: "active" | "expired" | "cancelled" | "suspended";
+      status: number; // Using integer status
       startDate: string;
       expiresAt: string;
       invoiceNumber?: string;

@@ -15,7 +15,7 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ data, pageName, isMobile }: HeroSectionProps) => {
-  const { titleWords, description, btnPrimaryText } = data;
+  const { title, titleWords, description, btnPrimaryText } = data;
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
 
@@ -44,7 +44,7 @@ const HeroSection = ({ data, pageName, isMobile }: HeroSectionProps) => {
   //   }
   // };
 
-  const renderTitle = (titleWords: TitleWord[]) => {
+  const renderTitle = () => {
     return (
       <ScrollAnimation delay={0.2} direction="up">
         <h1
@@ -52,16 +52,20 @@ const HeroSection = ({ data, pageName, isMobile }: HeroSectionProps) => {
             pageName === "home" ? "md:mb-[60px]" : ""
           }`}
         >
-          {titleWords.map((word, index) => (
-            <span
-              key={index}
-              className={`${
-                word.color ? `text-[${word.color}]` : "text-white"
-              } ${word.isItalic ? "italic" : ""}`}
-            >
-              {word.text}
-            </span>
-          ))}
+          {title
+            ? title
+            : titleWords
+            ? titleWords.map((word, index) => (
+                <span
+                  key={index}
+                  className={`${
+                    word.color ? `text-[${word.color}]` : "text-white"
+                  } ${word.isItalic ? "italic" : ""}`}
+                >
+                  {word.text}
+                </span>
+              ))
+            : null}
         </h1>
       </ScrollAnimation>
     );
@@ -85,7 +89,7 @@ const HeroSection = ({ data, pageName, isMobile }: HeroSectionProps) => {
                 }`
           }`}
         >
-          {renderTitle(titleWords)}
+          {renderTitle()}
           {pageName !== "home" ? (
             <ScrollAnimation delay={0.4} direction="up">
               <p className="text-white md:text-base md:leading-5 text-sm leading-[18px] tracking-[-2%] font-light mb-[28px] md:mb-[80px] md:max-w-[486px]">

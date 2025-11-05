@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
     // Create order using Razorpay API client
     const orderResponse = await razorpayApiClient.createOrder({
-      amount: amount * 100,
+      amount: amount,
       currency,
       receipt: receipt || `receipt_${Date.now()}`,
       notes: {

@@ -45,7 +45,7 @@ export async function GET(
         order_id: number;
         payment_id: number;
         membership_type: number;
-        status: string;
+        status: string; // Changed back to string since DB uses 'active'
         start_date: string;
         end_date: string;
         invoice_number: string;

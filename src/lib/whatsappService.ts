@@ -25,21 +25,13 @@ class WhatsAppService {
   }
 
   private formatMessage(data: WhatsAppMessageData): string {
-    const { customerName, balancePaymentDate } = data;
+    const { customerName } = data;
 
     // Create the message with proper formatting
-    const message = `Hi ${customerName},
-Thank you for joining the Drive FITT family! 🏏💪
-
-Please find your receipt voucher attached for the pre-booking advance.🎉
-Your membership price is now locked in at the discounted rate — just complete the balance payment by ${balancePaymentDate} to keep it active.
-
-We're excited to have you onboard at Drive FITT 🚀
-
-— Team Drive FITT`;
+    const message = `Hi+${customerName}%2C%0AThank+you+for+joining+the+Drive+FITT+family%21+%F0%9F%8F%8F%F0%9F%92%AA%0A%0APlease+find+your+receipt+voucher+attached+for+the+pre-booking+advance.+%F0%9F%8E%89%0AYour+membership+price+is+now+locked+in+at+the+discounted+rate+%E2%80%94+just+complete+the+balance+payment+by+29th+Dec+2025+to+keep+it+active.%0A%0AWe%E2%80%99re+excited+to+have+you+onboard+at+Drive+FITT+%F0%9F%9A%80%0A%0A%E2%80%94+Team+Drive+FITT`;
 
     // Properly URL encode the entire message
-    return encodeURIComponent(message);
+    return message;
   }
 
   async sendInvoiceDocument(
