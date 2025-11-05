@@ -168,7 +168,7 @@ const JobPostApplicationSection: React.FC<JobPostApplicationSectionProps> = ({
         // Set departments and locations for filters
         setDepartments(deptLocData.departments);
         setLocations(deptLocData.locations);
-      } catch (_) {
+      } catch {
         setJobPosts([]);
         setApplications([]);
         setTotalItems(0);
