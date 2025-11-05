@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { Department, Location } from "@/types/database";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const departmentsQuery = `
       SELECT id, name, title, status, created_at, updated_at

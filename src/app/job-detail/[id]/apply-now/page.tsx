@@ -11,7 +11,7 @@ const fetchJob = async (id: string): Promise<JobPosting> => {
   try {
     const job = await jobAPI.getById(Number(id));
     return job;
-  } catch (error) {
+  } catch {
     // If job not found or not accessible, trigger the not-found page
     notFound();
   }

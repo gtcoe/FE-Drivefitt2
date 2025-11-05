@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
-import { BlogStatus } from "@/constants/enums";
 
 export async function GET(
   request: NextRequest,

@@ -12,7 +12,7 @@ interface JobSearchSectionProps {
   isMobile?: boolean;
 }
 
-const JobSearchSection = ({ data: _data, isMobile }: JobSearchSectionProps) => {
+const JobSearchSection = ({ isMobile }: JobSearchSectionProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] =
     useState("All job categories");

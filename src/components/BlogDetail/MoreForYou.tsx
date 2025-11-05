@@ -10,11 +10,7 @@ interface MoreForYouProps {
   isMobile: boolean;
 }
 
-const MoreForYou = ({
-  blogs,
-  categoryHeading: _categoryHeading,
-  isMobile: _isMobile,
-}: MoreForYouProps) => {
+const MoreForYou = ({ blogs }: MoreForYouProps) => {
   // Format date
   const formatDate = (dateString: string) => {
     try {

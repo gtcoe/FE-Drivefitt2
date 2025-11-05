@@ -449,9 +449,10 @@ const JobPostApplicationSection: React.FC<JobPostApplicationSectionProps> = ({
   };
 
   const handleToggleVisibility = async (
-    _index: number,
+    index: number,
     jobData: { id: number; isVisible: boolean }
   ) => {
+    void index;
     await jobAPI.setVisibility(jobData.id, !jobData.isVisible);
     const refreshed = await jobAPI.list({ admin: true }); // Get all job postings for admin
     // Update complete job data

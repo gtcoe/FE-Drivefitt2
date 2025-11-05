@@ -2,23 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { BlogStatus } from "@/constants/enums";
 
+type BlogRow = {
+  id: number;
+  title: string;
+  description: string;
+  slug: string;
+  date: string;
+  image: string;
+  html: string;
+  category_id: number | null;
+  is_featured: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+  category_heading: string | null;
+};
+
 export async function GET() {
   try {
-    type BlogRow = {
-      id: number;
-      title: string;
-      description: string;
-      slug: string;
-      date: string;
-      image: string;
-      html: string;
-      category_id: number | null;
-      is_featured: number;
-      status: number;
-      created_at: string;
-      updated_at: string;
-      category_heading: string | null;
-    };
     const rows = await executeQuery<BlogRow[]>(
       `SELECT 
         b.id, 
@@ -41,7 +42,7 @@ export async function GET() {
       [BlogStatus.DELETED]
     );
     return NextResponse.json({ status: true, data: rows });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to fetch" },
       { status: 500 }
@@ -87,6 +88,21 @@ export async function POST(request: NextRequest) {
         status,
       ]
     );
+    type BlogRow = {
+      id: number;
+      title: string;
+      description: string;
+      slug: string;
+      date: string;
+      image: string;
+      html: string;
+      category_id: number | null;
+      is_featured: number;
+      status: number;
+      created_at: string;
+      updated_at: string;
+      category_heading: string | null;
+    };
 
     const insertedId = result?.insertId;
     const [row] = await executeQuery<BlogRow[]>(
@@ -94,7 +110,7 @@ export async function POST(request: NextRequest) {
       [insertedId]
     );
     return NextResponse.json({ status: true, data: row }, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to create" },
       { status: 500 }

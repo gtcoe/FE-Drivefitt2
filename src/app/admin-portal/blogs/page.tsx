@@ -33,7 +33,7 @@ export default function BlogsPage() {
   const [selectedBlog, setSelectedBlog] = useState<BlogEntry | undefined>(
     undefined
   );
-  const [loading, setLoading] = useState<boolean>(false);
+  const [, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -138,10 +138,12 @@ export default function BlogsPage() {
     }
   };
 
+  type BlogDeleteAction = { _action: "delete"; id: string | number };
   const handleSaveBlog = async (blogData: BlogFormData) => {
     // Check if this is a delete action
-    if ((blogData as any)._action === "delete") {
-      await handleDeleteBlog((blogData as any).id);
+    const maybeDelete = blogData as Partial<BlogDeleteAction>;
+    if (maybeDelete._action === "delete" && maybeDelete.id !== undefined) {
+      await handleDeleteBlog(String(maybeDelete.id));
       return;
     }
 

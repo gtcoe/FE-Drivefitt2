@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, data: null, error: "Failed to create presigned URL" },
       { status: 500 }

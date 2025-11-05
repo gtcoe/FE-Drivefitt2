@@ -48,7 +48,7 @@ export async function GET(
         { status: 404 }
       );
     return NextResponse.json({ status: true, data: row });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to fetch" },
       { status: 500 }
@@ -104,7 +104,7 @@ export async function PUT(
       [params.id]
     );
     return NextResponse.json({ status: true, data: row });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to update" },
       { status: 500 }
@@ -122,7 +122,7 @@ export async function DELETE(
       [BlogStatus.DELETED, params.id]
     );
     return NextResponse.json({ status: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to delete" },
       { status: 500 }

@@ -15,7 +15,7 @@ export async function GET() {
       `SELECT id, heading, status, created_at, updated_at FROM blog_category ORDER BY id DESC`
     );
     return NextResponse.json({ status: true, data: rows });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to fetch" },
       { status: 500 }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       [insertedId]
     );
     return NextResponse.json({ status: true, data: row }, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { status: false, error: "Failed to create" },
       { status: 500 }

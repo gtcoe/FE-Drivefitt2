@@ -16,7 +16,6 @@ const BlogModal = ({
   onClose,
   onSave,
   blog,
-  mode: _mode,
 }: BlogModalProps) => {
   const [formData, setFormData] = useState<BlogFormData>({
     title: "",
