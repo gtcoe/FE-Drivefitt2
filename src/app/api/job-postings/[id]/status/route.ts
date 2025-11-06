@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
-import { JobStatus } from "@/types/database";
+import { JOB_STATUS } from "@/constants/database";
 
 export async function PUT(
   request: NextRequest,
@@ -16,7 +16,10 @@ export async function PUT(
     const body = await request.json();
     const { status } = body;
 
-    if (status === undefined || !Object.values(JobStatus).includes(status)) {
+    if (
+      status === undefined ||
+      !Object.values(JOB_STATUS).includes(Number(status))
+    ) {
       return NextResponse.json(
         {
           error:
@@ -56,10 +59,10 @@ export async function PUT(
   } catch (error) {
     console.error("Error updating job posting status:", error);
     return NextResponse.json(
-      { 
+      {
         status: false,
         data: null,
-        error: "Internal server error" 
+        error: "Internal server error",
       },
       { status: 500 }
     );
