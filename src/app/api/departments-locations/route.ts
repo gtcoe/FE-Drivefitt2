@@ -18,12 +18,11 @@ export async function GET() {
       ORDER BY city ASC, full_location ASC
     `;
 
-    const [departmentsResult, locationsResult] = await Promise.all<
-      [Department[], Location[]]
-    >([
-      executeQuery<Department[]>(departmentsQuery),
-      executeQuery<Location[]>(locationsQuery),
-    ]);
+    const [departmentsResult, locationsResult]: [Department[], Location[]] =
+      await Promise.all([
+        executeQuery<Department[]>(departmentsQuery),
+        executeQuery<Location[]>(locationsQuery),
+      ]);
 
     const departments: Department[] = departmentsResult.map((row) => ({
       id: row.id,
