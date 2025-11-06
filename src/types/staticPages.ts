@@ -305,3 +305,6 @@ export interface StaticPageData {
   jobDetailSection?: JobDetailSection;
   applyNowForm?: ApplyNowFormSection;
 }
+
+// Alias for specific pages to keep imports stable where used
+export type ContactUsPageData = StaticPageData;
