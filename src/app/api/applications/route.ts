@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
       id: row.id,
       candidate_name: row.candidate_name,
       email: row.email,
-      phone: row.phone,
+      phone: row.phone ?? undefined,
       job_id: row.job_id,
       status: row.status as ApplicationStatus,
       current_location: row.current_location ?? undefined,
