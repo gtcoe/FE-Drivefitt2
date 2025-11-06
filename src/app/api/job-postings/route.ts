@@ -118,8 +118,8 @@ export async function GET(request: NextRequest) {
     const jobPostings: JobPosting[] = result.map((row) => ({
       id: row.id,
       title: row.title,
-      department_id: row.dept_id,
-      location_id: row.loc_id,
+      department_id: row.dept_id ?? 0,
+      location_id: row.loc_id ?? 0,
       job_type: row.job_type,
       application_deadline: row.application_deadline
         ? new Date(row.application_deadline)
