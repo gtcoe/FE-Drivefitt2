@@ -15,10 +15,12 @@ export async function PUT(
 
     const body = await request.json();
     const { status } = body;
+    const numericStatus = Number(status);
 
     if (
       status === undefined ||
-      !Object.values(JOB_STATUS).includes(Number(status))
+      Number.isNaN(numericStatus) ||
+      !(Object.values(JOB_STATUS) as number[]).includes(numericStatus)
     ) {
       return NextResponse.json(
         {
@@ -36,7 +38,7 @@ export async function PUT(
     `;
 
     const result = await executeQuery<{ affectedRows: number }>(query, [
-      status,
+      numericStatus,
       jobId,
     ]);
 
