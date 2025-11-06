@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
-import { JobPosting, JobStatus } from "@/types/database";
+import { JobPosting, JobStatus, JobType } from "@/types/database";
 
 export async function GET(request: NextRequest) {
   try {
@@ -120,12 +120,12 @@ export async function GET(request: NextRequest) {
       title: row.title,
       department_id: row.dept_id ?? 0,
       location_id: row.loc_id ?? 0,
-      job_type: row.job_type,
+      job_type: row.job_type as JobType,
       application_deadline: row.application_deadline
         ? new Date(row.application_deadline)
         : undefined,
-      job_description: row.job_description,
-      skills_required: row.skills_required,
+      job_description: row.job_description ?? undefined,
+      skills_required: row.skills_required ?? undefined,
       role: row.role
         ? typeof row.role === "string"
           ? JSON.parse(row.role)
@@ -137,28 +137,36 @@ export async function GET(request: NextRequest) {
           : row.qualifications
         : [],
       status: row.status as JobStatus,
-      years_of_experience: row.years_of_experience,
+      years_of_experience: row.years_of_experience ?? undefined,
       is_visible: Boolean(row.is_visible),
       created_at: new Date(row.created_at),
       updated_at: new Date(row.updated_at),
       department: row.dept_id
         ? {
             id: row.dept_id,
-            name: row.dept_name,
-            title: row.dept_title,
-            status: row.dept_status,
-            created_at: new Date(row.dept_created_at),
-            updated_at: new Date(row.dept_updated_at),
+            name: row.dept_name ?? "",
+            title: row.dept_title ?? "",
+            status: (row.dept_status ?? 0) as number,
+            created_at: row.dept_created_at
+              ? new Date(row.dept_created_at)
+              : new Date(0),
+            updated_at: row.dept_updated_at
+              ? new Date(row.dept_updated_at)
+              : new Date(0),
           }
         : undefined,
       location: row.loc_id
         ? {
             id: row.loc_id,
-            full_location: row.full_location,
-            city: row.city,
-            status: row.loc_status,
-            created_at: new Date(row.loc_created_at),
-            updated_at: new Date(row.loc_updated_at),
+            full_location: row.full_location ?? "",
+            city: row.city ?? "",
+            status: (row.loc_status ?? 0) as number,
+            created_at: row.loc_created_at
+              ? new Date(row.loc_created_at)
+              : new Date(0),
+            updated_at: row.loc_updated_at
+              ? new Date(row.loc_updated_at)
+              : new Date(0),
           }
         : undefined,
     }));
