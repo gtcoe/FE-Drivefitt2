@@ -79,11 +79,11 @@ export async function GET(request: NextRequest) {
       updated_at: new Date(row.updated_at),
       job: {
         id: row.job_id,
-        title: row.job_title,
+        title: row.job_title ?? "",
         department: row.dept_id
           ? {
               id: row.dept_id,
-              name: row.dept_name,
+              name: row.dept_name ?? "",
             }
           : undefined,
       },
