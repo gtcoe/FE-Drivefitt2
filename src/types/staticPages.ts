@@ -88,12 +88,20 @@ export interface FooterProps {
   copyright: string;
 }
 
+export type ScrollingCardItem = {
+  subTitle: string;
+  list: string[];
+  extraTagLabel?: string;
+  backgroundImage?: string;
+  mobileImage?: string;
+};
+
 export interface ScrollingCardSection {
   title: string;
   description?: string;
   iconImage?: string;
   cards?: unknown[];
-  cardSection?: unknown[];
+  cardSection?: ScrollingCardItem[];
 }
 
 export interface CountdownSection {
@@ -441,10 +449,20 @@ export interface PhotoCircleSectionProps {
   image2?: string;
 }
 
+export type CardsParallaxItem = {
+  title?: string;
+  description?: string;
+  src: string;
+  backgroundImage?: string;
+  url: string;
+  mobileUrl?: string;
+  color: string;
+};
+
 export interface CardsParallaxProps {
   title?: string;
   cards?: unknown[];
-  cardSection?: unknown[];
+  cardSection?: CardsParallaxItem[];
 }
 
 // Stronger exports for coaches/packages used in StaticPages

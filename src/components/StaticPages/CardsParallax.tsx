@@ -1,6 +1,6 @@
 "use client";
 
-import { CardsParallaxProps } from "@/types/staticPages";
+import { CardsParallaxProps, CardsParallaxItem } from "@/types/staticPages";
 import CardParallax from "@/components/StaticPages/CardParallax";
 import styles from "./CardParallax.module.scss";
 import { useScroll } from "framer-motion";
@@ -38,7 +38,7 @@ const CardsParallax = ({
   }, []);
   return (
     <div ref={container} className={styles.main}>
-      {cardSection?.map((card: any, i: number) => {
+      {cardSection?.map((card: CardsParallaxItem, i: number) => {
         const targetScale = 1 - ((cardSection?.length ?? 0) - i) * 0.05;
         return (
           <CardParallax
