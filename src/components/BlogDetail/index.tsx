@@ -168,19 +168,19 @@ const BlogDetailContent = ({ blog: rawBlog, isMobile }: BlogDetailProps) => {
 
   // Transform raw blog data to BlogEntry format
   const blog: BlogEntry = {
-    id: rawBlog.id,
-    title: rawBlog.title,
-    description: rawBlog.description,
-    slug: rawBlog.slug,
-    date: rawBlog.date,
-    image: rawBlog.image,
+    id: String(rawBlog.id),
+    title: rawBlog.title ?? "",
+    description: rawBlog.description ?? "",
+    slug: rawBlog.slug ?? "",
+    date: rawBlog.date ?? "",
+    image: rawBlog.image ?? "",
     content: rawBlog.html,
-    categoryId: rawBlog.category_id,
-    categoryHeading: rawBlog.category_heading,
+    categoryId: rawBlog.category_id ?? undefined,
+    categoryHeading: rawBlog.category_heading ?? undefined,
     status: rawBlog.status,
     isFeatured: rawBlog.is_featured === 1,
-    created: rawBlog.created_at,
-    edited: rawBlog.updated_at,
+    created: rawBlog.created_at ?? "",
+    edited: rawBlog.updated_at ?? "",
   };
 
   useEffect(() => {
@@ -196,19 +196,19 @@ const BlogDetailContent = ({ blog: rawBlog, isMobile }: BlogDetailProps) => {
           if (relatedResponse.ok) {
             const { data } = await relatedResponse.json();
             const transformedRelated = (data as RawBlog[]).map((b) => ({
-              id: b.id,
-              title: b.title,
-              description: b.description,
-              slug: b.slug,
-              date: b.date,
-              image: b.image,
+              id: String(b.id),
+              title: b.title ?? "",
+              description: b.description ?? "",
+              slug: b.slug ?? "",
+              date: b.date ?? "",
+              image: b.image ?? "",
               content: b.html,
-              categoryId: b.category_id,
-              categoryHeading: b.category_heading,
+              categoryId: b.category_id ?? undefined,
+              categoryHeading: b.category_heading ?? undefined,
               status: b.status,
               isFeatured: b.is_featured === 1,
-              created: b.created_at,
-              edited: b.updated_at,
+              created: b.created_at ?? "",
+              edited: b.updated_at ?? "",
             }));
             setRelatedBlogs(transformedRelated);
           }
@@ -223,19 +223,19 @@ const BlogDetailContent = ({ blog: rawBlog, isMobile }: BlogDetailProps) => {
         if (otherResponse.ok) {
           const { data } = await otherResponse.json();
           const transformedOther = (data as RawBlog[]).map((b) => ({
-            id: b.id,
-            title: b.title,
-            description: b.description,
-            slug: b.slug,
-            date: b.date,
-            image: b.image,
+            id: String(b.id),
+            title: b.title ?? "",
+            description: b.description ?? "",
+            slug: b.slug ?? "",
+            date: b.date ?? "",
+            image: b.image ?? "",
             content: b.html,
-            categoryId: b.category_id,
-            categoryHeading: b.category_heading,
+            categoryId: b.category_id ?? undefined,
+            categoryHeading: b.category_heading ?? undefined,
             status: b.status,
             isFeatured: b.is_featured === 1,
-            created: b.created_at,
-            edited: b.updated_at,
+            created: b.created_at ?? "",
+            edited: b.updated_at ?? "",
           }));
           setOtherBlogs(transformedOther);
         }

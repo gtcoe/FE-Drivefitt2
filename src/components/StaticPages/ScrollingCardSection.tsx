@@ -67,9 +67,9 @@ const ScrollingCardSection = ({
           className="rounded-[20px] md:rounded-[40px] w-full h-full cursor-pointer flex flex-col justify-center"
           style={{
             background: `linear-gradient(180.09deg, rgba(13, 13, 13, 0) 50%, #0D0D0D 99.92%), url(${
-              isMobile && cardSection[activeIndex]?.mobileImage
-                ? cardSection[activeIndex].mobileImage
-                : cardSection[activeIndex]?.backgroundImage
+              isMobile && (cardSection?.[activeIndex] as any)?.mobileImage
+                ? (cardSection?.[activeIndex] as any).mobileImage
+                : (cardSection?.[activeIndex] as any)?.backgroundImage || ""
             })`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
@@ -102,7 +102,7 @@ const ScrollingCardSection = ({
             direction="left"
             className="flex flex-col md:w-[584px] w-full h-auto md:h-full justify-center border-t border-[#FFFFFF29] md:border-t-0"
           >
-            {cardSection.map((card, idx) => (
+            {cardSection?.map((card: any, idx: number) => (
               <motion.div
                 key={idx}
                 ref={(el) => {
@@ -172,7 +172,7 @@ const ScrollingCardSection = ({
                   }}
                 >
                   <div className="flex flex-col gap-4 md:gap-3 pb-6 md:px-10">
-                    {card.list.map((item, itemIdx) => (
+                    {(card.list as any[]).map((item: any, itemIdx: number) => (
                       <div
                         key={itemIdx}
                         className="flex items-start gap-[14px] md:gap-[26px]"

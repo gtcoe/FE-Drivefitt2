@@ -15,7 +15,7 @@ const InnovationCommunity = ({
         <TitleDescription title={title || ""} description={description || ""} />
       </ScrollAnimation>
       <div className="grid grid-rows-3 md:grid-rows-none md:grid-cols-3 gap-5 md:gap-10">
-        {infoSection.map((item, index) => (
+        {infoSection?.map((item, index) => (
           <ScrollAnimation
             key={item.title}
             delay={0.3 + index * 0.1}

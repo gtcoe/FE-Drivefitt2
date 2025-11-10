@@ -33,34 +33,36 @@ const Faq = ({ data }: { data: FaqSectionProps }) => {
               background: "linear-gradient(180deg, #1E1E1E 0%, #141414 100%)",
             }}
           >
-            {faqList?.map((faq, idx) => (
-              <div
-                key={idx}
-                className="border-b border-[#333333] last:border-b-0"
-              >
+            {(faqList as Array<{ title: string; description: string }>)?.map(
+              (faq, idx) => (
                 <div
-                  className="flex justify-between items-center py-8 cursor-pointer"
-                  onMouseDown={() => toggleFaq(idx)}
+                  key={idx}
+                  className="border-b border-[#333333] last:border-b-0"
                 >
-                  <h3 className="text-white text-base md:text-xl font-medium">
-                    {faq.title}
-                  </h3>
-                  <Image
-                    src={`https://da8nru77lsio9.cloudfront.net/images/${
-                      openFaqIndex === idx ? "minus" : "plus"
-                    }.svg`}
-                    alt={openFaqIndex === idx ? "minus" : "plus"}
-                    width={24}
-                    height={26}
-                  />
+                  <div
+                    className="flex justify-between items-center py-8 cursor-pointer"
+                    onMouseDown={() => toggleFaq(idx)}
+                  >
+                    <h3 className="text-white text-base md:text-xl font-medium">
+                      {faq.title}
+                    </h3>
+                    <Image
+                      src={`https://da8nru77lsio9.cloudfront.net/images/${
+                        openFaqIndex === idx ? "minus" : "plus"
+                      }.svg`}
+                      alt={openFaqIndex === idx ? "minus" : "plus"}
+                      width={24}
+                      height={26}
+                    />
+                  </div>
+                  {openFaqIndex === idx && (
+                    <p className="text-[#8A8A8A] text-sm md:text-xl font-light md:pb-10 md:pr-11">
+                      {faq.description}
+                    </p>
+                  )}
                 </div>
-                {openFaqIndex === idx && (
-                  <p className="text-[#8A8A8A] text-sm md:text-xl font-light md:pb-10 md:pr-11">
-                    {faq.description}
-                  </p>
-                )}
-              </div>
-            ))}
+              )
+            )}
           </div>
         </div>
       </ScrollAnimation>

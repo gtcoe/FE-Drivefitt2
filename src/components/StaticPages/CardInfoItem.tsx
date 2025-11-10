@@ -6,7 +6,9 @@ const CardInfoItem = ({ data }: { data: CardType }) => {
 
   return (
     <div className="flex p-6 md:p-8 md:flex-col flex-row gap-4 md:gap-8">
-      <Image src={iconImage || ""} alt={title || ""} width={56} height={56} />
+      {typeof iconImage === "string" && iconImage ? (
+        <Image src={iconImage} alt={title || ""} width={56} height={56} />
+      ) : null}
       <div className="flex flex-col gap-2 md:gap-3 w-full text-white">
         <h2 className="text-base leading-5 md:text-[32px] tracking-[-1px] md:leading-9 font-semibold">
           {title}

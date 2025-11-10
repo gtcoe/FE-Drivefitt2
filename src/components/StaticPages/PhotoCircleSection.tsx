@@ -93,23 +93,27 @@ const PhotoCircleSection = ({
                 className="flex-shrink-0 z-10 -mr-5 -mt-[52px]"
                 style={{ y: y1 }}
               >
-                <Image
-                  src={image1}
-                  alt="Pilates Practitioner 1"
-                  width={200}
-                  height={268}
-                />
+                {image1 ? (
+                  <Image
+                    src={image1}
+                    alt="Pilates Practitioner 1"
+                    width={200}
+                    height={268}
+                  />
+                ) : null}
               </motion.div>
               <motion.div
                 className="flex-shrink-0 z-10 -ml-5 -mt-[52px]"
                 style={{ y: y2 }}
               >
-                <Image
-                  src={image2}
-                  alt="Pilates Practitioner 2"
-                  width={200}
-                  height={268}
-                />
+                {image2 ? (
+                  <Image
+                    src={image2}
+                    alt="Pilates Practitioner 2"
+                    width={200}
+                    height={268}
+                  />
+                ) : null}
               </motion.div>
             </motion.div>
           </div>
@@ -124,13 +128,15 @@ const PhotoCircleSection = ({
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Image
-                src={image1}
-                alt="Pilates Practitioner 1"
-                width={252}
-                height={360}
-                className="w-auto h-auto"
-              />
+              {image1 ? (
+                <Image
+                  src={image1}
+                  alt="Pilates Practitioner 1"
+                  width={252}
+                  height={360}
+                  className="w-auto h-auto"
+                />
+              ) : null}
             </motion.div>
             <motion.div
               className="flex items-center justify-center z-20 flex-shrink-0"
@@ -166,13 +172,15 @@ const PhotoCircleSection = ({
               transition={{ duration: 0.8, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <Image
-                src={image2}
-                alt="Pilates Practitioner 2"
-                width={252}
-                height={360}
-                className="w-auto h-auto"
-              />
+              {image2 ? (
+                <Image
+                  src={image2}
+                  alt="Pilates Practitioner 2"
+                  width={252}
+                  height={360}
+                  className="w-auto h-auto"
+                />
+              ) : null}
             </motion.div>
           </div>
         )}

@@ -58,20 +58,24 @@ const AppDownload = ({
                   </p>
                 )}
                 <div className="flex gap-4 justify-center md:justify-start">
-                  <Image
-                    src={googlePlayImg}
-                    alt="google-play"
-                    width={180}
-                    height={56}
-                    className="w-[120px] h-10 md:w-[140px] md:h-[64px]"
-                  />
-                  <Image
-                    src={appStoreImg}
-                    alt="app-store"
-                    width={180}
-                    height={56}
-                    className="w-[120px] h-10 md:w-[140px] md:h-[64px]"
-                  />
+                  {googlePlayImg && (
+                    <Image
+                      src={googlePlayImg}
+                      alt="google-play"
+                      width={180}
+                      height={56}
+                      className="w-[120px] h-10 md:w-[140px] md:h-[64px]"
+                    />
+                  )}
+                  {appStoreImg && (
+                    <Image
+                      src={appStoreImg}
+                      alt="app-store"
+                      width={180}
+                      height={56}
+                      className="w-[120px] h-10 md:w-[140px] md:h-[64px]"
+                    />
+                  )}
                 </div>
               </div>
             </div>

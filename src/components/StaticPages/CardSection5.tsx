@@ -103,11 +103,11 @@ const CardSection5 = ({
                 background: "linear-gradient(180deg, #1E1E1E 0%, #141414 100%)",
               }}
             >
-              {cardSection.map((card, idx) => {
+              {cardSection?.map((card, idx) => {
                 return (
                   <div key={idx} className="flex flex-col">
-                    <CardInfoItem data={card} />
-                    {idx < cardSection.length - 1 && (
+                    <CardInfoItem data={card as CardType} />
+                    {idx < (cardSection?.length ?? 0) - 1 && (
                       <div className="border-b border-[#333333] mx-6" />
                     )}
                   </div>
@@ -124,15 +124,18 @@ const CardSection5 = ({
             className="flex flex-col gap-10"
           >
             <StaticCard
-              data={cardSection[0]}
+              data={cardSection?.[0] as CardType}
               className="!h-[406px]"
               imageClass="!h-[402px]"
             />
-            <StaticCardInfo data={cardSection[1]} className="!h-[276px]" />
+            <StaticCardInfo
+              data={cardSection?.[1] as CardType}
+              className="!h-[276px]"
+            />
           </ScrollAnimation>
           <ScrollAnimation delay={0.4} direction="up" className="flex flex-col">
             <StaticCard
-              data={cardSection[2]}
+              data={cardSection?.[2] as CardType}
               className="!h-[722px]"
               imageClass="!h-[718px]"
             />
@@ -142,9 +145,12 @@ const CardSection5 = ({
             direction="up"
             className="flex flex-col gap-10"
           >
-            <StaticCardInfo data={cardSection[3]} className="!h-[276px]" />
+            <StaticCardInfo
+              data={cardSection?.[3] as CardType}
+              className="!h-[276px]"
+            />
             <StaticCard
-              data={cardSection[4]}
+              data={cardSection?.[4] as CardType}
               className="!h-[406px]"
               imageClass="!h-[402px]"
             />

@@ -24,13 +24,15 @@ const FooterInfo = ({
     >
       <div className="w-full md:w-2/5 flex">
         <ChatWithUs
-          footerInfoList={footerInfoList}
-          socialLinkList={socialLinkList}
+          footerInfoList={footerInfoList ?? []}
+          socialLinkList={socialLinkList ?? []}
         />
       </div>
-      <div className="w-full md:w-3/5 flex">
-        <ContactForm data={contactFormSection} />
-      </div>
+      {contactFormSection && (
+        <div className="w-full md:w-3/5 flex">
+          <ContactForm data={contactFormSection} />
+        </div>
+      )}
     </div>
   );
 };

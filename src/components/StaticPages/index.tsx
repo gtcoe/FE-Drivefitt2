@@ -42,6 +42,8 @@ import {
   JobSearchSection as JobSearchSectionType,
   JobDetailSection as JobDetailSectionType,
   ApplyNowFormSection,
+  Coach,
+  Package,
 } from "@/types/staticPages";
 import CardSection4 from "@/components/StaticPages/CardSection4";
 import CardSection5 from "@/components/StaticPages/CardSection5";
@@ -254,14 +256,14 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
       case "meetYourCoachesSection":
         return (
           <MeetYourCoachesSection
-            {...(value as unknown as MeetYourCoachesSectionProps)}
+            {...(value as unknown as MeetYourCoachesSectionProps & { coaches: Coach[] })}
             isMobile={isMobile}
           />
         );
       case "chooseYourPathSection":
         return (
           <ChooseYourPathSection
-            {...(value as unknown as ChooseYourPathSectionProps)}
+            {...(value as unknown as ChooseYourPathSectionProps & { packages: Package[] })}
             isMobile={isMobile}
           />
         );

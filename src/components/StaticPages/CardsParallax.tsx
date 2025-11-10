@@ -38,14 +38,18 @@ const CardsParallax = ({
   }, []);
   return (
     <div ref={container} className={styles.main}>
-      {cardSection.map((card, i) => {
-        const targetScale = 1 - (cardSection.length - i) * 0.05;
-
+      {cardSection?.map((card: any, i: number) => {
+        const targetScale = 1 - ((cardSection?.length ?? 0) - i) * 0.05;
         return (
           <CardParallax
             key={`p_${i}`}
             i={i}
-            {...card}
+            title={card?.title}
+            description={card?.description}
+            url={card?.url || ""}
+            mobileUrl={card?.mobileUrl}
+            src={card?.src || ""}
+            color={card?.color || "#000000"}
             progress={scrollYProgress}
             range={[i * 0.25, 1]}
             targetScale={targetScale}

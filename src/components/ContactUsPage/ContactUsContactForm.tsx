@@ -424,31 +424,33 @@ const ContactUsContactForm = ({
                 {isLocationOpen && (
                   <div className="relative">
                     <ul className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg border border-[#333333] bg-[#FFFFFF] shadow-lg">
-                      {(fields.preferredLocation?.options || []).map((opt) => (
-                        <li key={opt}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setFormData((prev) => ({
-                                ...prev,
-                                preferredLocation: opt,
-                              }));
-                              setErrors((prev) => ({
-                                ...prev,
-                                preferredLocation: "",
-                              }));
-                              setIsLocationOpen(false);
-                            }}
-                            className={`w-full text-left px-4 py-2 text-sm ${
-                              formData.preferredLocation === opt
-                                ? "bg-[#00DBDC1A] text-[#00DBDC]"
-                                : "text-[#0D0D0D] hover:bg-[#00DBDC1A] hover:text-[#000000]"
-                            }`}
-                          >
-                            {opt}
-                          </button>
-                        </li>
-                      ))}
+                      {(fields.preferredLocation?.options || []).map(
+                        (opt: string) => (
+                          <li key={opt}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  preferredLocation: opt,
+                                }));
+                                setErrors((prev) => ({
+                                  ...prev,
+                                  preferredLocation: "",
+                                }));
+                                setIsLocationOpen(false);
+                              }}
+                              className={`w-full text-left px-4 py-2 text-sm ${
+                                formData.preferredLocation === opt
+                                  ? "bg-[#00DBDC1A] text-[#00DBDC]"
+                                  : "text-[#0D0D0D] hover:bg-[#00DBDC1A] hover:text-[#000000]"
+                              }`}
+                            >
+                              {opt}
+                            </button>
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
                 )}

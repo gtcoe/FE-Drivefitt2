@@ -12,7 +12,8 @@ const JobDetailSection = ({ data, isMobile }: JobDetailSectionProps) => {
   const router = useRouter();
 
   const handleApplyNow = () => {
-    router.push(`/job-detail/${data.job.id}/apply-now`);
+    const job = data.job as { id: string | number; [key: string]: unknown };
+    router.push(`/job-detail/${job.id}/apply-now`);
   };
 
   return (
@@ -32,69 +33,87 @@ const JobDetailSection = ({ data, isMobile }: JobDetailSectionProps) => {
           } border-2 border-[#333333] bg-gradient-to-b from-[#1E1E1E] to-[#141414]`}
         >
           <div className="px-6 md:px-10 py-6 md:py-10">
-            {data.job.details.map((detail, index) => (
-              <div
-                key={index}
-                className={`w-full h-fit opacity-100 ${
-                  isMobile ? "pb-6 gap-4" : "pb-10 gap-6"
-                } ${
-                  index < data.job.details.length - 1
-                    ? "border-b border-[#333333]"
-                    : ""
-                }`}
-              >
-                {/* Title */}
-                <h3
-                  className={`font-semibold text-white mb-6 md:mb-6 ${
-                    detail.title === "Skills and Qualifications:"
-                      ? isMobile
-                        ? "text-base leading-5 tracking-[0%]"
-                        : "text-2xl leading-7 tracking-[-2%]"
-                      : isMobile
-                      ? "text-2xl leading-7 tracking-[-2px]"
-                      : "text-[32px] leading-[48px] tracking-[-2px]"
+            {(
+              data.job as {
+                details: Array<{
+                  title: string;
+                  description?: string;
+                  list?: string[];
+                }>;
+              }
+            ).details.map(
+              (
+                detail: {
+                  title: string;
+                  description?: string;
+                  list?: string[];
+                },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className={`w-full h-fit opacity-100 ${
+                    isMobile ? "pb-6 gap-4" : "pb-10 gap-6"
                   } ${
-                    detail.title === "About Drivefitt"
-                      ? "mt-0"
-                      : "mt-6 md:mt-10"
+                    index <
+                    (data.job as { details: Array<unknown> }).details.length - 1
+                      ? "border-b border-[#333333]"
+                      : ""
                   }`}
                 >
-                  {detail.title}
-                </h3>
-
-                {/* Description */}
-                {detail.description && (
-                  <p
-                    className={`text-gray-300 font-light ${
-                      isMobile
-                        ? "text-sm leading-5 tracking-[0%]"
-                        : "text-xl leading-7 tracking-[-2%]"
+                  {/* Title */}
+                  <h3
+                    className={`font-semibold text-white mb-6 md:mb-6 ${
+                      detail.title === "Skills and Qualifications:"
+                        ? isMobile
+                          ? "text-base leading-5 tracking-[0%]"
+                          : "text-2xl leading-7 tracking-[-2%]"
+                        : isMobile
+                        ? "text-2xl leading-7 tracking-[-2px]"
+                        : "text-[32px] leading-[48px] tracking-[-2px]"
+                    } ${
+                      detail.title === "About Drivefitt"
+                        ? "mt-0"
+                        : "mt-6 md:mt-10"
                     }`}
                   >
-                    {detail.description}
-                  </p>
-                )}
+                    {detail.title}
+                  </h3>
 
-                {/* List */}
-                {detail.list && detail.list.length > 0 && (
-                  <ul className="space-y-3">
-                    {detail.list.map((item, itemIndex) => (
-                      <li
-                        key={itemIndex}
-                        className={`flex items-start gap-3 text-gray-300 font-light ${
-                          isMobile
-                            ? "text-sm leading-5 tracking-[0%]"
-                            : "text-xl leading-7 tracking-[-2%]"
-                        }`}
-                      >
-                        <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+                  {/* Description */}
+                  {detail.description && (
+                    <p
+                      className={`text-gray-300 font-light ${
+                        isMobile
+                          ? "text-sm leading-5 tracking-[0%]"
+                          : "text-xl leading-7 tracking-[-2%]"
+                      }`}
+                    >
+                      {detail.description}
+                    </p>
+                  )}
+
+                  {/* List */}
+                  {detail.list && detail.list.length > 0 && (
+                    <ul className="space-y-3">
+                      {detail.list?.map((item: string, itemIndex: number) => (
+                        <li
+                          key={itemIndex}
+                          className={`flex items-start gap-3 text-gray-300 font-light ${
+                            isMobile
+                              ? "text-sm leading-5 tracking-[0%]"
+                              : "text-xl leading-7 tracking-[-2%]"
+                          }`}
+                        >
+                          <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )
+            )}
 
             {/* Apply Now Button */}
             <div className="flex justify-end">

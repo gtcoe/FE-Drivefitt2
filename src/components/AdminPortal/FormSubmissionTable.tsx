@@ -249,21 +249,21 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
       const updatedData = [...generalQueriesData];
       updatedData[index] = {
         ...updatedData[index],
-        status: newStatus,
+        status: newStatus as "New" | "In review" | "Closed",
       };
       setGeneralQueriesData(updatedData);
     } else if (sectionType === "franchise-applications") {
       const updatedData = [...franchiseApplicationsData];
       updatedData[index] = {
         ...updatedData[index],
-        status: newStatus,
+        status: newStatus as "New" | "Reviewed" | "Pending" | "Closed",
       };
       setFranchiseApplicationsData(updatedData);
     } else if (sectionType === "lead-submissions") {
       const updatedData = [...leadSubmissionsData];
       updatedData[index] = {
         ...updatedData[index],
-        status: newStatus,
+        status: newStatus as "New" | "Reviewed" | "Pending" | "Closed",
       };
       setLeadSubmissionsData(updatedData);
     }
@@ -509,7 +509,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => toggleDropdown(originalIndex + 2000)}
+                  onClick={() => toggleDropdown(index + 2000)}
                   className="bg-[#333333] border border-[#333333] rounded flex items-center justify-between transition-colors"
                   style={{
                     width: "85px",
@@ -650,7 +650,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => toggleDropdown(originalIndex + 4000)}
+                  onClick={() => toggleDropdown(index + 4000)}
                   className="bg-[#333333] border border-[#333333] rounded flex items-center justify-between transition-colors"
                   style={{
                     width: "85px",
