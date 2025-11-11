@@ -77,6 +77,7 @@ export const fitnessData: StaticPageData = {
   },
   evolutionSection: {
     title: "Discover A New Era Of Fitness",
+    description: "",
     evolutionList: [
       {
         title: "Best Fitness Socials",

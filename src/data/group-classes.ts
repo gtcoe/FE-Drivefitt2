@@ -14,8 +14,7 @@ export const groupClassesData: StaticPageData = {
     description: "",
     desktopImage:
       "https://da8nru77lsio9.cloudfront.net/images/group-classes-c/hero.webp",
-    mobileImage:
-      "/images/group-classes/hero-mobile.jpg",
+    mobileImage: "/images/group-classes/hero-mobile.jpg",
     btnPrimaryText: "Book a free trial",
   },
   banner2Section: {
@@ -132,20 +131,7 @@ export const groupClassesData: StaticPageData = {
       },
     ],
   },
-  bannerCTASection2: {
-    title: "More Than a Class. It’s a Culture.",
-    description:
-      "Every session at Drive FITT is intentionally designed, professionally led, and performance-driven. Whether you're leveling up your strength, chasing recovery, or finding your flow - our group classes meet you at your edge and take you beyond.",
-    btnLabel: "Book a free trial",
-    desktopImage:
-      "https://da8nru77lsio9.cloudfront.net/images/group-classes-c/bannerCta2.webp",
-    mobileImage:
-      "https://da8nru77lsio9.cloudfront.net/images/group-classes-c/bannerCta2Mobile.webp",
-    imageClass: "md:max-h-[564px]",
-    specialBackgroundClass: "#1D1D1DB2",
-    showStrip: false,
-    parentClass: "md:!mt-[140px]",
-  },
+  // Removed bannerCTASection2 as it's not defined in StaticPageData
   footerInfoSection: {
     footerInfoList: [
       {

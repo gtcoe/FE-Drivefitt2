@@ -30,8 +30,6 @@ import {
   RecoveryBannerProps,
   NotJustClubSectionProps,
   EcosystemGifSectionProps,
-  MeetYourCoachesSectionProps,
-  ChooseYourPathSectionProps,
   PhotoCircleSectionProps,
   Banner2SectionType,
   Banner2WithImageProps,
@@ -42,8 +40,6 @@ import {
   JobSearchSection as JobSearchSectionType,
   JobDetailSection as JobDetailSectionType,
   ApplyNowFormSection,
-  Coach,
-  Package,
 } from "@/types/staticPages";
 import CardSection4 from "@/components/StaticPages/CardSection4";
 import CardSection5 from "@/components/StaticPages/CardSection5";
@@ -256,14 +252,22 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
       case "meetYourCoachesSection":
         return (
           <MeetYourCoachesSection
-            {...(value as unknown as MeetYourCoachesSectionProps & { coaches: Coach[] })}
+            title={(value as { title?: string }).title || ""}
+            coaches={
+              ((value as { coaches?: unknown[] }).coaches || []) as unknown[]
+            }
+            seeMoreText={(value as { seeMoreText?: string }).seeMoreText}
             isMobile={isMobile}
           />
         );
       case "chooseYourPathSection":
         return (
           <ChooseYourPathSection
-            {...(value as unknown as ChooseYourPathSectionProps & { packages: Package[] })}
+            title={(value as { title?: string }).title || ""}
+            packages={
+              ((value as { packages?: unknown[] }).packages || []) as unknown[]
+            }
+            buttonText={(value as { buttonText?: string }).buttonText || ""}
             isMobile={isMobile}
           />
         );

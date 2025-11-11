@@ -20,10 +20,8 @@ export const careersData: StaticPageData = {
     btnPrimaryText: "",
   },
   jobSearchSection: {
+    title: "Find Your Dream Job",
     jobs: [],
-    jobCategories: [],
-    jobTypes: [],
-    jobLocations: [],
   },
   footerSection: {
     logo: "https://da8nru77lsio9.cloudfront.net/images/logo.svg",

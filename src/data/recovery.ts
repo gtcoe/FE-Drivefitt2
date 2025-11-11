@@ -70,6 +70,7 @@ export const recoveryData: StaticPageData = {
   },
   evolutionSection: {
     title: "Why Recovery Matters",
+    description: "",
     evolutionList: [
       {
         title: "For Cricketers",

@@ -97,32 +97,6 @@ export const personalTrainingData: StaticPageData = {
       },
     ],
   },
-  nextStepSection: {
-    title: "Ready to Get Started?",
-    description:
-      "Ready to lead the sports and fitness revolution in your city?",
-    cardList: [
-      {
-        icon: "https://da8nru77lsio9.cloudfront.net/images/personal-training-c/step1.svg",
-        title: "Book your free consult – meet your coach.",
-        description: "",
-      },
-      {
-        icon: "https://da8nru77lsio9.cloudfront.net/images/personal-training-c/step2.svg",
-        title: "Get your custom plan – designed around your performance goals.",
-        description: "",
-      },
-      {
-        icon: "https://da8nru77lsio9.cloudfront.net/images/personal-training-c/step3.svg",
-        title:
-          "Start your transformation – train smarter, feel stronger, stay consistent.",
-        description: "",
-      },
-    ],
-    cardTitleClass:
-      "font-medium md:font-semibold text-base md:text-[28px] leading-5 md:leading-[36px] tracking-[0px] md:tracking-[-1px]",
-    cardDescriptionClass: "",
-  },
   bannerCTASection2: {
     title:
       "Book your free consult and feel the difference of Drive FIIT’s one-on-one coaching.",

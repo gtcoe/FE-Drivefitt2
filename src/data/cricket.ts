@@ -75,6 +75,7 @@ export const cricketData: StaticPageData = {
   },
   evolutionSection: {
     title: "Your Cricket Evolution Starts Here",
+    description: "",
     evolutionList: [
       {
         title: "Faster Skill Development",

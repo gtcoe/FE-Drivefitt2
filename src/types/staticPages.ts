@@ -151,6 +151,9 @@ export interface Banner2SectionType {
   title: string;
   description: string;
   titleClass?: string;
+  class?: string;
+  subClass?: string;
+  descriptionClass?: string;
 }
 
 export interface Banner2WithImageProps {
@@ -219,6 +222,7 @@ export interface StaticPageData {
   hero?: Hero;
   franchiseHeroSection?: unknown;
   aboutUsHeroSection?: unknown;
+  visionariesSection?: unknown;
   carouselBanner?: Array<{
     title: string;
     countdownEnd?: string;
@@ -252,8 +256,12 @@ export interface StaticPageData {
   photoCircleSection?: PhotoCircleSectionProps;
   banner2Section?: Banner2SectionType;
   banner2WithImageSection?: Banner2WithImageProps;
+  multiRevenueSection?: unknown;
   cardsParallaxSection?: CardsParallaxProps;
   signatureClassesSection?: SignatureClassesSection;
+  bannerCTASection2?: unknown;
+  bannerCTASection?: unknown;
+  banner3JoinUsSection?: unknown;
   pricingPlansSection?: PricingPlansSection;
   includedPlansSection?: IncludedPlansSection;
   jobSearchSection?: JobSearchSection;
@@ -363,6 +371,8 @@ export interface Job {
   department?: string;
   location?: string;
   type?: string;
+  jobType?: string;
+  jobCategory?: string;
   [key: string]: unknown;
 }
 
@@ -482,13 +492,13 @@ export type Package = unknown;
 // Ensure exports for sections used in StaticPages/index.tsx
 export interface MeetYourCoachesSectionProps {
   title: string;
-  coaches: Coach[];
+  coaches: unknown[];
   seeMoreText: string;
 }
 
 export interface ChooseYourPathSectionProps {
   title: string;
-  packages: Package[];
+  packages: unknown[];
   buttonText: string;
 }
 
@@ -503,6 +513,9 @@ export type ProfilePageData = StaticPageData & {
   };
   actions: {
     viewPlan: { isButton?: boolean; text: string; enabled?: boolean };
+    changeName?: { isButton?: boolean; text: string; enabled?: boolean };
+    changeEmail?: { isButton?: boolean; text: string; enabled?: boolean };
+    changeBirthday?: { isButton?: boolean; text: string; enabled?: boolean };
   };
 };
 

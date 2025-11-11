@@ -5,7 +5,7 @@ import {
   DepartmentStatus,
   LocationStatus,
 } from "@/constants/database";
-export {
+export type {
   JobStatus,
   ApplicationStatus,
   JobType,

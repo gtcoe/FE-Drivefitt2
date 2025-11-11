@@ -80,6 +80,7 @@ export const runningData: StaticPageData = {
     // title: "Join India’s One Of The First Indoor Run Movement",
     title:
       "Forget traffic, pollution, or weather. Choose Drive FITT’s indoor studio for:",
+    description: "",
     evolutionList: [
       {
         title: "Community Energy",

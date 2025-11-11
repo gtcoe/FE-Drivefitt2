@@ -68,7 +68,7 @@ const JobDisplay = ({ job, isMobile, isFirst, isLast }: JobDisplayProps) => {
                 isMobile ? "text-xs leading-5" : "text-base leading-5"
               }`}
             >
-              {job.jobType ?? ""}
+              {String(job.jobType ?? job.type ?? "")}
             </span>
           </div>
         </div>

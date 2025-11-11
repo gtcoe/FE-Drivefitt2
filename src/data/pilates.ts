@@ -56,6 +56,7 @@ export const pilatesData: StaticPageData = {
   },
   evolutionSection: {
     title: "Pilates Formats Offered",
+    description: "",
     evolutionList: [
       {
         title: "Mat Pilates",
