@@ -40,11 +40,21 @@ export interface CarouselBanner {
   description: string;
 }
 
+export type StaticCardType = {
+  title: string;
+  description: string;
+  backgroundImage?: string;
+  modalImage?: string;
+  link?: string;
+  redirectionIcon?: string;
+  [key: string]: unknown;
+};
+
 export interface StaticCardProps {
   title: string;
   description: string;
   cards?: unknown[];
-  cardSection?: unknown[];
+  cardSection?: StaticCardType[];
 }
 
 export interface InnovationCommunitySectionProps {
@@ -503,12 +513,4 @@ export type ContactUsPageData = Omit<
 > & {
   footerInfoSection: ContactUsFooterInfoProps;
   appDownloadSection?: AppDownloadProps;
-};
-
-// Static card type used in StaticCard component
-export type StaticCardType = {
-  title: string;
-  description: string;
-  backgroundImage?: string;
-  modalImage?: string;
 };

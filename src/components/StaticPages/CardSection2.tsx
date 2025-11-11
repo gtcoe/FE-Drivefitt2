@@ -1,4 +1,4 @@
-import { StaticCardProps, StaticCardType } from "@/types/staticPages";
+import { StaticCardProps } from "@/types/staticPages";
 import StaticCard from "@/components/StaticPages/StaticCard";
 import TitleDescription from "@/components/common/TitleDescription";
 import ScrollAnimation from "@/components/common/ScrollAnimation";
@@ -20,7 +20,7 @@ const CardSection2 = ({
         <>
           {isMobile ? (
             <div className="flex flex-col w-full gap-4">
-              {cardSection.map((card: StaticCardType, idx) => (
+              {cardSection.map((card, idx) => (
                 <ScrollAnimation
                   key={idx}
                   delay={0.3 + idx * 0.2}
@@ -34,13 +34,13 @@ const CardSection2 = ({
             <div className="grid grid-cols-2 gap-10">
               <ScrollAnimation delay={0.3} direction="up">
                 <StaticCard
-                  data={cardSection[0] as StaticCardType}
+                  data={cardSection[0]}
                   className="h-[256px] md:h-[407px]"
                 />
               </ScrollAnimation>
               <ScrollAnimation delay={0.5} direction="up">
                 <StaticCard
-                  data={cardSection[1] as StaticCardType}
+                  data={cardSection[1]}
                   className="h-[256px] md:h-[407px]"
                 />
               </ScrollAnimation>
