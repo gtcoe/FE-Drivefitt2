@@ -63,8 +63,10 @@ export default function DashboardPage() {
   }, [subscriptionTimeRange, formsTimeRange]);
 
   useEffect(() => {
-    fetchDashboardData();
-  }, [fetchDashboardData]);
+    if (adminUser) {
+      fetchDashboardData();
+    }
+  }, [fetchDashboardData, adminUser]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-IN", {

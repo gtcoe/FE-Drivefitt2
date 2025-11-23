@@ -58,8 +58,12 @@ const DashboardGraph: React.FC<DashboardGraphProps> = ({
         <div className="relative">
           <select
             value={timeRange}
-            onChange={(e) => onTimeRangeChange?.(e.target.value)}
-            className="appearance-none bg-[#0D0D0D] text-[#BFBFBF] rounded-lg pl-4 pr-8 py-2 border border-[#2D2D2D] focus:outline-none"
+            onChange={(e) => {
+              if (onTimeRangeChange) {
+                onTimeRangeChange(e.target.value);
+              }
+            }}
+            className="appearance-none bg-[#0D0D0D] text-[#BFBFBF] rounded-lg pl-4 pr-8 py-2 border border-[#2D2D2D] focus:outline-none cursor-pointer"
             style={{
               fontSize: "14px",
               lineHeight: "20px",

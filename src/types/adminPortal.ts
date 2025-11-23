@@ -39,6 +39,7 @@ export interface BlogFormData {
   slug: string;
   image: string;
   content?: string;
+  date?: string; // Date in YYYY-MM-DD format
   isPublished?: number;
   isFeatured?: boolean; // Whether this blog should be featured
   // category handling
@@ -86,7 +87,7 @@ export interface BlogsTableProps {
 export interface BlogModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (blog: BlogFormData) => void;
+  onSave: (blog: BlogFormData) => void | Promise<void>;
   blog?: BlogEntry;
   mode: "create" | "edit";
 }

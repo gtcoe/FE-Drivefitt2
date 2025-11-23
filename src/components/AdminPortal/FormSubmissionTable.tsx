@@ -345,11 +345,17 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
           borderCollapse: "separate",
           borderSpacing: 0,
           tableLayout: "auto",
-          overflow: "visible",
         }}
       >
-        <thead style={{ position: "sticky", top: 0, zIndex: 10 }}>
-          <tr style={{ background: "#1D1D1D" }}>
+        <thead
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+            background: "#333333",
+          }}
+        >
+          <tr style={{ background: "#333333" }}>
             <th style={headerCellStyle}>Name</th>
             <th style={headerCellStyle}>Email Address</th>
             <th style={headerCellStyle}>Phone Number</th>
@@ -543,11 +549,17 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
           borderCollapse: "separate",
           borderSpacing: 0,
           tableLayout: "auto",
-          overflow: "visible",
         }}
       >
-        <thead style={{ position: "sticky", top: 0, zIndex: 10 }}>
-          <tr style={{ background: "#1D1D1D" }}>
+        <thead
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+            background: "#333333",
+          }}
+        >
+          <tr style={{ background: "#333333" }}>
             <th style={headerCellStyle}>Name</th>
             <th style={headerCellStyle}>Email Address</th>
             <th style={headerCellStyle}>Phone Number</th>
@@ -732,11 +744,17 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
           borderCollapse: "separate",
           borderSpacing: 0,
           tableLayout: "auto",
-          overflow: "visible",
         }}
       >
-        <thead style={{ position: "sticky", top: 0, zIndex: 10 }}>
-          <tr style={{ background: "#1D1D1D" }}>
+        <thead
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+            background: "#333333",
+          }}
+        >
+          <tr style={{ background: "#333333" }}>
             <th style={headerCellStyle}>Name</th>
             <th style={headerCellStyle}>Phone Number</th>
             <th style={headerCellStyle}>Interested In</th>
@@ -808,6 +826,9 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
                   <div className="relative flex justify-center">
                     <button
                       type="button"
+                      ref={(el) => {
+                        statusButtonRefs.current[index] = el;
+                      }}
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleStatusDropdown(index);
@@ -856,11 +877,11 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
                     </button>
                     {statusDropdownOpen === index && (
                       <div
-                        className="absolute left-0 bg-[#1D1D1D] border border-[#333333] rounded shadow-lg z-20"
+                        id={`status-dropdown-${index}`}
+                        className="fixed bg-[#1D1D1D] border border-[#333333] rounded shadow-lg"
                         style={{
                           width: "85px",
-                          top: "100%",
-                          marginTop: "4px",
+                          zIndex: 99999,
                         }}
                       >
                         {getStatusOptions().map((option) => (
@@ -996,33 +1017,36 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
       <div
         className={`border border-[#333333] ${
           showHeader ? "border-t-0 rounded-b-2xl" : "rounded-2xl"
-        }`}
-        style={{ width: "1100px" }}
+        } flex flex-col`}
+        style={{ width: "1100px", maxHeight: "calc(103vh - 250px)" }}
       >
-        {loading && (
-          <div className="flex items-center justify-center py-20 bg-[#1D1D1D]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00DBDC]"></div>
-          </div>
-        )}
+        <div
+          className="overflow-y-auto flex-1"
+          style={{ maxHeight: "calc(103vh - 350px)" }}
+        >
+          {loading && (
+            <div className="flex items-center justify-center py-20 bg-[#1D1D1D]">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00DBDC]"></div>
+            </div>
+          )}
 
-        {error && (
-          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg mx-10 my-4">
-            <p className="text-red-400 text-sm">{error}</p>
-          </div>
-        )}
+          {error && (
+            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg mx-10 my-4">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
 
-        {!loading && !error && data.length === 0 && (
-          <div className="py-20 text-center text-[#8A8A8A] bg-[#1D1D1D]">
-            No data found
-          </div>
-        )}
+          {!loading && !error && data.length === 0 && (
+            <div className="py-20 text-center text-[#8A8A8A] bg-[#1D1D1D]">
+              No data found
+            </div>
+          )}
 
-        {!loading && !error && data.length > 0 && (
-          <div style={{ overflow: "visible" }}>{renderTable()}</div>
-        )}
+          {!loading && !error && data.length > 0 && <div>{renderTable()}</div>}
+        </div>
 
         <div
-          className="bg-[#333333] px-6 py-4 border-t border-[#333333] rounded-b-2xl"
+          className="bg-[#333333] px-6 py-4 border-t border-[#333333] rounded-b-2xl flex-shrink-0"
           style={{
             width: "100%",
           }}

@@ -144,13 +144,6 @@ const AdminHeader = ({
           </button>
         )}
 
-        {/* Publish Button */}
-        {title === "Blogs" && (
-          <button className="bg-[#00DBDC] text-[#0D0D0D] px-6 py-2 rounded-lg font-medium text-sm hover:bg-[#00C5C8] transition-colors duration-200">
-            Publish
-          </button>
-        )}
-
         {/* User Profile */}
         <div className="relative" ref={userDropdownRef}>
           <button

@@ -188,7 +188,9 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }: BlogModalProps) => {
     // compute categoryId based on mode
     const categoryId =
       categoryMode === "select" ? selectedCategoryId : undefined;
-    onSave({ ...formData, isPublished: 0, categoryId });
+    // Convert date from DD/MM/YYYY to YYYY-MM-DD format for API
+    const dateInYYYYMMDD = toPickerValue(date);
+    onSave({ ...formData, date: dateInYYYYMMDD, isPublished: 0, categoryId });
     setTimeout(() => {
       setSaveButtonText("Save");
       onClose();
@@ -204,7 +206,9 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }: BlogModalProps) => {
 
     const categoryId =
       categoryMode === "select" ? selectedCategoryId : undefined;
-    onSave({ ...formData, isPublished: 1, categoryId });
+    // Convert date from DD/MM/YYYY to YYYY-MM-DD format for API
+    const dateInYYYYMMDD = toPickerValue(date);
+    onSave({ ...formData, date: dateInYYYYMMDD, isPublished: 1, categoryId });
     onClose();
   };
 
@@ -284,13 +288,75 @@ const BlogModal = ({ isOpen, onClose, onSave, blog }: BlogModalProps) => {
     }
   };
 
-  const handlePreview = () => {
-    // Generate preview URL and open in new tab
-    if (formData.slug) {
-      const previewUrl = `${window.location.origin}/blogs/${formData.slug}`;
+  const handlePreview = async () => {
+    // Validate all required fields before preview
+    const missingFields: string[] = [];
+
+    if (!formData.title?.trim()) {
+      missingFields.push("Title");
+    }
+    if (!formData.description?.trim()) {
+      missingFields.push("Description");
+    }
+    if (!formData.slug?.trim()) {
+      missingFields.push("Slug");
+    } else if (!validateSlug(formData.slug)) {
+      alert("Please enter a valid slug to preview the blog");
+      return;
+    }
+    if (!date?.trim()) {
+      missingFields.push("Date");
+    }
+    if (!formData.image?.trim()) {
+      missingFields.push("Image");
+    }
+    if (!formData.content?.trim()) {
+      missingFields.push("Content");
+    }
+
+    if (missingFields.length > 0) {
+      alert(
+        `Please fill in the following required fields before preview:\n\n${missingFields.join(
+          ", "
+        )}`
+      );
+      return;
+    }
+
+    // Auto-save as draft before preview (if it's a new blog or has unsaved changes)
+    // This ensures the blog exists in the database for preview
+    try {
+      const categoryId =
+        categoryMode === "select" ? selectedCategoryId : undefined;
+
+      // Convert date from DD/MM/YYYY to YYYY-MM-DD format for API
+      const dateInYYYYMMDD = toPickerValue(date);
+
+      // Save as draft (isPublished: 0) before preview, including date
+      await onSave({
+        ...formData,
+        date: dateInYYYYMMDD,
+        isPublished: 0,
+        categoryId,
+      });
+
+      // Small delay to ensure database write completes
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // Open preview in new tab
+      const previewUrl = `${window.location.origin}/blogs/preview/${formData.slug}`;
       window.open(previewUrl, "_blank");
-    } else {
-      alert("Please enter a slug to preview the blog");
+    } catch (error) {
+      console.error("Error saving blog before preview:", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      if (errorMessage.includes("Missing fields")) {
+        alert(
+          "Some required fields are missing. Please fill in all required fields (Title, Description, Slug, Date, Image, Content) before preview."
+        );
+      } else {
+        alert(`Failed to save blog: ${errorMessage}. Please try again.`);
+      }
     }
   };
 

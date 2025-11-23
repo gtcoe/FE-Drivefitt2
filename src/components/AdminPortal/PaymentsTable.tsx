@@ -222,7 +222,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
               }}
             >
               <thead style={{ position: "sticky", top: 0, zIndex: 10 }}>
-                <tr style={{ background: "#1D1D1D" }}>
+                <tr style={{ background: "#333333" }}>
                   <th style={headerCellStyle}>User Name</th>
                   <th style={headerCellStyle}>Order ID</th>
                   <th style={headerCellStyle}>Amount</th>
@@ -254,7 +254,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
         )}
 
         <div
-          className="bg-[#333333] px-6 py-4 border-t border-[#333333]"
+          className="bg-[#333333] px-6 py-4 border-t border-[#333333] rounded-b-2xl"
           style={{
             width: "100%",
           }}
