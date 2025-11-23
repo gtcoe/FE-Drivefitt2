@@ -106,7 +106,7 @@ const EvolutionSection = ({
         >
           {/* Desktop Hover View */}
           <div className="hidden md:flex justify-between h-fit items-start w-full gap-10 md:px-[120px] pl-6 py-4 md:py-[60px]">
-            {evolutionList.map((evo: EvolutionItem, idx: number) => {
+            {evolutionList.map((evo, idx) => {
               return (
                 <div
                   key={idx}
@@ -140,7 +140,7 @@ const EvolutionSection = ({
         className="block md:hidden mt-[-70px] pl-4 evolutionCarousel"
       >
         <Slider {...sliderSettings}>
-          {evolutionList.map((evo: EvolutionItem, idx: number) => (
+          {evolutionList.map((evo, idx) => (
             <div key={idx} className="!w-full pl-4">
               <div
                 ref={(el) => {

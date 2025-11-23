@@ -24,8 +24,8 @@ const FranchiseFooterInfo = ({
     >
       <div className="w-full md:w-2/5 flex">
         <ChatWithUs
-          footerInfoList={footerInfoList ?? []}
-          socialLinkList={socialLinkList ?? []}
+          footerInfoList={footerInfoList}
+          socialLinkList={socialLinkList}
           isMobile={isMobile}
         />
       </div>

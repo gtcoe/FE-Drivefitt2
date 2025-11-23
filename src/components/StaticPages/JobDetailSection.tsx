@@ -12,8 +12,7 @@ const JobDetailSection = ({ data, isMobile }: JobDetailSectionProps) => {
   const router = useRouter();
 
   const handleApplyNow = () => {
-    const job = data.job as { id: string | number; [key: string]: unknown };
-    router.push(`/job-detail/${job.id}/apply-now`);
+    router.push(`/job-detail/${data.job.id}/apply-now`);
   };
 
   return (
@@ -33,21 +32,9 @@ const JobDetailSection = ({ data, isMobile }: JobDetailSectionProps) => {
           } border-2 border-[#333333] bg-gradient-to-b from-[#1E1E1E] to-[#141414]`}
         >
           <div className="px-6 md:px-10 py-6 md:py-10">
-            {(
-              data.job as {
-                details: Array<{
-                  title: string;
-                  description?: string;
-                  list?: string[];
-                }>;
-              }
-            ).details.map(
+            {data.job.details.map(
               (
-                detail: {
-                  title: string;
-                  description?: string;
-                  list?: string[];
-                },
+                detail: { title: string; description: string; list: string[] },
                 index: number
               ) => (
                 <div
@@ -55,8 +42,7 @@ const JobDetailSection = ({ data, isMobile }: JobDetailSectionProps) => {
                   className={`w-full h-fit opacity-100 ${
                     isMobile ? "pb-6 gap-4" : "pb-10 gap-6"
                   } ${
-                    index <
-                    (data.job as { details: Array<unknown> }).details.length - 1
+                    index < data.job.details.length - 1
                       ? "border-b border-[#333333]"
                       : ""
                   }`}
@@ -96,7 +82,7 @@ const JobDetailSection = ({ data, isMobile }: JobDetailSectionProps) => {
                   {/* List */}
                   {detail.list && detail.list.length > 0 && (
                     <ul className="space-y-3">
-                      {detail.list?.map((item: string, itemIndex: number) => (
+                      {detail.list.map((item, itemIndex) => (
                         <li
                           key={itemIndex}
                           className={`flex items-start gap-3 text-gray-300 font-light ${

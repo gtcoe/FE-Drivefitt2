@@ -4,14 +4,8 @@ import { useEffect, useState } from "react";
 import AdminHeader from "@/components/AdminPortal/AdminHeader";
 import CareerSection from "@/components/AdminPortal/CareerSection";
 import JobPostApplicationSection from "@/components/AdminPortal/JobPostApplicationSection";
-import { AdminUser } from "@/types/adminPortal";
 import { metricsAPI } from "@/services/metricsAPI";
-
-// Mock user data - in real implementation, this would come from authentication
-const mockUser: AdminUser = {
-  name: "Admin",
-  email: "admin@drivefitt.com",
-};
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 interface CareerMetrics {
   openPositions: number;
@@ -28,6 +22,7 @@ export default function CareerManagementPage() {
     shortlistedCandidates: 0,
   });
   const [loading, setLoading] = useState(true);
+  const { adminUser } = useAdminAuth();
 
   const fetchMetrics = async () => {
     try {
@@ -45,6 +40,14 @@ export default function CareerManagementPage() {
   useEffect(() => {
     fetchMetrics();
   }, []);
+
+  if (!adminUser) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   const CareerApplicationList = [
     {
@@ -68,7 +71,7 @@ export default function CareerManagementPage() {
     <div className="min-h-screen bg-[#0D0D0D]">
       <AdminHeader
         title="Career management"
-        user={mockUser}
+        user={adminUser}
         showSearchButton={false}
         showAddButton={false}
       />

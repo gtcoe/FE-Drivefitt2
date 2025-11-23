@@ -3,15 +3,7 @@ import { executeQuery } from "@/lib/database";
 
 export async function GET() {
   try {
-    const rows = await executeQuery<
-      Array<{
-        id: number;
-        heading: string;
-        status: string;
-        created_at: string;
-        updated_at: string;
-      }>
-    >(
+    const rows = await executeQuery<unknown[]>(
       `SELECT id, heading, status, created_at, updated_at FROM blog_category ORDER BY id DESC`
     );
     return NextResponse.json({ status: true, data: rows });
@@ -38,16 +30,8 @@ export async function POST(request: NextRequest) {
       `INSERT INTO blog_category (heading, status) VALUES (?, ?)`,
       [heading, status]
     );
-    const insertedId = result?.insertId;
-    const [row] = await executeQuery<
-      Array<{
-        id: number;
-        heading: string;
-        status: string;
-        created_at: string;
-        updated_at: string;
-      }>
-    >(
+    const insertedId = result.insertId;
+    const [row]: unknown[] = await executeQuery<unknown[]>(
       `SELECT id, heading, status, created_at, updated_at FROM blog_category WHERE id = ?`,
       [insertedId]
     );

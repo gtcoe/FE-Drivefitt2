@@ -15,13 +15,8 @@ export async function PUT(
 
     const body = await request.json();
     const { status } = body;
-    const numericStatus = Number(status);
 
-    if (
-      status === undefined ||
-      Number.isNaN(numericStatus) ||
-      !(Object.values(JOB_STATUS) as number[]).includes(numericStatus)
-    ) {
+    if (status === undefined || !Object.values(JOB_STATUS).includes(status)) {
       return NextResponse.json(
         {
           error:
@@ -38,7 +33,7 @@ export async function PUT(
     `;
 
     const result = await executeQuery<{ affectedRows: number }>(query, [
-      numericStatus,
+      status,
       jobId,
     ]);
 

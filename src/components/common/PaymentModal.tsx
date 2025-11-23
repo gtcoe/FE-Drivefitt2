@@ -87,6 +87,7 @@ export default function PaymentModal({
           userDetails.name && userDetails.email && userDetails.contact,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isOpen,
     user?.id,

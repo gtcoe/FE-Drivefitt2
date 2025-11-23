@@ -1,0 +1,83 @@
+export const CONTACT_STATUS = {
+  NEW: 1,
+  IN_PROGRESS: 2,
+  RESOLVED: 3,
+  CLOSED: 4,
+  DELETED: 5,
+} as const;
+
+export const CONTACT_STATUS_LABELS = {
+  [CONTACT_STATUS.NEW]: "New",
+  [CONTACT_STATUS.IN_PROGRESS]: "In Progress",
+  [CONTACT_STATUS.RESOLVED]: "Resolved",
+  [CONTACT_STATUS.CLOSED]: "Closed",
+  [CONTACT_STATUS.DELETED]: "Deleted",
+} as const;
+
+export const CONTACT_STATUS_COLORS = {
+  [CONTACT_STATUS.NEW]: "#00DBDC",
+  [CONTACT_STATUS.IN_PROGRESS]: "#FFA500",
+  [CONTACT_STATUS.RESOLVED]: "#00FF00",
+  [CONTACT_STATUS.CLOSED]: "#808080",
+  [CONTACT_STATUS.DELETED]: "#FF0000",
+} as const;
+
+export const FRANCHISE_STATUS = {
+  NEW: 1,
+  CONTACTED: 2,
+  IN_DISCUSSION: 3,
+  APPROVED: 4,
+  REJECTED: 5,
+  DELETED: 6,
+} as const;
+
+export const FRANCHISE_STATUS_LABELS = {
+  [FRANCHISE_STATUS.NEW]: "New",
+  [FRANCHISE_STATUS.CONTACTED]: "Contacted",
+  [FRANCHISE_STATUS.IN_DISCUSSION]: "In Discussion",
+  [FRANCHISE_STATUS.APPROVED]: "Approved",
+  [FRANCHISE_STATUS.REJECTED]: "Rejected",
+  [FRANCHISE_STATUS.DELETED]: "Deleted",
+} as const;
+
+export const FRANCHISE_STATUS_COLORS = {
+  [FRANCHISE_STATUS.NEW]: "#00DBDC",
+  [FRANCHISE_STATUS.CONTACTED]: "#FFA500",
+  [FRANCHISE_STATUS.IN_DISCUSSION]: "#FFFF00",
+  [FRANCHISE_STATUS.APPROVED]: "#00FF00",
+  [FRANCHISE_STATUS.REJECTED]: "#FF0000",
+  [FRANCHISE_STATUS.DELETED]: "#8B0000",
+} as const;
+
+export const LEAD_STATUS = {
+  NEW: 1,
+  CONTACTED: 2,
+  QUALIFIED: 3,
+  CONVERTED: 4,
+  REJECTED: 5,
+  DELETED: 6,
+} as const;
+
+export const LEAD_STATUS_LABELS = {
+  [LEAD_STATUS.NEW]: "New",
+  [LEAD_STATUS.CONTACTED]: "Contacted",
+  [LEAD_STATUS.QUALIFIED]: "Qualified",
+  [LEAD_STATUS.CONVERTED]: "Converted",
+  [LEAD_STATUS.REJECTED]: "Rejected",
+  [LEAD_STATUS.DELETED]: "Deleted",
+} as const;
+
+export const LEAD_STATUS_COLORS = {
+  [LEAD_STATUS.NEW]: "#00DBDC",
+  [LEAD_STATUS.CONTACTED]: "#FFA500",
+  [LEAD_STATUS.QUALIFIED]: "#FFFF00",
+  [LEAD_STATUS.CONVERTED]: "#00FF00",
+  [LEAD_STATUS.REJECTED]: "#FF0000",
+  [LEAD_STATUS.DELETED]: "#8B0000",
+} as const;
+
+export type ContactStatusType =
+  (typeof CONTACT_STATUS)[keyof typeof CONTACT_STATUS];
+export type FranchiseStatusType =
+  (typeof FRANCHISE_STATUS)[keyof typeof FRANCHISE_STATUS];
+export type LeadStatusType = (typeof LEAD_STATUS)[keyof typeof LEAD_STATUS];

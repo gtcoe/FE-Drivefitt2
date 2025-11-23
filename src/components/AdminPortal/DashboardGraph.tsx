@@ -16,7 +16,7 @@ import {
 interface DashboardGraphProps {
   title: string;
   value: string | number;
-  data: Array<Record<string, string | number>>;
+  data: any[];
   type: "line" | "bar";
   timeRange: string;
   onTimeRangeChange?: (range: string) => void;

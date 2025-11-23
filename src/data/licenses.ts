@@ -146,8 +146,8 @@ export const licensesData: StaticPageData = {
         title: "Quick Links",
         links: [
           { title: "About us", link: "/about-us" },
-          { title: "Blogs", link: "/coming-soon" },
-          { title: "Career", link: "/coming-soon" },
+          { title: "Blogs", link: "/blogs" },
+          { title: "Career", link: "/careers" },
           { title: "Partner With Us", link: "/franchise" },
         ],
       },

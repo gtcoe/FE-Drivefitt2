@@ -7,22 +7,7 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
-    type BlogRow = {
-      id: number;
-      title: string;
-      description: string;
-      slug: string;
-      date: string;
-      image: string;
-      html: string;
-      category_id: number | null;
-      is_featured: number;
-      status: number;
-      created_at: string;
-      updated_at: string;
-      category_heading: string | null;
-    };
-    const [row] = await executeQuery<BlogRow[]>(
+    const [row]: any[] = await executeQuery<any[]>(
       `SELECT 
         b.id, 
         b.title, 

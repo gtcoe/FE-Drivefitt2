@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Job } from "@/types/staticPages";
 import { useRouter } from "next/navigation";
 
@@ -39,9 +40,11 @@ const JobDisplay = ({ job, isMobile, isFirst, isLast }: JobDisplayProps) => {
         <div className="flex items-center md:gap-[10px] gap-2">
           {/* Location */}
           <div className="flex items-center gap-1">
-            <img
+            <Image
               src="/images/careers/marker.svg"
               alt="Location"
+              width={20}
+              height={20}
               className="w-5 h-5"
             />
             <span
@@ -58,9 +61,11 @@ const JobDisplay = ({ job, isMobile, isFirst, isLast }: JobDisplayProps) => {
 
           {/* Job Type */}
           <div className="flex items-center gap-1">
-            <img
+            <Image
               src="/images/careers/luggage.svg"
               alt="Job Type"
+              width={20}
+              height={20}
               className="w-5 h-5"
             />
             <span
@@ -68,7 +73,7 @@ const JobDisplay = ({ job, isMobile, isFirst, isLast }: JobDisplayProps) => {
                 isMobile ? "text-xs leading-5" : "text-base leading-5"
               }`}
             >
-              {String(job.jobType ?? job.type ?? "")}
+              {job.jobType}
             </span>
           </div>
         </div>

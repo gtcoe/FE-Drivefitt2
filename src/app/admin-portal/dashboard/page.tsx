@@ -1,46 +1,106 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AdminHeader from "@/components/AdminPortal/AdminHeader";
 import StatsCard from "@/components/AdminPortal/StatsCard";
 import DashboardGraph from "@/components/AdminPortal/DashboardGraph";
-import { AdminUser } from "@/types/adminPortal";
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
-// Mock user data - in real implementation, this would come from authentication
-const mockUser: AdminUser = {
-  name: "Admin",
-  email: "admin@drivefitt.com",
-};
+interface DashboardStats {
+  sales: number;
+  subscriptionCount: number;
+  newUserLogin: number;
+  formSubmitted: number;
+}
 
-// Mock data for graphs
-const generateMockData = (days: number) => {
-  const data = [];
-  for (let i = 0; i < days; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
-    data.unshift({
-      date: date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      value: Math.floor(Math.random() * 100),
-    });
-  }
-  return data;
-};
+interface GraphData {
+  date: string;
+  value: number;
+}
 
 export default function DashboardPage() {
   const [subscriptionTimeRange, setSubscriptionTimeRange] = useState("30");
   const [formsTimeRange, setFormsTimeRange] = useState("30");
+  const { adminUser } = useAdminAuth();
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [subscriptionData, setSubscriptionData] = useState<GraphData[]>([]);
+  const [formsData, setFormsData] = useState<GraphData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [subscriptionTotal, setSubscriptionTotal] = useState(0);
+  const [formsTotal, setFormsTotal] = useState(0);
 
-  const subscriptionData = generateMockData(Number(subscriptionTimeRange));
-  const formsData = generateMockData(Number(formsTimeRange));
+  const fetchDashboardData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const statsResponse = await fetch(`/api/admin/dashboard/stats?days=30`);
+      const statsData = await statsResponse.json();
+      if (statsData.status) {
+        setStats(statsData.data);
+      }
+
+      const subscriptionResponse = await fetch(
+        `/api/admin/dashboard/graph?type=subscription&days=${subscriptionTimeRange}`
+      );
+      const subscriptionGraphData = await subscriptionResponse.json();
+      if (subscriptionGraphData.status) {
+        setSubscriptionData(subscriptionGraphData.data.data);
+        setSubscriptionTotal(subscriptionGraphData.data.total);
+      }
+
+      const formsResponse = await fetch(
+        `/api/admin/dashboard/graph?type=forms&days=${formsTimeRange}`
+      );
+      const formsGraphData = await formsResponse.json();
+      if (formsGraphData.status) {
+        setFormsData(formsGraphData.data.data);
+        setFormsTotal(formsGraphData.data.total);
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [subscriptionTimeRange, formsTimeRange]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  if (!adminUser) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D]">
+        <AdminHeader
+          title="Dashboard"
+          showSearchButton={false}
+          showAddButton={false}
+        />
+        <div className="p-10 flex items-center justify-center">
+          <div className="text-white">Loading dashboard data...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0D0D0D]">
       <AdminHeader
         title="Dashboard"
-        user={mockUser}
         showSearchButton={false}
         showAddButton={false}
       />
@@ -48,20 +108,24 @@ export default function DashboardPage() {
       <div className="p-10">
         {/* Stats Cards */}
         <div className="grid grid-cols-4 gap-6 mb-8">
-          <StatsCard title="Sales" value="₹5,00,000" subtitle="Last 30 days" />
+          <StatsCard
+            title="Sales"
+            value={stats ? formatCurrency(stats.sales) : "₹0"}
+            subtitle="Last 30 days"
+          />
           <StatsCard
             title="Subscription Count"
-            value="2,323"
+            value={stats ? stats.subscriptionCount.toLocaleString() : "0"}
             subtitle="Last 30 days"
           />
           <StatsCard
             title="New User Login"
-            value="200"
+            value={stats ? stats.newUserLogin.toLocaleString() : "0"}
             subtitle="Last 30 days"
           />
           <StatsCard
             title="Form Submitted"
-            value="500"
+            value={stats ? stats.formSubmitted.toLocaleString() : "0"}
             subtitle="Last 30 days"
           />
         </div>
@@ -70,7 +134,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 gap-6">
           <DashboardGraph
             title="Subscription"
-            value="200"
+            value={subscriptionTotal.toLocaleString()}
             data={subscriptionData}
             type="line"
             timeRange={subscriptionTimeRange}
@@ -78,7 +142,7 @@ export default function DashboardPage() {
           />
           <DashboardGraph
             title="Forms Submitted"
-            value="500"
+            value={formsTotal.toLocaleString()}
             data={formsData}
             type="bar"
             timeRange={formsTimeRange}

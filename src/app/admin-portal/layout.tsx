@@ -3,20 +3,19 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import LeftSidebar from "@/components/AdminPortal/LeftSidebar";
+import AdminLogin from "@/components/AdminPortal/AdminLogin";
 import { AdminNavItem } from "@/types/adminPortal";
+import { AdminAuthProvider, useAdminAuth } from "@/contexts/AdminAuthContext";
 
 const adminNavItems: AdminNavItem[] = [
   { id: "dashboard", label: "Dashboard", path: "/admin-portal/dashboard" },
   { id: "blogs", label: "Blogs", path: "/admin-portal/blogs" },
+  { id: "users", label: "Users", path: "/admin-portal/users" },
+  { id: "payments", label: "Payments", path: "/admin-portal/payments" },
   {
     id: "career-management",
     label: "Career Management",
     path: "/admin-portal/career-management",
-  },
-  {
-    id: "web-analytics",
-    label: "Web Analytics",
-    path: "/admin-portal/web-analytics",
   },
   {
     id: "form-submission",
@@ -42,14 +41,11 @@ const adminNavItems: AdminNavItem[] = [
   },
 ];
 
-export default function AdminPortalLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function AdminPortalContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("dashboard");
+  const { isAuthenticated, isLoading } = useAdminAuth();
 
   // Extract selected option from pathname
   useEffect(() => {
@@ -66,12 +62,16 @@ export default function AdminPortalLayout({
         adminNavItems.some((item) => item.id === currentOption)
       ) {
         setSelectedOption(currentOption);
-      } else if (pathname === "/admin-portal") {
-        // Redirect to dashboard if on base admin-portal path
-        router.push("/admin-portal/dashboard");
       }
     }
-  }, [pathname, router]);
+  }, [pathname]);
+
+  // Redirect unauthenticated users to login
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated && pathname !== "/admin-portal") {
+      router.push("/admin-portal");
+    }
+  }, [isAuthenticated, isLoading, pathname, router]);
 
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
@@ -95,6 +95,21 @@ export default function AdminPortalLayout({
     }
   };
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show login form if not authenticated
+  if (!isAuthenticated) {
+    return <AdminLogin />;
+  }
+
+  // Show admin portal layout for authenticated users
   return (
     <div className="min-h-screen bg-[#0D0D0D] flex">
       {/* Left Sidebar */}
@@ -109,5 +124,17 @@ export default function AdminPortalLayout({
         {children}
       </div>
     </div>
+  );
+}
+
+export default function AdminPortalLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AdminAuthProvider>
+      <AdminPortalContent>{children}</AdminPortalContent>
+    </AdminAuthProvider>
   );
 }

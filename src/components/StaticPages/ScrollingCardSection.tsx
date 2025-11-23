@@ -1,8 +1,5 @@
 "use client";
-import {
-  ScrollingCardSection as ScrollingCardSectionType,
-  ScrollingCardItem,
-} from "@/types/staticPages";
+import { ScrollingCardSection as ScrollingCardSectionType } from "@/types/staticPages";
 import TitleDescription from "@/components/common/TitleDescription";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
@@ -18,7 +15,8 @@ const ScrollingCardSection = ({
   data,
   isMobile,
 }: ScrollingCardSectionProps) => {
-  const { title, description, iconImage, cardSection } = data;
+  const { title, description, iconImage, cardSection, cards } = data;
+  const cardList = cardSection || cards || [];
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
@@ -70,9 +68,9 @@ const ScrollingCardSection = ({
           className="rounded-[20px] md:rounded-[40px] w-full h-full cursor-pointer flex flex-col justify-center"
           style={{
             background: `linear-gradient(180.09deg, rgba(13, 13, 13, 0) 50%, #0D0D0D 99.92%), url(${
-              isMobile && cardSection?.[activeIndex]?.mobileImage
-                ? cardSection[activeIndex].mobileImage
-                : cardSection?.[activeIndex]?.backgroundImage || ""
+              isMobile && cardList[activeIndex]?.mobileImage
+                ? cardList[activeIndex].mobileImage
+                : cardList[activeIndex]?.backgroundImage
             })`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
@@ -105,7 +103,7 @@ const ScrollingCardSection = ({
             direction="left"
             className="flex flex-col md:w-[584px] w-full h-auto md:h-full justify-center border-t border-[#FFFFFF29] md:border-t-0"
           >
-            {cardSection?.map((card: ScrollingCardItem, idx: number) => (
+            {cardList.map((card, idx) => (
               <motion.div
                 key={idx}
                 ref={(el) => {

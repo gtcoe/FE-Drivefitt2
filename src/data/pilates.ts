@@ -56,7 +56,6 @@ export const pilatesData: StaticPageData = {
   },
   evolutionSection: {
     title: "Pilates Formats Offered",
-    description: "",
     evolutionList: [
       {
         title: "Mat Pilates",
@@ -194,8 +193,8 @@ export const pilatesData: StaticPageData = {
         title: "Quick links",
         links: [
           { title: "About us", link: "/about-us" },
-          { title: "Blogs", link: "/coming-soon" },
-          { title: "Career", link: "/coming-soon" },
+          { title: "Blogs", link: "/blogs" },
+          { title: "Career", link: "/careers" },
           { title: "Partner with us", link: "/franchise" },
         ],
       },

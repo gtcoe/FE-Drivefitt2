@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { JobPosting, JobPostingUpdateData } from "@/types/database";
-import { JOB_STATUS, JobStatus, JobType } from "@/constants/database";
+import { JOB_STATUS, JobStatus } from "@/constants/database";
 
 export async function GET(
   request: NextRequest,
@@ -47,37 +47,7 @@ export async function GET(
       WHERE jp.id = ? AND jp.status = ? AND jp.is_visible = 1
     `;
 
-    type DbRow = {
-      id: number;
-      title: string;
-      job_type: number;
-      application_deadline: string | null;
-      job_description: string | null;
-      skills_required: string | null;
-      role: string | string[] | null;
-      qualifications: string | string[] | null;
-      status: number;
-      years_of_experience: string | null;
-      is_visible: number;
-      created_at: string;
-      updated_at: string;
-      dept_id: number | null;
-      dept_name: string | null;
-      dept_title: string | null;
-      dept_status: number | null;
-      dept_created_at: string | null;
-      dept_updated_at: string | null;
-      loc_id: number | null;
-      full_location: string | null;
-      city: string | null;
-      loc_status: number | null;
-      loc_created_at: string | null;
-      loc_updated_at: string | null;
-    };
-    const result = await executeQuery<DbRow[]>(query, [
-      jobId,
-      JOB_STATUS.ACTIVE,
-    ]);
+    const result = await executeQuery<any[]>(query, [jobId, JOB_STATUS.ACTIVE]);
 
     if (result.length === 0) {
       return NextResponse.json(
@@ -90,14 +60,14 @@ export async function GET(
     const jobPosting: JobPosting = {
       id: row.id,
       title: row.title,
-      department_id: row.dept_id ?? 0,
-      location_id: row.loc_id ?? 0,
-      job_type: row.job_type as JobType,
+      department_id: row.dept_id,
+      location_id: row.loc_id,
+      job_type: row.job_type,
       application_deadline: row.application_deadline
         ? new Date(row.application_deadline)
         : undefined,
-      job_description: row.job_description ?? undefined,
-      skills_required: row.skills_required ?? undefined,
+      job_description: row.job_description,
+      skills_required: row.skills_required,
       role: row.role
         ? typeof row.role === "string"
           ? JSON.parse(row.role)
@@ -109,36 +79,28 @@ export async function GET(
           : row.qualifications
         : [],
       status: row.status as JobStatus,
-      years_of_experience: row.years_of_experience ?? undefined,
+      years_of_experience: row.years_of_experience,
       is_visible: Boolean(row.is_visible),
       created_at: new Date(row.created_at),
       updated_at: new Date(row.updated_at),
       department: row.dept_id
         ? {
             id: row.dept_id,
-            name: row.dept_name ?? "",
-            title: row.dept_title ?? "",
-            status: (row.dept_status ?? 0) as number,
-            created_at: row.dept_created_at
-              ? new Date(row.dept_created_at)
-              : new Date(0),
-            updated_at: row.dept_updated_at
-              ? new Date(row.dept_updated_at)
-              : new Date(0),
+            name: row.dept_name,
+            title: row.dept_title,
+            status: row.dept_status,
+            created_at: new Date(row.dept_created_at),
+            updated_at: new Date(row.dept_updated_at),
           }
         : undefined,
       location: row.loc_id
         ? {
             id: row.loc_id,
-            full_location: row.full_location ?? "",
-            city: row.city ?? "",
-            status: (row.loc_status ?? 0) as number,
-            created_at: row.loc_created_at
-              ? new Date(row.loc_created_at)
-              : new Date(0),
-            updated_at: row.loc_updated_at
-              ? new Date(row.loc_updated_at)
-              : new Date(0),
+            full_location: row.full_location,
+            city: row.city,
+            status: row.loc_status,
+            created_at: new Date(row.loc_created_at),
+            updated_at: new Date(row.loc_updated_at),
           }
         : undefined,
     };
@@ -177,7 +139,7 @@ export async function PUT(
     const body: JobPostingUpdateData = await request.json();
 
     const updateFields: string[] = [];
-    const updateValues: Array<string | number | null> = [];
+    const updateValues: any[] = [];
 
     if (body.title !== undefined) {
       updateFields.push("title = ?");
@@ -291,9 +253,7 @@ export async function DELETE(
 
     // Check if job posting exists
     const checkQuery = `SELECT id FROM job_postings WHERE id = ?`;
-    const existingJob = await executeQuery<Array<{ id: number }>>(checkQuery, [
-      jobId,
-    ]);
+    const existingJob = await executeQuery<any[]>(checkQuery, [jobId]);
 
     if (existingJob.length === 0) {
       return NextResponse.json(

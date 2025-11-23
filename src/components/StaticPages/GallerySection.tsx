@@ -132,10 +132,16 @@ const GallerySection = ({
               <div className="col-span-2 grid grid-rows-2 gap-2">
                 <div
                   className="row-span-1 relative h-full w-full rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity duration-200"
-                  onClick={() => openImageModal(imageList[0])}
+                  onClick={() => openImageModal(0)}
                 >
                   <Image
-                    src={GALLERY_IMAGES[imageList[0]]?.CROPPED_IMAGE || ""}
+                    src={
+                      GALLERY_IMAGES[
+                        typeof imageList[0] === "number"
+                          ? imageList[0]
+                          : parseInt(String(imageList[0])) || 1
+                      ]?.CROPPED_IMAGE || ""
+                    }
                     alt="gallery-1"
                     fill
                     className="object-cover"
@@ -143,10 +149,16 @@ const GallerySection = ({
                 </div>
                 <div
                   className="row-span-1 relative h-full w-full rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity duration-200"
-                  onClick={() => openImageModal(imageList[1])}
+                  onClick={() => openImageModal(1)}
                 >
                   <Image
-                    src={GALLERY_IMAGES[imageList[1]]?.CROPPED_IMAGE || ""}
+                    src={
+                      GALLERY_IMAGES[
+                        typeof imageList[1] === "number"
+                          ? imageList[1]
+                          : parseInt(String(imageList[1])) || 2
+                      ]?.CROPPED_IMAGE || ""
+                    }
                     alt="gallery-2"
                     fill
                     className="object-cover"
@@ -155,10 +167,16 @@ const GallerySection = ({
               </div>
               <div
                 className="col-span-3 relative h-full w-full rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity duration-200"
-                onClick={() => openImageModal(imageList[2])}
+                onClick={() => openImageModal(2)}
               >
                 <Image
-                  src={GALLERY_IMAGES[imageList[2]]?.CROPPED_IMAGE || ""}
+                  src={
+                    GALLERY_IMAGES[
+                      typeof imageList[2] === "number"
+                        ? imageList[2]
+                        : parseInt(String(imageList[2])) || 3
+                    ]?.CROPPED_IMAGE || ""
+                  }
                   alt="gallery-3"
                   fill
                   className="object-cover"

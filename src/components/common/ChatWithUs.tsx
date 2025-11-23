@@ -1,10 +1,10 @@
-import { FooterInfoItem, SocialLinks } from "@/types/staticPages";
+import { FooterInfoItem, SocialLink } from "@/types/staticPages";
 import Image from "next/image";
 import ScrollAnimation from "@/components/common/ScrollAnimation";
 
 interface ChatWithUsProps {
   footerInfoList: FooterInfoItem[];
-  socialLinkList: SocialLinks[];
+  socialLinkList: SocialLink[];
   isMobile?: boolean;
 }
 

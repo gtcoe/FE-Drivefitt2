@@ -199,7 +199,7 @@ const ContactForm = ({
                     htmlFor="firstName"
                     className="text-xs md:text-sm text-[#8A8A8A]"
                   >
-                    {fields.firstName?.label}
+                    {fields.firstName.label}
                   </label>
                   <input
                     id="firstName"
@@ -207,7 +207,7 @@ const ContactForm = ({
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    placeholder={fields.firstName?.placeholder}
+                    placeholder={fields.firstName.placeholder}
                     className={`bg-[#FFFFFF] border rounded-lg py-1.5 md:py-2 px-4 text-[#0D0D0D] placeholder:text-[#8A8A8A] focus:border-[2px] focus:border-[#00DBDC] outline-none transition-colors ${
                       errors.firstName ? "border-red-500" : "border-[#333333]"
                     }`}
@@ -218,7 +218,7 @@ const ContactForm = ({
                     htmlFor="lastName"
                     className="text-xs md:text-sm text-[#8A8A8A]"
                   >
-                    {fields.lastName?.label}
+                    {fields.lastName.label}
                   </label>
                   <input
                     id="lastName"
@@ -226,7 +226,7 @@ const ContactForm = ({
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    placeholder={fields.lastName?.placeholder}
+                    placeholder={fields.lastName.placeholder}
                     className="bg-[#FFFFFF] border border-[#333333] rounded-lg py-1.5 md:py-2 px-4 text-[#0D0D0D] placeholder:text-[#8A8A8A] focus:border-[#00DBDC] outline-none transition-colors"
                   />
                 </div>
@@ -238,7 +238,7 @@ const ContactForm = ({
                     htmlFor="email"
                     className="text-xs md:text-sm text-[#8A8A8A]"
                   >
-                    {fields.email?.label}
+                    {fields.email.label}
                   </label>
                   <input
                     id="email"
@@ -246,7 +246,7 @@ const ContactForm = ({
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder={fields.email?.placeholder}
+                    placeholder={fields.email.placeholder}
                     className="bg-[#FFFFFF] border border-[#333333] rounded-lg py-1.5 md:py-2 px-4 text-[#0D0D0D] placeholder:text-[#8A8A8A] focus:border-[#00DBDC] outline-none transition-colors"
                   />
                 </div>
@@ -255,7 +255,7 @@ const ContactForm = ({
                     htmlFor="phone"
                     className="text-xs md:text-sm text-[#8A8A8A]"
                   >
-                    {fields.phone?.label}
+                    {fields.phone.label}
                   </label>
                   <div
                     className={`bg-[#FFFFFF] border rounded-lg flex items-center transition-colors overflow-hidden ${
@@ -271,7 +271,7 @@ const ContactForm = ({
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder={fields.phone?.placeholder}
+                      placeholder={fields.phone.placeholder}
                       className="bg-transparent flex-1 py-1.5 md:py-2 pr-4 text-[#0D0D0D] placeholder:text-[#8A8A8A] outline-none min-w-0"
                     />
                   </div>
@@ -280,14 +280,14 @@ const ContactForm = ({
 
               <div className="flex flex-col gap-1.5 flex-1">
                 <label htmlFor="message" className="text-sm text-[#8A8A8A]">
-                  {fields.message?.label}
+                  {fields.message.label}
                 </label>
                 <input
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder={fields.message?.placeholder}
+                  placeholder={fields.message.placeholder}
                   className="bg-[#FFFFFF] border border-[#333333] rounded-lg py-1.5 md:py-2 px-4 text-[#0D0D0D] placeholder:text-[#8A8A8A] focus:border-[#00DBDC] outline-none transition-colors"
                 />
               </div>

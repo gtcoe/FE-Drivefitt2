@@ -1,9 +1,9 @@
-import { StaticCardType } from "@/types/staticPages";
+import { CardType } from "@/types/staticPages";
 import Image from "next/image";
 import { PROTEIN_BAR_TEXT } from "@/data/constants";
 
 interface StaticCardProps {
-  data: StaticCardType;
+  data: CardType;
   className?: string;
 }
 const StaticCard = ({ data, className }: StaticCardProps) => {
@@ -32,20 +32,22 @@ const StaticCard = ({ data, className }: StaticCardProps) => {
                 : "right-[-5%] top-[-9%] md:right-[-5%] md:top-[-27px] h-[271px] md:h-[430px]  w-[260px]  md:w-[412px]"
             }`}
           >
-            <Image
-              src={modalImage || ""}
-              alt={`${title} - ${description}`}
-              width={title === PROTEIN_BAR_TEXT ? 244 : 412}
-              height={title === PROTEIN_BAR_TEXT ? 440 : 430}
-              className={`${
-                title === PROTEIN_BAR_TEXT
-                  ? "w-[153px] h-[276px] md:w-[244px] md:h-[440px]"
-                  : "w-[260px] h-[271px] md:w-[412px] md:h-[430px]"
-              } object-contain object-right`}
-              style={{
-                objectPosition: "right center",
-              }}
-            />
+            {modalImage && (
+              <Image
+                src={modalImage}
+                alt={`${title} - ${description}`}
+                width={title === PROTEIN_BAR_TEXT ? 244 : 412}
+                height={title === PROTEIN_BAR_TEXT ? 440 : 430}
+                className={`${
+                  title === PROTEIN_BAR_TEXT
+                    ? "w-[153px] h-[276px] md:w-[244px] md:h-[440px]"
+                    : "w-[260px] h-[271px] md:w-[412px] md:h-[430px]"
+                } object-contain object-right`}
+                style={{
+                  objectPosition: "right center",
+                }}
+              />
+            )}
           </div>
           <div className="flex justify-between items-end p-6 md:p-10 relative">
             <div className="flex flex-col justify-start w-3/5 gap-2 md:gap-4">

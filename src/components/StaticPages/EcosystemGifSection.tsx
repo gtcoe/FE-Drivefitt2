@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import TitleDescription from "../common/TitleDescription";
 
@@ -56,9 +57,11 @@ const EcosystemGifSection = ({
         <div className="w-full px-4 md:px-[120px] max-w-[1060px]">
           <div className="relative overflow-hidden rounded-lg">
             {isVisible && (
-              <img
+              <Image
                 src="https://da8nru77lsio9.cloudfront.net/images/ecosystem4.gif"
                 alt="DriveFITT Ecosystem"
+                width={1060}
+                height={600}
                 className={`w-full h-full object-cover transition-opacity duration-500 ${
                   isLoaded ? "opacity-100" : "opacity-0"
                 }`}

@@ -17,7 +17,7 @@ const FlipCard = ({ value, label, isMobile }: FlipCardProps) => {
   };
 
   useEffect(() => {
-    const newValue = formatNumber(value);
+    const newValue = formatNumber(parseInt(value) || 0);
 
     if (newValue !== currentValue) {
       const top = topRef.current;

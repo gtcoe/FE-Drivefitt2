@@ -205,6 +205,7 @@ const PricingPlans = ({ plans, className, isMobile }: PricingPlansProps) => {
         "PricingPlans: waitingForUserData is false, not checking profile completeness"
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [waitingForUserData, user]);
 
   // Map plan titles to integers

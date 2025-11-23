@@ -1,20 +1,24 @@
 "use client";
 
 import AdminHeader from "@/components/AdminPortal/AdminHeader";
-import { AdminUser } from "@/types/adminPortal";
-
-// Mock user data - in real implementation, this would come from authentication
-const mockUser: AdminUser = {
-  name: "Admin",
-  email: "admin@drivefitt.com",
-};
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 export default function WebAnalyticsPage() {
+  const { adminUser } = useAdminAuth();
+
+  if (!adminUser) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#0D0D0D]">
       <AdminHeader
         title="Web Analytics"
-        user={mockUser}
+        user={adminUser}
         showSearchButton={false}
         showAddButton={false}
       />

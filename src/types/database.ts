@@ -5,13 +5,14 @@ import {
   DepartmentStatus,
   LocationStatus,
 } from "@/constants/database";
+
 export type {
-  JobStatus,
   ApplicationStatus,
+  JobStatus,
   JobType,
   DepartmentStatus,
   LocationStatus,
-} from "@/constants/database";
+};
 
 export interface ContactUs {
   id: number;
@@ -72,7 +73,7 @@ export interface Department {
   id: number;
   name: string;
   title?: string;
-  status: DepartmentStatus | number;
+  status: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -81,7 +82,7 @@ export interface Location {
   id: number;
   full_location: string;
   city?: string;
-  status: LocationStatus | number;
+  status: number;
   created_at: Date;
   updated_at: Date;
 }

@@ -21,10 +21,15 @@ export const aboutUsData: StaticPageData = {
       "https://da8nru77lsio9.cloudfront.net/images/aboutUs-c/hero-mobile.svg",
     btnPrimaryText: "",
   },
-  bannerSection: {
-    title: "Our Mission",
-    description:
-      "India invests billions in cricket, yet public access to high quality cricket training is limited. Drive FITT bridges this divide with a premium sports club offering smart cricket nets, pro-grade coaching, performance fitness zones, and recovery amenities—accessible to everyone, from aspiring athletes to wellness seekers.",
+  banner1Section: {
+    title: "Our",
+    title1: "Mission",
+    subTitle: "We Spotted a Unique Gap",
+    description1:
+      "India invests billions in cricket, yet public access to high quality cricket training is limited. Drive FITT bridges this divide with a premium sports club offering smart cricket nets, pro-grade coaching, performance fitness zones, and recovery amenities—accessible to everyone, from aspiring athletes to wellness seekers. ",
+    description2: "",
+    description3: "",
+    className: "-mt-[95px] md:-mt-[200px]",
   },
   visionariesSection: {
     title: "The Visionaries",
@@ -187,7 +192,14 @@ export const aboutUsData: StaticPageData = {
     addGradient: false,
     mobileImageUp: true,
   },
-  // Removed duplicate banner section to satisfy StaticPageData constraints
+  bannerSection: {
+    title: "Become a DriveFITT member",
+    description:
+      "Join the waitlist now and be the first to access elite workouts, expert coaching, exclusive perks, member-only events, and special launch offers.",
+    btnLabel: "Join the Waitlist",
+    image: "https://da8nru77lsio9.cloudfront.net/images/becomeMember.svg",
+    mobileImage: "https://da8nru77lsio9.cloudfront.net/images/becomeMember.svg",
+  },
   footerInfoSection: {
     footerInfoList: [
       {
@@ -268,8 +280,8 @@ export const aboutUsData: StaticPageData = {
         links: [
           { title: "About us", link: "/about-us" },
           { title: "Our services", link: "/coming-soon" },
-          { title: "Blogs", link: "/coming-soon" },
-          { title: "Career", link: "/coming-soon" },
+          { title: "Blogs", link: "/blogs" },
+          { title: "Career", link: "/careers" },
           { title: "Partner with us", link: "/franchise" },
         ],
       },

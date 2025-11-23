@@ -131,7 +131,20 @@ export const groupClassesData: StaticPageData = {
       },
     ],
   },
-  // Removed bannerCTASection2 as it's not defined in StaticPageData
+  bannerCTASection2: {
+    title: "More Than a Class. It’s a Culture.",
+    description:
+      "Every session at Drive FITT is intentionally designed, professionally led, and performance-driven. Whether you're leveling up your strength, chasing recovery, or finding your flow - our group classes meet you at your edge and take you beyond.",
+    btnLabel: "Book a free trial",
+    desktopImage:
+      "https://da8nru77lsio9.cloudfront.net/images/group-classes-c/bannerCta2.webp",
+    mobileImage:
+      "https://da8nru77lsio9.cloudfront.net/images/group-classes-c/bannerCta2Mobile.webp",
+    imageClass: "md:max-h-[564px]",
+    specialBackgroundClass: "#1D1D1DB2",
+    showStrip: false,
+    parentClass: "md:!mt-[140px]",
+  },
   footerInfoSection: {
     footerInfoList: [
       {
@@ -211,8 +224,8 @@ export const groupClassesData: StaticPageData = {
         title: "Quick links",
         links: [
           { title: "About us", link: "/about-us" },
-          { title: "Blogs", link: "/coming-soon" },
-          { title: "Career", link: "/coming-soon" },
+          { title: "Blogs", link: "/blogs" },
+          { title: "Career", link: "/careers" },
           { title: "Partner with us", link: "/franchise" },
         ],
       },

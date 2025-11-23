@@ -11,7 +11,8 @@ const CardSection3 = ({
   data: CardSection;
   isMobile?: boolean;
 }) => {
-  const { title, description, cardSection } = data;
+  const { title, description, cards, cardSection } = data;
+  const cardList = cards || cardSection || [];
 
   const CustomMobileCard = ({
     card,
@@ -100,9 +101,9 @@ const CardSection3 = ({
       </ScrollAnimation>
       {isMobile ? (
         <div className="flex flex-col w-full gap-4">
-          {cardSection?.map((card, idx) => (
+          {cardList.map((card, idx) => (
             <ScrollAnimation key={idx} delay={0.3 + idx * 0.2} direction="up">
-              <CustomMobileCard card={card as CardType} index={idx} />
+              <CustomMobileCard card={card} index={idx} />
             </ScrollAnimation>
           ))}
         </div>
@@ -111,7 +112,7 @@ const CardSection3 = ({
           <ScrollAnimation delay={0.3} direction="up">
             <div className="col-span-1 row-span-2 h-full">
               <Card
-                data={cardSection?.[0] as CardType}
+                data={cardList[0]}
                 className="!h-full"
                 imageClass="!h-full"
                 iconClass="!size-10"
@@ -122,7 +123,7 @@ const CardSection3 = ({
           <div className="col-span-1 grid grid-rows-2 gap-10 h-full">
             <ScrollAnimation delay={0.4} direction="up">
               <Card
-                data={cardSection?.[1] as CardType}
+                data={cardList[1]}
                 className="!h-full"
                 imageClass="!h-full"
                 iconClass="!size-10"
@@ -131,7 +132,7 @@ const CardSection3 = ({
             </ScrollAnimation>
             <ScrollAnimation delay={0.5} direction="up">
               <Card
-                data={cardSection?.[2] as CardType}
+                data={cardList[2]}
                 className="!h-full"
                 imageClass="!h-full"
                 iconClass="!size-10"

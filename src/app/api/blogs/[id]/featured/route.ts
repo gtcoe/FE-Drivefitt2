@@ -17,23 +17,7 @@ export async function PATCH(
     ]);
 
     // Return the updated blog
-    const [row] = await executeQuery<
-      Array<{
-        id: number;
-        title: string;
-        description: string;
-        slug: string;
-        date: string;
-        image: string;
-        html: string;
-        category_id: number | null;
-        is_featured: number;
-        status: number;
-        created_at: string;
-        updated_at: string;
-        category_heading: string | null;
-      }>
-    >(
+    const [row]: any[] = await executeQuery<any[]>(
       `SELECT 
         b.id, 
         b.title, 

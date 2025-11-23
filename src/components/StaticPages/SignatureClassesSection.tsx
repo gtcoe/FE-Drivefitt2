@@ -15,6 +15,7 @@ const SignatureClassesSection = ({
   isMobile,
 }: SignatureClassesSectionProps) => {
   const { title, cardList, cardList2 } = data;
+  
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [animatedCards, setAnimatedCards] = useState<number[]>([]);

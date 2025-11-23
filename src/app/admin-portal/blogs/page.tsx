@@ -4,21 +4,11 @@ import { useEffect, useState } from "react";
 import AdminHeader from "@/components/AdminPortal/AdminHeader";
 import BlogsTable from "@/components/AdminPortal/BlogsTable";
 import BlogModal from "@/components/AdminPortal/BlogModal";
-import {
-  AdminUser,
-  BlogEntry,
-  BlogFormData,
-  BlogCategory,
-} from "@/types/adminPortal";
+import { BlogEntry, BlogFormData, BlogCategory } from "@/types/adminPortal";
 import { blogAPI } from "@/services/blogAPI";
 import { blogCategoryAPI } from "@/services/blogCategoryAPI";
 import { BlogStatus } from "@/constants/enums";
-
-// Mock user data - in real implementation, this would come from authentication
-const mockUser: AdminUser = {
-  name: "Admin",
-  email: "admin@drivefitt.com",
-};
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 const mockBlogs: BlogEntry[] = [];
 
@@ -33,7 +23,8 @@ export default function BlogsPage() {
   const [selectedBlog, setSelectedBlog] = useState<BlogEntry | undefined>(
     undefined
   );
-  const [, setLoading] = useState<boolean>(false);
+  const [_loading, setLoading] = useState<boolean>(false);
+  const { adminUser } = useAdminAuth();
 
   useEffect(() => {
     (async () => {
@@ -51,6 +42,14 @@ export default function BlogsPage() {
       }
     })();
   }, []);
+
+  if (!adminUser) {
+    return (
+      <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
 
   const handleSearch = (query: string) => {
     applyFilters(query, selectedCategories, selectedStatuses);
@@ -138,12 +137,10 @@ export default function BlogsPage() {
     }
   };
 
-  type BlogDeleteAction = { _action: "delete"; id: string | number };
   const handleSaveBlog = async (blogData: BlogFormData) => {
     // Check if this is a delete action
-    const maybeDelete = blogData as Partial<BlogDeleteAction>;
-    if (maybeDelete._action === "delete" && maybeDelete.id !== undefined) {
-      await handleDeleteBlog(String(maybeDelete.id));
+    if ((blogData as any)._action === "delete") {
+      await handleDeleteBlog((blogData as any).id);
       return;
     }
 
@@ -166,7 +163,7 @@ export default function BlogsPage() {
     <div className="h-full bg-[#0D0D0D] flex flex-col">
       <AdminHeader
         title="Blogs"
-        user={mockUser}
+        user={adminUser}
         onSearch={handleSearch}
         onAdd={handleAddBlog}
         showSearchButton={true}

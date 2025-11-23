@@ -1,8 +1,8 @@
-import { CountdownSection } from "@/types/staticPages";
+import { CountdownData } from "@/types/staticPages";
 import Countdown from "@/components/StaticPages/Countdown";
 
 interface CountdownProps {
-  countdownData: CountdownSection;
+  countdownData: CountdownData;
   isMobile?: boolean;
 }
 

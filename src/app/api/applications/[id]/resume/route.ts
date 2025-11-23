@@ -21,9 +21,7 @@ export async function GET(
       WHERE id = ?
     `;
 
-    const result = await executeQuery<
-      Array<{ resume: string | null; candidate_name: string }>
-    >(query, [applicationId]);
+    const result = await executeQuery<any[]>(query, [applicationId]);
 
     if (result.length === 0) {
       return NextResponse.json(

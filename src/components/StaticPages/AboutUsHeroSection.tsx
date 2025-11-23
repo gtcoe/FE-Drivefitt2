@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FranchiseHero } from "@/types/franchisePage";
 import { MouseEvent, ButtonHTMLAttributes } from "react";
@@ -73,9 +74,11 @@ const AboutUsHeroSection = ({ data }: AboutUsHeroSectionProps) => {
               <div className="flex items-center justify-center gap-3">
                 {/* Location */}
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
                     src="/images/careers/marker.svg"
                     alt="Location"
+                    width={20}
+                    height={20}
                     className="w-5 h-5"
                   />
                   <span className="text-base md:text-lg text-[#BFBFBF] font-light">
@@ -88,9 +91,11 @@ const AboutUsHeroSection = ({ data }: AboutUsHeroSectionProps) => {
 
                 {/* Job Type */}
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
                     src="/images/careers/luggage.svg"
                     alt="Job Type"
+                    width={20}
+                    height={20}
                     className="w-5 h-5"
                   />
                   <span className="text-base md:text-lg text-[#BFBFBF] font-light">

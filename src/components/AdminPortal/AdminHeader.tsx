@@ -4,10 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { AdminHeaderProps } from "@/types/adminPortal";
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
 
 const AdminHeader = ({
   title,
-  user,
   onSearch,
   onAdd,
   showSearchButton = false,
@@ -17,6 +17,8 @@ const AdminHeader = ({
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
+  const userDropdownRef = useRef<HTMLDivElement>(null);
+  const { adminUser, logout } = useAdminAuth();
 
   const handleSearchClick = () => {
     setShowSearchInput(!showSearchInput);
@@ -45,15 +47,22 @@ const AdminHeader = ({
       ) {
         setShowSearchInput(false);
       }
+      if (
+        userDropdownRef.current &&
+        !userDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowUserDropdown(false);
+      }
     };
 
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setShowSearchInput(false);
+        setShowUserDropdown(false);
       }
     };
 
-    if (showSearchInput) {
+    if (showSearchInput || showUserDropdown) {
       document.addEventListener("mousedown", handleClickOutside);
       document.addEventListener("keydown", handleEscapeKey);
     }
@@ -62,7 +71,11 @@ const AdminHeader = ({
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscapeKey);
     };
-  }, [showSearchInput]);
+  }, [showSearchInput, showUserDropdown]);
+
+  if (!adminUser) {
+    return null;
+  }
 
   return (
     <div className="h-fit bg-[#0D0D0D] mb-6 mt-10 px-10 flex items-start justify-between">
@@ -139,7 +152,7 @@ const AdminHeader = ({
         )}
 
         {/* User Profile */}
-        <div className="relative">
+        <div className="relative" ref={userDropdownRef}>
           <button
             type="button"
             onClick={() => setShowUserDropdown(!showUserDropdown)}
@@ -147,10 +160,12 @@ const AdminHeader = ({
           >
             <div className="w-8 h-8 bg-[#00DBDC] rounded-full flex items-center justify-center">
               <span className="text-[#0D0D0D] font-medium text-sm">
-                {user.name.charAt(0).toUpperCase()}
+                {adminUser.name.charAt(0).toUpperCase()}
               </span>
             </div>
-            <span className="text-white font-medium text-sm">{user.name}</span>
+            <span className="text-white font-medium text-sm">
+              {adminUser.name}
+            </span>
             <svg
               width="12"
               height="8"
@@ -172,20 +187,12 @@ const AdminHeader = ({
 
           {/* User Dropdown */}
           {showUserDropdown && (
-            <div className="absolute right-0 top-full mt-2 w-48 bg-[#1D1D1D] border border-[#333333] rounded-lg shadow-lg z-50">
-              <div className="p-3 border-b border-[#333333]">
-                <p className="text-white font-medium text-sm">{user.name}</p>
-                <p className="text-[#8A8A8A] text-xs">{user.email}</p>
-              </div>
+            <div className="absolute right-0 top-full mt-2 w-32 bg-[#1D1D1D] border border-[#333333] rounded-lg shadow-lg z-50">
               <div className="p-1">
-                <button className="w-full text-left px-3 py-2 text-sm text-white hover:bg-[#333333] rounded">
-                  Profile Settings
-                </button>
-                <button className="w-full text-left px-3 py-2 text-sm text-white hover:bg-[#333333] rounded">
-                  Account Settings
-                </button>
-                <hr className="border-[#333333] my-1" />
-                <button className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-[#333333] rounded">
+                <button
+                  onClick={logout}
+                  className="w-full text-center px-3 py-2 text-sm text-red-400 hover:bg-[#333333] rounded"
+                >
                   Sign Out
                 </button>
               </div>

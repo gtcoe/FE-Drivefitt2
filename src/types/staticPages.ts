@@ -18,10 +18,10 @@ export interface NavbarProps {
 export interface Hero {
   title?: string;
   titleWords?: Array<{ text: string; color: string; isItalic?: boolean }>;
-  description?: string;
-  desktopImage?: string;
+  description: string;
+  desktopImage: string;
   originalDesktopImage?: string;
-  mobileImage?: string;
+  mobileImage: string;
   originalMobileImage?: string;
   btnPrimaryText?: string;
   btnPrimaryLink?: string;
@@ -30,8 +30,8 @@ export interface Hero {
 export interface CardSection {
   title: string;
   description: string;
-  cards?: unknown[];
-  cardSection?: unknown[];
+  cards?: any[];
+  cardSection?: any[];
 }
 
 export interface CarouselBanner {
@@ -40,393 +40,25 @@ export interface CarouselBanner {
   description: string;
 }
 
-export type StaticCardType = {
-  title: string;
-  description: string;
-  backgroundImage?: string;
-  modalImage?: string;
-  link?: string;
-  redirectionIcon?: string;
-  [key: string]: unknown;
-};
-
 export interface StaticCardProps {
   title: string;
   description: string;
-  cards?: unknown[];
-  cardSection?: StaticCardType[];
+  cards?: any[];
+  cardSection?: any[];
 }
 
 export interface InnovationCommunitySectionProps {
   title: string;
   description: string;
-  infoSection?: Array<{
-    title: string;
-    list: Array<{ image: string; description: string }>;
-  }>;
-}
-
-export interface FooterInfoProps {
-  title?: string;
-  description?: string;
-  footerInfoList?: Array<{
-    title: string;
-    description: string;
-    email: string;
-    image: string;
-  }>;
-  socialLinkList?: Array<{ image: string; link: string }>;
-  contactFormSection?: {
-    title: string;
-    description: string;
-    submitButtonText: string;
-    fields: {
-      firstName: { label: string; placeholder: string };
-      lastName: { label: string; placeholder: string };
-      email: { label: string; placeholder: string };
-      phone: { label: string; placeholder: string };
-      message: { label: string; placeholder: string };
-    };
-  };
-}
-
-export interface FooterProps {
-  logo: string;
-  description: string;
-  sections: unknown[];
-  socialLinks: unknown[];
-  copyright: string;
-}
-
-export type ScrollingCardItem = {
-  subTitle: string;
-  list: string[];
-  extraTagLabel?: string;
-  backgroundImage?: string;
-  mobileImage?: string;
-};
-
-export interface ScrollingCardSection {
-  title: string;
-  description?: string;
-  iconImage?: string;
-  cards?: unknown[];
-  cardSection?: ScrollingCardItem[];
-}
-
-export interface CountdownSection {
-  title?: string;
-  date?: string;
-  endDate?: string;
-  bgImage?: string;
-  mobileBgImage?: string;
-  location?: string;
-  openingText?: string;
-  labels?: { days: string; hours: string; minutes: string; seconds: string };
-}
-
-export interface PolicySection {
-  title?: string;
-  htmlContent: string;
-}
-
-export interface JoinNowSectionProps {
-  title: string;
-  description: string;
-}
-
-export interface RecoveryBannerProps {
-  title: string;
-  description: string;
-  image?: string;
-  mobileImage?: string;
-}
-
-export interface EcosystemGifSectionProps {
-  title: string;
-  description: string;
-}
-
-export interface Banner2SectionType {
-  title: string;
-  description: string;
-  titleClass?: string;
-  class?: string;
-  subClass?: string;
-  descriptionClass?: string;
-}
-
-export interface Banner2WithImageProps {
-  title: string;
-  description: string;
-  image: string;
-  backgroundImage: string;
-  mobileBackgroundImage: string;
-  className?: string;
-}
-
-export interface SignatureClassCard {
-  title: string;
-  description: string;
-  backgroundImage: string;
-}
-
-export interface SignatureClassesSection {
-  title: string;
-  classes?: unknown[];
-  cardList: SignatureClassCard[];
-  cardList2: SignatureClassCard[];
-}
-
-export interface PricingPlan {
-  title: string;
-  subtitle?: string;
-  discountedPrice: string;
-  originalPrice: string;
-  discountPercentage: string;
-  buttonText: string;
-  seatsLeft: string;
-  limitedOfferCountText?: string; // e.g., "100 members" or "100 families"
-}
-
-export interface PricingPlansSection {
-  plans: PricingPlan[];
-}
-
-export interface IncludedPlansSection {
-  title: string;
-  items: string[];
-  className?: string;
-}
-
-export interface JobSearchSection {
-  title: string;
-  jobs: unknown[];
-  jobCategories?: unknown[];
-}
-
-export interface JobDetailSection {
-  job: unknown;
-}
-
-export interface ApplyNowFormSection {
-  jobId: string;
-}
-
-export interface StaticPageData {
-  title?: string;
-  description?: string;
-  seoTitle?: string;
-  seoDescription?: string;
-  navbar?: NavbarProps;
-  hero?: Hero;
-  franchiseHeroSection?: unknown;
-  aboutUsHeroSection?: unknown;
-  visionariesSection?: unknown;
-  carouselBanner?: Array<{
-    title: string;
-    countdownEnd?: string;
-    backgroundImage: string;
-  }>;
-  cardSection4?: CardSection;
-  cardSection3?: CardSection;
-  cardSection5?: CardSection;
-  cardSection2?: StaticCardProps;
-  innovationCommunitySection?: InnovationCommunitySectionProps;
-  evolutionSection?: EvolutionSectionProps;
-  gallerySection?: GallerySectionProps;
-  countdownSection?: CountdownSection;
-  faqSection?: FaqSectionProps;
-  sportsClubSection?: SportsClubSectionProps;
-  bannerSection?: SportsClubSectionProps;
-  memberSection?: MemberSectionProps;
-  appDownloadSection?: AppDownloadProps;
-  footerInfoSection?: FooterInfoProps;
-  footerSection?: FooterProps;
-  scrollingCardSection?: ScrollingCardSection;
-  comingSoonSection?: ComingSoonSection;
-  error404Section?: Error404Section;
-  policySection?: PolicySection;
-  joinNowSection?: JoinNowSectionProps;
-  recoveryBannerSection?: RecoveryBannerProps;
-  notJustClubSection?: NotJustClubSectionProps;
-  ecosystemGifSection?: EcosystemGifSectionProps;
-  meetYourCoachesSection?: MeetYourCoachesSectionProps;
-  chooseYourPathSection?: ChooseYourPathSectionProps;
-  photoCircleSection?: PhotoCircleSectionProps;
-  banner2Section?: Banner2SectionType;
-  banner2WithImageSection?: Banner2WithImageProps;
-  multiRevenueSection?: unknown;
-  cardsParallaxSection?: CardsParallaxProps;
-  signatureClassesSection?: SignatureClassesSection;
-  bannerCTASection2?: unknown;
-  bannerCTASection?: unknown;
-  banner3JoinUsSection?: unknown;
-  pricingPlansSection?: PricingPlansSection;
-  includedPlansSection?: IncludedPlansSection;
-  jobSearchSection?: JobSearchSection;
-  jobDetailSection?: JobDetailSection;
-  applyNowForm?: ApplyNowFormSection;
-}
-
-export type FooterInfoItem = {
-  title: string;
-  description: string;
-  email: string;
-  image: string;
-};
-
-export type SocialLinks = {
-  image: string;
-  link: string;
-};
-
-export interface ContactFormProps {
-  title: string;
-  description: string;
-  submitButtonText: string;
-  fields: {
-    firstName?: { label: string; placeholder: string };
-    lastName?: { label: string; placeholder: string };
-    email?: { label: string; placeholder: string };
-    phone?: { label: string; placeholder: string };
-    message?: { label: string; placeholder: string };
-    name?: { label: string; placeholder: string };
-    interests?: { label: string };
-    preferredLocation?: {
-      label: string;
-      placeholder: string;
-      options: string[];
-    };
-  };
-}
-
-export interface ContactUsContactFormProps {
-  title: string;
-  description: string;
-  submitButtonText: string;
-  fields: {
-    name: { label: string; placeholder: string };
-    phone: { label: string; placeholder: string };
-    interests: { label: string };
-    preferredLocation: {
-      label: string;
-      placeholder: string;
-      options: string[];
-    };
-    message: { label: string; placeholder: string };
-  };
-}
-
-export interface ContactUsFooterInfoProps {
-  footerInfoList: FooterInfoItem[];
-  socialLinkList: SocialLinks[];
-  contactFormSection: ContactUsContactFormProps;
-}
-
-export type CardType = {
-  title?: string;
-  description?: string;
-  image?: string;
-  icon?: string;
-  link?: string;
-  backgroundImage?: string;
-  redirectionIcon?: string;
-  iconImage?: string;
-  [key: string]: unknown;
-};
-
-export interface CountdownProps {
-  countdownData: CountdownSection;
-  isMobile?: boolean;
-}
-
-export type EvolutionItem = {
-  title: string;
-  description: string;
-  image?: string;
-  [key: string]: unknown;
-};
-
-export interface EvolutionSectionProps {
-  title: string;
-  description: string;
-  evolutionList: EvolutionItem[];
-}
-
-export interface FlipCardProps {
-  value: number;
-  label: string;
-  isMobile?: boolean;
-}
-
-export interface InfoSection {
-  title: string;
-  list: Array<{ image: string; description: string }>;
-}
-
-export interface Job {
-  id: string | number;
-  title: string;
-  department?: string;
-  location?: string;
-  type?: string;
-  jobType?: string;
-  jobCategory?: string;
-  [key: string]: unknown;
-}
-
-export type MemberItem = {
-  title: string;
-  description: string;
-  image: string;
-  [key: string]: unknown;
-};
-
-export interface MemberSectionProps {
-  title: string;
-  description: string;
-  memberList?: MemberItem[];
-}
-
-export type NotJustClubItem = {
-  title: string;
-  description: string;
-  image: string;
-  icon?: string;
-  [key: string]: unknown;
-};
-
-export interface NotJustClubSectionProps {
-  title: string;
-  description: string;
-  bgImg?: string;
-  list?: NotJustClubItem[];
-}
-
-export interface AppDownloadProps {
-  title: string;
-  description: string;
-  googlePlayImg?: string;
-  appStoreImg?: string;
-  mobileImage?: string;
-  desktopImage?: string;
-}
-
-export interface SportsClubSectionProps {
-  title: string;
-  description: string;
-  image?: string;
-  mobileImage?: string;
-  btnLabel?: string;
+  infoSection?: InfoSection[];
 }
 
 export interface GallerySectionProps {
   title: string;
   description: string;
   images?: string[];
+  imageList?: (string | number)[];
   btnLabel?: string;
-  imageList?: number[];
   desktopImage?: string;
   mobileImage?: string;
   addGradient?: boolean;
@@ -437,11 +69,194 @@ export interface GallerySectionProps {
   parentClass?: string;
 }
 
+export interface SportsClubSectionProps {
+  title: string;
+  description: string;
+  image: string;
+  mobileImage?: string;
+  btnLabel: string;
+}
+
+export interface MemberItem {
+  title: string;
+  description: string;
+  backgroundImage: string;
+}
+
+export interface MemberSectionProps {
+  title: string;
+  description: string;
+  memberList?: MemberItem[];
+}
+
+export interface AppDownloadProps {
+  title: string;
+  description: string;
+  googlePlayImg: string;
+  appStoreImg: string;
+  mobileImage: string;
+  desktopImage: string;
+}
+
+export interface FooterInfoItem {
+  title: string;
+  description: string;
+  email: string;
+  image: string;
+}
+
+export interface FooterSection {
+  title: string;
+  links: Array<{ title: string; link: string }>;
+}
+
+export interface SocialLink {
+  image: string;
+  link: string;
+}
+
+export interface ContactFormField {
+  label: string;
+  placeholder?: string;
+  options?: string[];
+}
+
+export interface ContactFormProps {
+  title: string;
+  description: string;
+  submitButtonText: string;
+  fields: {
+    firstName: ContactFormField;
+    lastName: ContactFormField;
+    email: ContactFormField;
+    phone: ContactFormField;
+    message: ContactFormField;
+  };
+}
+
+export interface ContactUsContactFormProps {
+  title: string;
+  description: string;
+  submitButtonText: string;
+  fields: {
+    name: ContactFormField;
+    phone: ContactFormField;
+    interests: ContactFormField;
+    preferredLocation: ContactFormField;
+    message: ContactFormField;
+  };
+}
+
+export interface ContactUsFooterInfoProps {
+  footerInfoList: FooterInfoItem[];
+  socialLinkList: SocialLink[];
+  contactFormSection: any;
+}
+
+export interface CardType {
+  title: string;
+  description: string;
+  backgroundImage: string;
+  link?: string;
+  redirectionIcon?: string;
+  iconImage?: string;
+  modalImage?: string;
+  [key: string]: unknown;
+}
+
+export interface FooterInfoProps {
+  title?: string;
+  description?: string;
+  footerInfoList: FooterInfoItem[];
+  socialLinkList: SocialLink[];
+  contactFormSection?: any;
+}
+
+export interface FooterProps {
+  logo: string;
+  description: string;
+  sections: FooterSection[];
+  socialLinks: SocialLink[];
+  copyright: string;
+}
+
+export interface EvolutionItem {
+  title: string;
+  description: string;
+  backgroundImage: string;
+}
+
+export interface EvolutionSectionProps {
+  title: string;
+  evolutionList: EvolutionItem[];
+}
+
+export interface FlipCardProps {
+  value: string;
+  label: string;
+  isMobile?: boolean;
+}
+
+export interface InfoSection {
+  title: string;
+  list: Array<{
+    description: string;
+    image: string;
+  }>;
+}
+
+export interface FAQ {
+  title: string;
+  description: string;
+}
+
 export interface FaqSectionProps {
   title: string;
+  description: string;
+  faqList: FAQ[];
+}
+
+export interface ScrollingCardSection {
+  title: string;
   description?: string;
-  faqs: unknown[];
-  faqList?: unknown[];
+  iconImage?: string;
+  cardSection?: any[];
+  cards?: any[];
+}
+
+export interface CountdownSection {
+  title: string;
+  date: string;
+  bgImage: string;
+  mobileBgImage?: string;
+  location?: string;
+  openingText?: string;
+  labels?: {
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  };
+}
+
+export interface CountdownData {
+  title: string;
+  date: string;
+  bgImage: string;
+  mobileBgImage?: string;
+  location?: string;
+  openingText?: string;
+  labels?: {
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  };
+}
+
+export interface CountdownProps {
+  countdownData: CountdownData;
+  isMobile?: boolean;
 }
 
 export interface ComingSoonSection {
@@ -462,6 +277,55 @@ export interface Error404Section {
   btnLink?: string;
 }
 
+export interface PolicySection {
+  title?: string;
+  htmlContent: string;
+}
+
+export interface JoinNowSectionProps {
+  title: string;
+  description: string;
+}
+
+export interface RecoveryBannerProps {
+  title: string;
+  description: string;
+  image?: string;
+  mobileImage?: string;
+}
+
+export interface NotJustClubItem {
+  title: string;
+  description: string;
+  icon?: string;
+  image?: string;
+}
+
+export interface NotJustClubSectionProps {
+  title: string;
+  description: string;
+  bgImg?: string;
+  list?: NotJustClubItem[];
+  items?: NotJustClubItem[];
+}
+
+export interface EcosystemGifSectionProps {
+  title: string;
+  description: string;
+}
+
+export interface MeetYourCoachesSectionProps {
+  title: string;
+  coaches: any[];
+  seeMoreText: string;
+}
+
+export interface ChooseYourPathSectionProps {
+  title: string;
+  packages: any[];
+  buttonText: string;
+}
+
 export interface PhotoCircleSectionProps {
   title: string;
   description: string;
@@ -469,61 +333,226 @@ export interface PhotoCircleSectionProps {
   image2?: string;
 }
 
-export type CardsParallaxItem = {
-  title?: string;
-  description?: string;
-  src: string;
-  backgroundImage?: string;
-  url: string;
-  mobileUrl?: string;
-  color: string;
-};
+export interface Banner2SectionType {
+  title: string;
+  description: string;
+  titleClass?: string;
+  class?: string;
+  subClass?: string;
+  descriptionClass?: string;
+}
+
+export interface Banner2WithImageProps {
+  title: string;
+  description: string;
+  image: string;
+  backgroundImage: string;
+  mobileBackgroundImage: string;
+  className?: string;
+}
 
 export interface CardsParallaxProps {
   title?: string;
-  cards?: unknown[];
-  cardSection?: CardsParallaxItem[];
+  cards?: any[];
+  cardSection?: any[];
 }
 
-// Stronger exports for coaches/packages used in StaticPages
-export type Coach = unknown;
-export type Package = unknown;
-
-// Ensure exports for sections used in StaticPages/index.tsx
-export interface MeetYourCoachesSectionProps {
+export interface SignatureClassCard {
   title: string;
-  coaches: unknown[];
-  seeMoreText: string;
+  description: string;
+  backgroundImage: string;
 }
 
-export interface ChooseYourPathSectionProps {
+export interface SignatureClassesSection {
   title: string;
-  packages: unknown[];
+  classes?: any[];
+  cardList: SignatureClassCard[];
+  cardList2: SignatureClassCard[];
+}
+
+export interface PricingPlan {
+  title: string;
+  subtitle?: string;
+  discountedPrice: string;
+  originalPrice: string;
+  discountPercentage: string;
   buttonText: string;
+  seatsLeft: string;
+  limitedOfferCountText?: string; // e.g., "100 members" or "100 families"
 }
 
-export type ProfilePageData = StaticPageData & {
+export interface PricingPlansSection {
+  plans: any[];
+}
+
+export interface IncludedPlansSection {
+  title: string;
+  items: string[];
+  className?: string;
+}
+
+export interface Job {
+  id: number;
+  title: string;
+  location: string;
+  jobType: string;
+  jobCategory: string;
+}
+
+export interface JobSearchSection {
+  title?: string;
+  jobs: Job[];
+  jobCategories?: any[];
+  jobTypes?: any[];
+  jobLocations?: any[];
+}
+
+export interface JobDetailSection {
+  job: any;
+}
+
+export interface ApplyNowFormSection {
+  jobId: string;
+}
+
+export interface ContactUsPageData {
+  title: string;
+  description: string;
+  seoTitle: string;
+  seoDescription: string;
+  navbar: NavbarProps;
+  appDownloadSection?: AppDownloadProps;
+  hero: {
+    titleWords: Array<{ text: string; color: string; isItalic?: boolean }>;
+    description: string;
+    desktopImage: string;
+    mobileImage: string;
+  };
+  footerInfoSection: {
+    footerInfoList: Array<{
+      title: string;
+      description: string;
+      email: string;
+      image: string;
+    }>;
+    socialLinkList: Array<{
+      image: string;
+      link: string;
+    }>;
+    contactFormSection?: any;
+  };
+  footerSection: FooterProps;
+}
+
+export interface ProfilePageData {
+  title: string;
+  seoTitle: string;
+  seoDescription: string;
   userInfo: {
     name: string;
     email: string;
-    phone?: string;
-    dateOfBirth?: string;
-    activePlan?: string;
-    planExpires?: string;
+    phone: string;
+    dateOfBirth: string;
+    activePlan: string;
+    planExpires: string;
   };
   actions: {
-    viewPlan: { isButton?: boolean; text: string; enabled?: boolean };
-    changeName?: { isButton?: boolean; text: string; enabled?: boolean };
-    changeEmail?: { isButton?: boolean; text: string; enabled?: boolean };
-    changeBirthday?: { isButton?: boolean; text: string; enabled?: boolean };
+    viewPlan: {
+      isButton?: boolean;
+      text: string;
+      enabled?: boolean;
+    };
+    [key: string]: unknown;
   };
-};
+  footerInfoSection?: FooterInfoProps;
+  footerSection?: FooterProps;
+  [key: string]: unknown;
+}
 
-// Alias for specific pages with specialization for sections
-export type ContactUsPageData = Omit<
-  StaticPageData,
-  "footerInfoSection" | "appDownloadSection"
-> & {
-  footerInfoSection: ContactUsFooterInfoProps;
+export interface StaticPageData {
+  title?: string;
+  description?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  navbar?: NavbarProps;
+  hero?: Hero;
+  franchiseHeroSection?: any;
+  aboutUsHeroSection?: any;
+  cardSection4?: CardSection;
+  cardSection3?: CardSection;
+  cardSection5?: CardSection;
+  cardSection2?: StaticCardProps;
+  innovationCommunitySection?: InnovationCommunitySectionProps;
+  evolutionSection?: EvolutionSectionProps;
+  gallerySection?: GallerySectionProps;
+  faqSection?: FaqSectionProps;
+  sportsClubSection?: SportsClubSectionProps;
+  bannerSection?: SportsClubSectionProps;
+  banner1Section?: any;
+  visionariesSection?: any;
+  banner3JoinUsSection?: any;
+  memberSection?: MemberSectionProps;
   appDownloadSection?: AppDownloadProps;
-};
+  footerInfoSection?: FooterInfoProps;
+  footerSection?: FooterProps;
+  scrollingCardSection?: ScrollingCardSection;
+  comingSoonSection?: ComingSoonSection;
+  error404Section?: Error404Section;
+  countdownSection?: CountdownSection;
+  policySection?: PolicySection;
+  joinNowSection?: JoinNowSectionProps;
+  recoveryBannerSection?: RecoveryBannerProps;
+  notJustClubSection?: NotJustClubSectionProps;
+  ecosystemGifSection?: EcosystemGifSectionProps;
+  meetYourCoachesSection?: MeetYourCoachesSectionProps;
+  chooseYourPathSection?: ChooseYourPathSectionProps;
+  photoCircleSection?: PhotoCircleSectionProps;
+  banner2Section?: Banner2SectionType;
+  banner2WithImageSection?: Banner2WithImageProps;
+  bannerCTASection2?: any;
+  bannerCTASection?: any;
+  cardsParallaxSection?: CardsParallaxProps;
+  signatureClassesSection?: SignatureClassesSection;
+  pricingPlansSection?: PricingPlansSection;
+  includedPlansSection?: IncludedPlansSection;
+  jobSearchSection?: JobSearchSection;
+  jobDetailSection?: JobDetailSection;
+  applyNowForm?: ApplyNowFormSection;
+  carouselBanner?: Array<{
+    title: string;
+    countdownEnd: string;
+    backgroundImage: string;
+  }>;
+  nextStepSection?: {
+    title: string;
+    description: string;
+    cardList: Array<{
+      icon?: string;
+      title: string;
+      description?: string | string[];
+      subTitle?: string;
+      tooltipImage?: string;
+      tooltipImageMobile?: string;
+      backgroundImage?: string;
+    }>;
+    cardTitleClass?: string;
+    cardDescriptionClass?: string;
+    backgroundImage?: string;
+  };
+  multiRevenueSection?: {
+    title: string;
+    description: string;
+    cardList: Array<{
+      icon?: string;
+      title: string;
+      description?: string | string[];
+      subTitle?: string;
+      tooltipImage?: string;
+      tooltipImageMobile?: string;
+      backgroundImage?: string;
+    }>;
+    cardTitleClass?: string;
+    cardDescriptionClass?: string;
+    backgroundImage?: string;
+  };
+}

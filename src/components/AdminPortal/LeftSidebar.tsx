@@ -67,15 +67,19 @@ const LeftSidebar = ({
         return (
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path
-              d="M10 9C12.2091 9 14 7.20914 14 5C14 2.79086 12.2091 1 10 1C7.79086 1 6 2.79086 6 5C6 7.20914 7.79086 9 10 9Z"
+              d="M10 2L9 5L11 5L10 2Z"
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               fill="none"
             />
             <path
-              d="M3 20C3 16.134 6.13401 13 10 13C13.866 13 17 16.134 17 20"
+              d="M8 5L6 16L10 20L14 16L12 5"
               stroke="currentColor"
               strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               fill="none"
             />
           </svg>
@@ -105,19 +109,73 @@ const LeftSidebar = ({
         return (
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path
-              d="M3 4C3 3.44772 3.44772 3 4 3H16C16.5523 3 17 3.44772 17 4V16C17 16.5523 16.5523 17 16 17H4C3.44772 17 3 16.5523 3 16V4Z"
+              d="M4 3C4 2.44772 4.44772 2 5 2H15C15.5523 2 16 2.44772 16 3V17C16 17.5523 15.5523 18 15 18H5C4.44772 18 4 17.5523 4 17V3Z"
               stroke="currentColor"
               strokeWidth="2"
               fill="none"
             />
             <path
-              d="M6 8H14"
+              d="M7 6H13"
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
             />
             <path
-              d="M6 12H11"
+              d="M7 10H11"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M12 13L15 10L17 12L14 15L12 13Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+        );
+      case "users":
+        return (
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M10 9C12.2091 9 14 7.20914 14 5C14 2.79086 12.2091 1 10 1C7.79086 1 6 2.79086 6 5C6 7.20914 7.79086 9 10 9Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path
+              d="M3 20C3 16.134 6.13401 13 10 13C13.866 13 17 16.134 17 20"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
+          </svg>
+        );
+      case "payments":
+        return (
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M1 5C1 4.44772 1.44772 4 2 4H18C18.5523 4 19 4.44772 19 5V15C19 15.5523 18.5523 16 18 16H2C1.44772 16 1 15.5523 1 15V5Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path
+              d="M1 8H19"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M5 12H8"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M12 12H15"
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
@@ -151,8 +209,6 @@ const LeftSidebar = ({
             pathname.includes("/form-submission/");
           const showSubItems =
             isFormSubmission && (isSelected || isFormSubmissionSubPage);
-
-          // For form-submission, check if any sub-page is active
 
           return (
             <div key={item.id}>

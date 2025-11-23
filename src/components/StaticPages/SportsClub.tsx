@@ -23,15 +23,13 @@ const SportsClub = ({ data, isMobile }: SportsClubProps) => {
       </ScrollAnimation>
       <ScrollAnimation delay={0.4} direction="up">
         <div className="w-full flex justify-center">
-          {imageToUse ? (
-            <Image
-              src={imageToUse}
-              alt={title || ""}
-              width={1440}
-              height={775}
-              className="mt-[1px] max-w-full h-auto"
-            />
-          ) : null}
+          <Image
+            src={imageToUse}
+            alt={title || ""}
+            width={1440}
+            height={775}
+            className="mt-[1px] max-w-full h-auto"
+          />
         </div>
       </ScrollAnimation>
     </section>

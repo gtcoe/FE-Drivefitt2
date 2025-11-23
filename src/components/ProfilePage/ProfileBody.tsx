@@ -35,9 +35,9 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
   const [editState, setEditState] = useState<ProfileEditState>({
     editingField: null,
     fieldValues: {
-      name: user?.name ?? userInfo.name ?? "",
-      email: user?.email ?? userInfo.email ?? "",
-      dateOfBirth: user?.dateOfBirth ?? userInfo.dateOfBirth ?? "",
+      name: user?.name || userInfo.name,
+      email: user?.email || userInfo.email,
+      dateOfBirth: user?.dateOfBirth || userInfo.dateOfBirth,
     },
     validation: {
       name: { isValid: true, message: "" },
@@ -75,9 +75,9 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
       setEditState((prev) => ({
         ...prev,
         fieldValues: {
-          name: user.name ?? userInfo.name ?? "",
-          email: user.email ?? userInfo.email ?? "",
-          dateOfBirth: user.dateOfBirth ?? userInfo.dateOfBirth ?? "",
+          name: user.name || userInfo.name,
+          email: user.email || userInfo.email,
+          dateOfBirth: user.dateOfBirth || userInfo.dateOfBirth,
         },
       }));
     }
@@ -371,7 +371,8 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
                     </span>
                   )}
                 </div>
-                {renderMobileActionButton(actions.viewPlan, "viewPlan")}
+                {actions.viewPlan &&
+                  renderMobileActionButton(actions.viewPlan, "viewPlan")}
               </div>
             </div>
           </div>
@@ -450,7 +451,8 @@ const ProfileBody = ({ data, isMobile }: ProfileBodyProps) => {
                     </span>
                   )}
                 </div>
-                {renderActionButton(actions.viewPlan, "viewPlan")}
+                {actions.viewPlan &&
+                  renderActionButton(actions.viewPlan, "viewPlan")}
               </div>
             </div>
 

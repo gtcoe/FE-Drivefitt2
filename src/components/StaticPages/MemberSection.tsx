@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import { MemberSectionProps, MemberItem } from "@/types/staticPages";
+import { MemberSectionProps } from "@/types/staticPages";
 import MemberCard from "@/components/StaticPages/MemberCard";
 import Image from "next/image";
 import TitleDescription from "@/components/common/TitleDescription";
@@ -57,17 +57,14 @@ const MemberSection = ({
 
   // Calculate position and width for highlighting based on visible members progress
   const getActiveCardHighlight = () => {
-    if (isMobile) return { width: 0, left: 0 }; // No highlight on mobile
+    if (isMobile || !memberList) return { width: 0, left: 0 }; // No highlight on mobile
 
     const totalWidth = 100; // Total width in percentage
     const visibleSlides = isMobile ? 1.8 : 3; // Number of slides visible at once
-    const maxSlidePosition = Math.max(
-      0,
-      (memberList?.length ?? 0) - visibleSlides
-    ); // Maximum possible slide position
+    const maxSlidePosition = Math.max(0, memberList.length - visibleSlides); // Maximum possible slide position
 
     // If total members is less than or equal to visible slides, show full progress
-    if ((memberList?.length ?? 0) <= visibleSlides) {
+    if (memberList.length <= visibleSlides) {
       return {
         width: "97%",
         left: "0%",
@@ -75,8 +72,7 @@ const MemberSection = ({
     }
 
     // Calculate base progress from visible slides
-    const baseProgress =
-      (visibleSlides / (memberList?.length ?? 1)) * totalWidth;
+    const baseProgress = (visibleSlides / memberList.length) * totalWidth;
 
     // Calculate additional progress based on current position
     const remainingWidth = totalWidth - baseProgress;
@@ -105,7 +101,7 @@ const MemberSection = ({
       <ScrollAnimation delay={0.3} direction="up">
         <div className="member-carousel">
           <Slider ref={sliderRef} {...sliderSettings}>
-            {memberList?.map((member: MemberItem) => (
+            {(memberList || []).map((member) => (
               <div key={member.title} className="px-[10px] md:px-5">
                 <MemberCard data={member} />
               </div>

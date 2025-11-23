@@ -2,28 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { BlogStatus } from "@/constants/enums";
 
-type BlogRow = {
-  id: number;
-  title: string;
-  description: string;
-  slug: string;
-  date: string;
-  image: string;
-  html: string;
-  category_id: number | null;
-  is_featured: number;
-  status: number;
-  created_at: string;
-  updated_at: string;
-  category_heading: string | null;
-};
-
 export async function GET(
   _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const [row] = await executeQuery<BlogRow[]>(
+    const [row]: any[] = await executeQuery<any[]>(
       `SELECT 
         b.id, 
         b.title, 
@@ -64,7 +48,7 @@ export async function PUT(
   try {
     const body = await request.json();
     const fields: string[] = [];
-    const values: Array<string | number | null> = [];
+    const values: any[] = [];
 
     const map: Record<string, string> = {
       title: "title",
@@ -100,7 +84,7 @@ export async function PUT(
       values
     );
 
-    const [row] = await executeQuery<BlogRow[]>(
+    const [row]: any[] = await executeQuery<any[]>(
       `SELECT id, title, description, slug, date, image_url AS image, category_id, is_featured, status, created_at, updated_at FROM blogs WHERE id = ?`,
       [params.id]
     );

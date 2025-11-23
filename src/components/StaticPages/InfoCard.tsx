@@ -20,7 +20,7 @@ const InfoCard = ({ data }: { data: InfoSection }) => {
           <h2 className="w-full md:w-[200px] font-semibold md:font-medium text-[20px] md:text-[32px] leading-6 md:leading-[38px] tracking-[-1px]">
             {title}
           </h2>
-          {list.map((item: { image: string; description: string }) => (
+          {list.map((item) => (
             <div
               key={item.description}
               className="flex gap-4 justify-start items-center"

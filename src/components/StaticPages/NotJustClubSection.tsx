@@ -89,7 +89,7 @@ const ListItem = ({ item, position, className = "" }: ListItemProps) => {
       layout
       style={{ willChange: "transform, opacity, filter" }}
     >
-      {item.icon ? (
+      {item.icon && (
         <Image
           src={item.icon}
           alt={item.description}
@@ -104,7 +104,7 @@ const ListItem = ({ item, position, className = "" }: ListItemProps) => {
           }}
           unoptimized
         />
-      ) : null}
+      )}
       <motion.span
         className="text-5xl font-semibold leading-[56px] tracking-[-2px] text-[#91FFFF]"
         layout
@@ -130,9 +130,10 @@ const NotJustClubSection = ({
   const [key, setKey] = useState(0);
 
   useEffect(() => {
+    if (!list) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => {
-        if (prev >= (list?.length ?? 0) - 1) {
+        if (prev >= list.length - 1) {
           setKey((k) => k + 1);
           return 0;
         }
@@ -141,17 +142,13 @@ const NotJustClubSection = ({
     }, 1200); // Reduced from 1500ms to 1200ms for faster cycling
 
     return () => clearInterval(interval);
-  }, [list?.length]);
+  }, [list]);
 
   useEffect(() => {
-    if (!list || list.length === 0) {
-      setVisibleItems([]);
-      return;
-    }
-    const items: NotJustClubItem[] = [];
+    if (!list) return;
+    const items = [];
     for (let i = -1; i <= 1; i++) {
-      const length = list.length;
-      const index = (activeIndex + i + length) % length;
+      const index = (activeIndex + i + list.length) % list.length;
       items.push(list[index]);
     }
     setVisibleItems(items);

@@ -33,6 +33,7 @@ export default function PaymentSuccessContent() {
     } else {
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const verifyPayment = async (

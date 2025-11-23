@@ -1,6 +1,6 @@
 "use client";
 
-import { CardsParallaxProps, CardsParallaxItem } from "@/types/staticPages";
+import { CardsParallaxProps } from "@/types/staticPages";
 import CardParallax from "@/components/StaticPages/CardParallax";
 import styles from "./CardParallax.module.scss";
 import { useScroll } from "framer-motion";
@@ -14,7 +14,8 @@ const CardsParallax = ({
   data: CardsParallaxProps;
   isMobile?: boolean;
 }) => {
-  const { cardSection } = data;
+  const { cards, cardSection } = data;
+  const cardList = cards || cardSection || [];
   const container = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -38,18 +39,14 @@ const CardsParallax = ({
   }, []);
   return (
     <div ref={container} className={styles.main}>
-      {cardSection?.map((card: CardsParallaxItem, i: number) => {
-        const targetScale = 1 - ((cardSection?.length ?? 0) - i) * 0.05;
+      {cardList.map((card, i) => {
+        const targetScale = 1 - (cardList.length - i) * 0.05;
+
         return (
           <CardParallax
             key={`p_${i}`}
             i={i}
-            title={card?.title}
-            description={card?.description}
-            url={card?.url || ""}
-            mobileUrl={card?.mobileUrl}
-            src={card?.src || ""}
-            color={card?.color || "#000000"}
+            {...card}
             progress={scrollYProgress}
             range={[i * 0.25, 1]}
             targetScale={targetScale}

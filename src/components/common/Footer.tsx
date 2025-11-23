@@ -51,34 +51,24 @@ const Footer = ({
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:mb-10 mb-8 w-full">
-            {(
-              sections as Array<{
-                title: string;
-                links: Array<{ title: string; link: string }>;
-              }>
-            ).map((section, index) => (
+            {sections.map((section, index) => (
               <div key={index}>
                 <h3 className="text-base font-normal leading-5 mb-4 text-[#9A9A9A]">
                   {section.title}
                 </h3>
                 <ul className="space-y-3">
-                  {section.links.map(
-                    (
-                      link: { title: string; link: string },
-                      linkIndex: number
-                    ) => (
-                      <li key={linkIndex}>
-                        <Link
-                          href={link.link}
-                          className={`text-white ${
-                            isMobile ? "" : "hover:text-[#00DBDC]"
-                          } cursor-pointer text-base leading-6 md:leading-10 font-medium tracking-[0%] md:tracking-[-2%] transition-colors`}
-                        >
-                          {link.title}
-                        </Link>
-                      </li>
-                    )
-                  )}
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link
+                        href={link.link}
+                        className={`text-white ${
+                          isMobile ? "" : "hover:text-[#00DBDC]"
+                        } cursor-pointer text-base leading-6 md:leading-10 font-medium tracking-[0%] md:tracking-[-2%] transition-colors`}
+                      >
+                        {link.title}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
@@ -90,26 +80,24 @@ const Footer = ({
             ? null
             : renderCopyright(copyright, "text-[#8A8A8A] mb-0 md:text-base")}
           <div className="flex space-x-6 md:space-x-8 mb-4 md:mb-0">
-            {(socialLinks as Array<{ image: string; link: string }>).map(
-              (social, index) => (
-                <Link
-                  key={index}
-                  href={social.link}
-                  target="_blank"
-                  className={`${
-                    isMobile ? "" : "hover:opacity-80"
-                  } transition-opacity`}
-                >
-                  <Image
-                    src={social.image}
-                    alt="social"
-                    width={24}
-                    height={24}
-                    className="size-5 md:size-6"
-                  />
-                </Link>
-              )
-            )}
+            {socialLinks.map((social, index) => (
+              <Link
+                key={index}
+                href={social.link}
+                target="_blank"
+                className={`${
+                  isMobile ? "" : "hover:opacity-80"
+                } transition-opacity`}
+              >
+                <Image
+                  src={social.image}
+                  alt="social"
+                  width={24}
+                  height={24}
+                  className="size-5 md:size-6"
+                />
+              </Link>
+            ))}
           </div>
           {isMobile
             ? renderCopyright(copyright, "text-[#8A8A8A] mb-4 text-xs")

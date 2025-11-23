@@ -14,23 +14,18 @@ export const blogAPI = {
     if (!res.ok || json?.status === false) {
       throw new Error(json?.error || "Failed to fetch blogs");
     }
-    const blogs = (json.data || json) as BlogServer[];
+    const blogs = json.data || json;
     // Transform snake_case to camelCase
-    return blogs.map((blog: BlogServer) => ({
+    return blogs.map((blog: any) => ({
       ...blog,
-      id: String(blog.id ?? ""),
-      title: blog.title ?? "",
-      description: blog.description ?? "",
-      slug: blog.slug ?? "",
-      date: blog.date ?? "",
-      categoryId: blog.category_id ?? 0,
-      categoryHeading: blog.category_heading ?? "",
-      content: blog.html ?? "",
-      status: blog.status ?? 0,
-      isFeatured: (blog.is_featured ?? 0) === 1,
-      image: blog.image_url || blog.image || "",
-      created: blog.created_at ?? "",
-      edited: blog.updated_at ?? "",
+      categoryId: blog.category_id,
+      categoryHeading: blog.category_heading,
+      content: blog.html,
+      status: blog.status,
+      isFeatured: blog.is_featured === 1,
+      image: blog.image_url || blog.image,
+      created: blog.created_at,
+      edited: blog.updated_at,
     }));
   },
 
@@ -44,22 +39,17 @@ export const blogAPI = {
     if (!res.ok || json?.status === false) {
       throw new Error(json?.error || "Failed to create blog");
     }
-    const blog = (json.data || json) as BlogServer;
+    const blog = json.data || json;
     return {
       ...blog,
-      id: String(blog.id ?? ""),
-      title: blog.title ?? "",
-      description: blog.description ?? "",
-      slug: blog.slug ?? "",
-      date: blog.date ?? "",
-      categoryId: blog.category_id ?? 0,
-      categoryHeading: blog.category_heading ?? "",
-      content: blog.html ?? "",
-      status: blog.status ?? 0,
-      isFeatured: (blog.is_featured ?? 0) === 1,
-      image: blog.image_url || blog.image || "",
-      created: blog.created_at ?? "",
-      edited: blog.updated_at ?? "",
+      categoryId: blog.category_id,
+      categoryHeading: blog.category_heading,
+      content: blog.html,
+      status: blog.status,
+      isFeatured: blog.is_featured === 1,
+      image: blog.image_url || blog.image,
+      created: blog.created_at,
+      edited: blog.updated_at,
     };
   },
 
@@ -76,22 +66,17 @@ export const blogAPI = {
     if (!res.ok || json?.status === false) {
       throw new Error(json?.error || "Failed to update blog");
     }
-    const blog = (json.data || json) as BlogServer;
+    const blog = json.data || json;
     return {
       ...blog,
-      id: String(blog.id ?? ""),
-      title: blog.title ?? "",
-      description: blog.description ?? "",
-      slug: blog.slug ?? "",
-      date: blog.date ?? "",
-      categoryId: blog.category_id ?? 0,
-      categoryHeading: blog.category_heading ?? "",
-      content: blog.html ?? "",
-      status: blog.status ?? 0,
-      isFeatured: (blog.is_featured ?? 0) === 1,
-      image: blog.image_url || blog.image || "",
-      created: blog.created_at ?? "",
-      edited: blog.updated_at ?? "",
+      categoryId: blog.category_id,
+      categoryHeading: blog.category_heading,
+      content: blog.html,
+      status: blog.status,
+      isFeatured: blog.is_featured === 1,
+      image: blog.image_url || blog.image,
+      created: blog.created_at,
+      edited: blog.updated_at,
     };
   },
 
@@ -127,22 +112,4 @@ export const blogAPI = {
       edited: blog.updated_at,
     };
   },
-};
-
-type BlogServer = {
-  id?: number | string;
-  title?: string;
-  description?: string;
-  slug?: string;
-  date?: string;
-  image_url?: string;
-  image?: string;
-  html?: string;
-  category_id?: number;
-  category_heading?: string;
-  status?: number;
-  is_featured?: number;
-  created_at?: string;
-  updated_at?: string;
-  [key: string]: unknown;
 };

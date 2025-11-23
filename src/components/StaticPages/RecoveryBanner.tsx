@@ -8,7 +8,7 @@ type RecoveryBannerType = {
 
 const RecoveryBanner = ({ data, isMobile }: RecoveryBannerType) => {
   const { title, description, image, mobileImage } = data;
-  const imageToUse = isMobile && mobileImage ? mobileImage : image;
+  const imageToUse = isMobile && mobileImage ? mobileImage : image || "";
 
   return (
     <section className="md:px-[120px] px-6 flex flex-col gap-5">

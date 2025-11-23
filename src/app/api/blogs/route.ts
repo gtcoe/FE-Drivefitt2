@@ -2,25 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { BlogStatus } from "@/constants/enums";
 
-type BlogRow = {
-  id: number;
-  title: string;
-  description: string;
-  slug: string;
-  date: string;
-  image: string;
-  html: string;
-  category_id: number | null;
-  is_featured: number;
-  status: number;
-  created_at: string;
-  updated_at: string;
-  category_heading: string | null;
-};
-
 export async function GET() {
   try {
-    const rows = await executeQuery<BlogRow[]>(
+    const rows = await executeQuery<any[]>(
       `SELECT 
         b.id, 
         b.title, 
@@ -74,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     const status = isPublished ? BlogStatus.PUBLISHED : BlogStatus.DRAFT;
     const category_id = categoryId ?? 0;
-    const result = await executeQuery<{ insertId: number }>(
+    const result: any = await executeQuery(
       `INSERT INTO blogs (title, description, slug, date, image_url, html, category_id, is_featured, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         title,
@@ -88,24 +72,9 @@ export async function POST(request: NextRequest) {
         status,
       ]
     );
-    type BlogRow = {
-      id: number;
-      title: string;
-      description: string;
-      slug: string;
-      date: string;
-      image: string;
-      html: string;
-      category_id: number | null;
-      is_featured: number;
-      status: number;
-      created_at: string;
-      updated_at: string;
-      category_heading: string | null;
-    };
 
     const insertedId = result?.insertId;
-    const [row] = await executeQuery<BlogRow[]>(
+    const [row]: any[] = await executeQuery<any[]>(
       `SELECT id, title, description, slug, date, image_url AS image, category_id, is_featured, status, created_at, updated_at FROM blogs WHERE id = ?`,
       [insertedId]
     );

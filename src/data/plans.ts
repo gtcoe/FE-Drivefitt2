@@ -76,8 +76,8 @@ export const plansData: StaticPageData = {
         links: [
           { title: "About us", link: "/about-us" },
           { title: "Our services", link: "/coming-soon" },
-          { title: "Blogs", link: "/coming-soon" },
-          { title: "Career", link: "/coming-soon" },
+          { title: "Blogs", link: "/blogs" },
+          { title: "Career", link: "/careers" },
           { title: "Partner with us", link: "/franchise" },
         ],
       },

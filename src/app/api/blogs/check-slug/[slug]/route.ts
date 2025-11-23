@@ -10,7 +10,7 @@ export async function GET(
     const excludeId = searchParams.get("exclude");
 
     let query = "SELECT COUNT(*) as count FROM blogs WHERE slug = ?";
-    const queryParams: Array<string | number> = [params.slug];
+    const queryParams: any[] = [params.slug];
 
     // Exclude a specific blog ID if provided (for updates)
     if (excludeId) {
@@ -18,11 +18,8 @@ export async function GET(
       queryParams.push(excludeId);
     }
 
-    const [result] = await executeQuery<Array<{ count: number }>>(
-      query,
-      queryParams
-    );
-    const isUnique = Number(result.count) === 0;
+    const [result]: any[] = await executeQuery<any[]>(query, queryParams);
+    const isUnique = result.count === 0;
 
     return NextResponse.json({
       status: true,

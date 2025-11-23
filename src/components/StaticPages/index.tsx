@@ -30,6 +30,8 @@ import {
   RecoveryBannerProps,
   NotJustClubSectionProps,
   EcosystemGifSectionProps,
+  MeetYourCoachesSectionProps,
+  ChooseYourPathSectionProps,
   PhotoCircleSectionProps,
   Banner2SectionType,
   Banner2WithImageProps,
@@ -252,22 +254,14 @@ const StaticPage = ({ data, pageName, isMobile }: StaticPageProps) => {
       case "meetYourCoachesSection":
         return (
           <MeetYourCoachesSection
-            title={(value as { title?: string }).title || ""}
-            coaches={
-              ((value as { coaches?: unknown[] }).coaches || []) as unknown[]
-            }
-            seeMoreText={(value as { seeMoreText?: string }).seeMoreText}
+            {...(value as unknown as MeetYourCoachesSectionProps)}
             isMobile={isMobile}
           />
         );
       case "chooseYourPathSection":
         return (
           <ChooseYourPathSection
-            title={(value as { title?: string }).title || ""}
-            packages={
-              ((value as { packages?: unknown[] }).packages || []) as unknown[]
-            }
-            buttonText={(value as { buttonText?: string }).buttonText || ""}
+            {...(value as unknown as ChooseYourPathSectionProps)}
             isMobile={isMobile}
           />
         );
