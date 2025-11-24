@@ -710,7 +710,7 @@ const dropdownStyle: React.CSSProperties = {
   background: "#1D1D1D",
   border: "1px solid #333333",
   borderRadius: "8px",
-  minWidth: "150px",
+  width: "100px",
   zIndex: 10,
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
 };

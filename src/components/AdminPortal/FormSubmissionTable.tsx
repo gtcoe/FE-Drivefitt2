@@ -469,7 +469,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
                         id={`status-dropdown-${index}`}
                         className="fixed bg-[#1D1D1D] border border-[#333333] rounded shadow-lg"
                         style={{
-                          width: "85px",
+                          width: "100px",
                           zIndex: 99999,
                         }}
                       >
@@ -664,7 +664,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
                         id={`status-dropdown-${index}`}
                         className="fixed bg-[#1D1D1D] border border-[#333333] rounded shadow-lg"
                         style={{
-                          width: "85px",
+                          width: "110px",
                           zIndex: 99999,
                         }}
                       >
@@ -880,7 +880,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
                         id={`status-dropdown-${index}`}
                         className="fixed bg-[#1D1D1D] border border-[#333333] rounded shadow-lg"
                         style={{
-                          width: "85px",
+                          width: "100px",
                           zIndex: 99999,
                         }}
                       >
