@@ -35,23 +35,17 @@ export async function GET(request: NextRequest) {
       WHERE 1=1
     `;
     let countQuery = `SELECT COUNT(*) as total FROM users WHERE 1=1`;
-    const queryParams: (string | number)[] = [];
 
     if (search) {
-      const searchCondition = ` AND (CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) LIKE ? OR phone LIKE ? OR email LIKE ?)`;
+      const searchCondition = ` AND (CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) LIKE '%${search}%' OR phone LIKE '%${search}%' OR email LIKE '%${search}%')`;
       query += searchCondition;
       countQuery += searchCondition;
-      const searchPattern = `%${search}%`;
-      queryParams.push(searchPattern, searchPattern, searchPattern);
     }
 
     query += ` ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
 
-    const users = await executeQuery<User[]>(query, queryParams);
-    const totalResults = await executeQuery<{ total: number }[]>(
-      countQuery,
-      queryParams.slice(0, queryParams.length - 2)
-    );
+    const users = await executeQuery<User[]>(query);
+    const totalResults = await executeQuery<{ total: number }[]>(countQuery);
 
     const total = totalResults[0].total;
     const totalPages = Math.ceil(total / limit);

@@ -1,22 +1,31 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { formatDateForAPI } from "@/utils/dateFilters";
+import React, { useState, useRef, useEffect } from "react";
+import { formatDateForAPI, formatDateForDisplay } from "@/utils/dateFilters";
 
 interface DateRangeFilterProps {
   onApply: (startDate: string, endDate: string) => void;
   onClear: () => void;
+  startDate?: string;
+  endDate?: string;
 }
 
 const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
   onApply,
   onClear,
+  startDate: propStartDate,
+  endDate: propEndDate,
 }) => {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(propStartDate || "");
+  const [endDate, setEndDate] = useState(propEndDate || "");
   const [isOpen, setIsOpen] = useState(false);
   const startDateInputRef = useRef<HTMLInputElement>(null);
   const endDateInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setStartDate(propStartDate || "");
+    setEndDate(propEndDate || "");
+  }, [propStartDate, propEndDate]);
 
   const handleApply = () => {
     if (startDate && endDate) {
@@ -39,6 +48,15 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
 
     setStartDate(formatDateForAPI(start));
     setEndDate(formatDateForAPI(end));
+  };
+
+  const getDisplayText = () => {
+    if (propStartDate && propEndDate) {
+      return `${formatDateForDisplay(propStartDate)} - ${formatDateForDisplay(
+        propEndDate
+      )}`;
+    }
+    return "Date Range";
   };
 
   return (
@@ -77,7 +95,9 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-[#BFBFBF] text-sm font-normal">Date Range</span>
+        <span className="text-[#BFBFBF] text-sm font-normal">
+          {getDisplayText()}
+        </span>
       </button>
 
       {isOpen && (

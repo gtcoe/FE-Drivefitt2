@@ -976,6 +976,8 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
             <DateRangeFilter
               onApply={(start, end) => setDateRange({ start, end })}
               onClear={() => setDateRange(null)}
+              startDate={dateRange?.start}
+              endDate={dateRange?.end}
             />
 
             <button
