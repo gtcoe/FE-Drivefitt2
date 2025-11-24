@@ -112,7 +112,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
   };
 
   return (
-    <div className="mb-6">
+    <div className="mb-6" style={{ width: "1100px" }}>
       <div className="flex items-center justify-between py-4 px-10 border border-[#333333] rounded-t-2xl">
         <h2 className="text-white text-2xl font-medium">{title}</h2>
         <div className="flex items-center gap-3">
@@ -190,7 +190,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
 
       <div
         className="border border-[#333333] border-t-0 rounded-b-2xl"
-        style={{ width: "1100px", overflow: "visible" }}
+        style={{ width: "100%", overflow: "visible" }}
       >
         {loading && (
           <div className="flex items-center justify-center py-20 bg-[#1D1D1D]">
@@ -214,7 +214,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
           <div style={{ overflow: "visible" }}>
             <table
               style={{
-                width: "1100px",
+                width: "100%",
                 borderCollapse: "separate",
                 borderSpacing: 0,
                 tableLayout: "auto",

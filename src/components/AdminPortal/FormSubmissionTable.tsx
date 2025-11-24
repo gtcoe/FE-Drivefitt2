@@ -341,7 +341,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
     return (
       <table
         style={{
-          width: "1100px",
+          width: "100%",
           borderCollapse: "separate",
           borderSpacing: 0,
           tableLayout: "auto",
@@ -545,7 +545,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
     return (
       <table
         style={{
-          width: "1100px",
+          width: "100%",
           borderCollapse: "separate",
           borderSpacing: 0,
           tableLayout: "auto",
@@ -740,7 +740,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
     return (
       <table
         style={{
-          width: "1100px",
+          width: "100%",
           borderCollapse: "separate",
           borderSpacing: 0,
           tableLayout: "auto",
@@ -950,7 +950,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
   };
 
   return (
-    <div className="mb-6">
+    <div className="mb-6" style={{ width: "1100px" }}>
       {showHeader && (
         <div className="flex items-center justify-between py-4 px-10 border border-[#333333] rounded-t-2xl">
           <h2 className="text-white text-2xl font-medium">{title}</h2>
@@ -1020,7 +1020,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
         className={`border border-[#333333] ${
           showHeader ? "border-t-0 rounded-b-2xl" : "rounded-2xl"
         } flex flex-col`}
-        style={{ width: "1100px", maxHeight: "calc(103vh - 250px)" }}
+        style={{ width: "100%", maxHeight: "calc(103vh - 250px)" }}
       >
         <div
           className="overflow-y-auto flex-1"

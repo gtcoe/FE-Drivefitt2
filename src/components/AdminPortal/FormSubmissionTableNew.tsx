@@ -264,7 +264,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
     return (
       <table
         style={{
-          width: "1100px",
+          width: "100%",
           borderCollapse: "separate",
           borderSpacing: 0,
         }}
@@ -365,7 +365,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
     return (
       <table
         style={{
-          width: "1100px",
+          width: "100%",
           borderCollapse: "separate",
           borderSpacing: 0,
         }}
@@ -458,7 +458,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
     return (
       <table
         style={{
-          width: "1100px",
+          width: "100%",
           borderCollapse: "separate",
           borderSpacing: 0,
         }}
@@ -568,7 +568,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
   };
 
   return (
-    <div className="mb-6">
+    <div className="mb-6" style={{ width: "1100px" }}>
       {showHeader && (
         <div className="flex items-center justify-between py-4 px-10 border border-[#333333] rounded-t-2xl">
           <h2 className="text-white text-2xl font-medium">{title}</h2>
@@ -634,7 +634,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
         </div>
       )}
 
-      <div style={{ width: "1100px", overflow: "hidden" }}>
+      <div style={{ width: "100%", overflow: "hidden" }}>
         {loading && (
           <div className="flex items-center justify-center py-20 bg-[#1D1D1D]">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00DBDC]"></div>
@@ -658,7 +658,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
         <div
           className="bg-[#333333] px-6 py-4"
           style={{
-            width: "1100px",
+            width: "100%",
             borderBottomLeftRadius: "16px",
             borderBottomRightRadius: "16px",
           }}
