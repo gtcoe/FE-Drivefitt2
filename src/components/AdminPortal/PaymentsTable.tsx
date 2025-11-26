@@ -111,6 +111,23 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
     return PAYMENT_STATUS_COLORS[status] || "#808080";
   };
 
+  const handleExport = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) {
+      params.append("search", searchQuery);
+    }
+    if (statusFilter && statusFilter !== "all") {
+      params.append("status", statusFilter);
+    }
+
+    const queryString = params.toString();
+    const url = queryString
+      ? `/api/admin/payments/export?${queryString}`
+      : "/api/admin/payments/export";
+
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="mb-6" style={{ width: "1100px" }}>
       <div className="flex items-center justify-between py-4 px-10 border border-[#333333] rounded-t-2xl">
@@ -185,6 +202,39 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
               </div>
             )}
           </div>
+
+          <button
+            onClick={handleExport}
+            className="bg-[#0D0D0D] border border-[#333333] rounded-lg flex items-center justify-center gap-2 hover:bg-[#333333] transition-colors duration-200 px-4"
+            style={{ height: "40px" }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M14 10V12.6667C14 13.0203 13.8595 13.3594 13.6095 13.6095C13.3594 13.8595 13.0203 14 12.6667 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V10"
+                stroke="#BFBFBF"
+                strokeWidth="1.33333"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M4.6665 6.66675L7.99984 10.0001L11.3332 6.66675"
+                stroke="#BFBFBF"
+                strokeWidth="1.33333"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M8 10V2"
+                stroke="#BFBFBF"
+                strokeWidth="1.33333"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="text-[#BFBFBF] text-sm font-normal">
+              Download CSV
+            </span>
+          </button>
         </div>
       </div>
 
