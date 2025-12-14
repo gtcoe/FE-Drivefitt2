@@ -78,7 +78,7 @@ const AdminHeader = ({
   }
 
   return (
-    <div className="h-fit bg-[#0D0D0D] mb-6 mt-10 px-10 flex items-start justify-between">
+    <div className="h-fit bg-[#0D0D0D] mb-5 mt-10 px-10 flex items-start justify-between">
       {/* Title */}
       <h1 className="font-normal text-[28px] leading-8 tracking-[0%] text-white">
         {title}

@@ -8,6 +8,8 @@ interface Payment {
   status: string;
   created_at: string;
   user_name: string;
+  user_email: string;
+  user_phone: string;
 }
 
 export async function GET(request: NextRequest) {
@@ -27,7 +29,9 @@ export async function GET(request: NextRequest) {
         o.amount, 
         o.status, 
         o.created_at, 
-        CONCAT(COALESCE(u.first_name, ''), ' ', COALESCE(u.last_name, '')) as user_name
+        CONCAT(COALESCE(u.first_name, ''), ' ', COALESCE(u.last_name, '')) as user_name,
+        u.email as user_email,
+        u.phone as user_phone
       FROM orders o
       LEFT JOIN users u ON o.user_id = u.id
       WHERE 1=1

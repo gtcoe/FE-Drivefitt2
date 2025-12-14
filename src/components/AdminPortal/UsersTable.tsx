@@ -27,7 +27,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ title }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [itemsPerPage] = useState(8);
+  const [itemsPerPage] = useState(20);
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchData = useCallback(async () => {
@@ -168,7 +168,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ title }) => {
         )}
 
         {!loading && !error && data.length > 0 && (
-          <div style={{ overflow: "visible" }}>
+          <div style={{ height: "520px", overflowY: "auto", overflowX: "visible" }}>
             <table
               style={{
                 width: "100%",

@@ -5,11 +5,29 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type") || "subscription";
-    const days = parseInt(searchParams.get("days") || "30");
+    const startDateParam = searchParams.get("startDate");
+    const endDateParam = searchParams.get("endDate");
 
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
-    const startDateStr = startDate.toISOString().split("T")[0];
+    let startDateStr: string;
+    let endDateStr: string;
+    let days: number;
+
+    if (startDateParam && endDateParam) {
+      startDateStr = startDateParam;
+      endDateStr = endDateParam;
+      const start = new Date(startDateStr);
+      const end = new Date(endDateStr);
+      const diffMs = end.getTime() - start.getTime();
+      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
+      days = diffDays > 0 ? diffDays : 1;
+    } else {
+      days = parseInt(searchParams.get("days") || "30");
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - (days - 1));
+      startDateStr = startDate.toISOString().split("T")[0];
+      endDateStr = endDate.toISOString().split("T")[0];
+    }
 
     let query = "";
     let params: any[] = [];
@@ -20,28 +38,36 @@ export async function GET(request: NextRequest) {
           DATE(created_at) as date,
           COUNT(*) as value
         FROM memberships
-        WHERE created_at >= ?
+        WHERE DATE(created_at) >= ?
+          AND DATE(created_at) <= ?
           AND status != 'cancelled'
         GROUP BY DATE(created_at)
         ORDER BY date ASC
       `;
-      params = [startDateStr];
+      params = [startDateStr, endDateStr];
     } else if (type === "forms") {
       query = `
         SELECT 
           DATE(created_at) as date,
           COUNT(*) as value
         FROM (
-          SELECT created_at FROM contact_us WHERE created_at >= ? AND status != 5
+          SELECT created_at FROM contact_us WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? AND status != 5
           UNION ALL
-          SELECT created_at FROM franchise_inquiries WHERE created_at >= ? AND status != 6
+          SELECT created_at FROM franchise_inquiries WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? AND status != 6
           UNION ALL
-          SELECT created_at FROM lead_generation WHERE created_at >= ? AND status != 6
+          SELECT created_at FROM lead_generation WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? AND status != 6
         ) as all_forms
         GROUP BY DATE(created_at)
         ORDER BY date ASC
       `;
-      params = [startDateStr, startDateStr, startDateStr];
+      params = [
+        startDateStr,
+        endDateStr,
+        startDateStr,
+        endDateStr,
+        startDateStr,
+        endDateStr,
+      ];
     }
 
     const results = await executeQuery<

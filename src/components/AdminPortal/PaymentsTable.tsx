@@ -12,6 +12,8 @@ interface PaymentsTableProps {
 interface Payment {
   id: number;
   user_name: string;
+  user_email: string;
+  user_phone: string;
   razorpay_order_id: string;
   amount: number;
   status: string;
@@ -32,7 +34,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [itemsPerPage] = useState(8);
+  const [itemsPerPage] = useState(20);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -261,7 +263,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
         )}
 
         {!loading && !error && data.length > 0 && (
-          <div style={{ overflow: "visible" }}>
+          <div style={{ height: "520px", overflowY: "auto", overflowX: "visible" }}>
             <table
               style={{
                 width: "100%",
@@ -274,6 +276,8 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
               <thead style={{ position: "sticky", top: 0, zIndex: 10 }}>
                 <tr style={{ background: "#333333" }}>
                   <th style={headerCellStyle}>User Name</th>
+                  <th style={headerCellStyle}>Mobile</th>
+                  <th style={headerCellStyle}>Email</th>
                   <th style={headerCellStyle}>Order ID</th>
                   <th style={headerCellStyle}>Amount</th>
                   <th style={headerCellStyle}>Status</th>
@@ -284,6 +288,8 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ title }) => {
                 {data.map((item) => (
                   <tr key={item.id} style={{ background: "#1D1D1D" }}>
                     <td style={cellStyle}>{item.user_name || "Unknown"}</td>
+                    <td style={cellStyle}>{item.user_phone || "-"}</td>
+                    <td style={cellStyle}>{item.user_email || "-"}</td>
                     <td style={cellStyle}>{item.razorpay_order_id}</td>
                     <td style={cellStyle}>
                       {formatCurrency(Number(item.amount))}

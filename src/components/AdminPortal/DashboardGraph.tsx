@@ -18,8 +18,6 @@ interface DashboardGraphProps {
   value: string | number;
   data: any[];
   type: "line" | "bar";
-  timeRange: string;
-  onTimeRangeChange?: (range: string) => void;
 }
 
 const DashboardGraph: React.FC<DashboardGraphProps> = ({
@@ -27,8 +25,6 @@ const DashboardGraph: React.FC<DashboardGraphProps> = ({
   value,
   data,
   type,
-  timeRange,
-  onTimeRangeChange,
 }) => {
   return (
     <div className="bg-[#1D1D1D] rounded-2xl p-6">
@@ -54,43 +50,6 @@ const DashboardGraph: React.FC<DashboardGraphProps> = ({
           >
             {value}
           </span>
-        </div>
-        <div className="relative">
-          <select
-            value={timeRange}
-            onChange={(e) => {
-              if (onTimeRangeChange) {
-                onTimeRangeChange(e.target.value);
-              }
-            }}
-            className="appearance-none bg-[#0D0D0D] text-[#BFBFBF] rounded-lg pl-4 pr-8 py-2 border border-[#2D2D2D] focus:outline-none cursor-pointer"
-            style={{
-              fontSize: "14px",
-              lineHeight: "20px",
-            }}
-          >
-            <option value="7">Last 7 days</option>
-            <option value="30">Last 30 days</option>
-            <option value="90">Last 90 days</option>
-          </select>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="ml-1"
-            >
-              <path
-                d="M5 7.5L10 12.5L15 7.5"
-                stroke="#8A8A8A"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
         </div>
       </div>
       <div className="h-[300px]">

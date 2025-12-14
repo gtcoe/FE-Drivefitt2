@@ -11,18 +11,18 @@ interface StatsCardProps {
 const StatsCard: React.FC<StatsCardProps> = ({ title, value, subtitle }) => {
   return (
     <div
-      className="bg-[#1D1D1D] rounded-2xl flex flex-col justify-center"
+      className="bg-[#1D1D1D] rounded-2xl flex flex-col justify-center items-center"
       style={{
         height: "128px",
         paddingTop: "24px",
-        paddingRight: "37px",
+        paddingRight: "17px",
         paddingBottom: "24px",
-        paddingLeft: "37px",
+        paddingLeft: "17px",
         gap: "16px",
       }}
     >
       <h3
-        className="text-[#BFBFBF]"
+        className="text-[#BFBFBF] text-center"
         style={{
           fontWeight: 400,
           fontSize: "14px",
@@ -32,12 +32,12 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, subtitle }) => {
       >
         {title}
       </h3>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 items-center">
         <span
           className="text-[#BFBFBF]"
           style={{
             fontWeight: 300,
-            fontSize: "40px",
+            fontSize: "32px",
             lineHeight: "100%",
             letterSpacing: "0%",
           }}
@@ -45,7 +45,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, value, subtitle }) => {
           {value}
         </span>
         <span
-          className="text-[#8A8A8A]"
+          className="text-[#8A8A8A] text-center"
           style={{
             fontWeight: 400,
             fontSize: "12px",

@@ -50,7 +50,7 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const itemsPerPage = sectionType === "lead-submissions" ? 3 : 4;
+  const itemsPerPage = 20;
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, _setStatusFilter] = useState<number | null>(null);
   const [dateRange, setDateRange] = useState<{
@@ -1019,36 +1019,35 @@ const FormSubmissionTable: React.FC<FormSubmissionTableProps> = ({
       <div
         className={`border border-[#333333] ${
           showHeader ? "border-t-0 rounded-b-2xl" : "rounded-2xl"
-        } flex flex-col`}
-        style={{ width: "100%", maxHeight: "calc(103vh - 250px)" }}
+        }`}
+        style={{ width: "100%", overflow: "visible" }}
       >
+        {loading && (
+          <div className="flex items-center justify-center py-20 bg-[#1D1D1D]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00DBDC]"></div>
+          </div>
+        )}
+
+        {error && (
+          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg mx-10 my-4">
+            <p className="text-red-400 text-sm">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && data.length === 0 && (
+          <div className="py-20 text-center text-[#8A8A8A] bg-[#1D1D1D]">
+            No data found
+          </div>
+        )}
+
+        {!loading && !error && data.length > 0 && (
+          <div style={{ height: "520px", overflowY: "auto", overflowX: "visible" }}>
+            {renderTable()}
+          </div>
+        )}
+
         <div
-          className="overflow-y-auto flex-1"
-          style={{ maxHeight: "calc(103vh - 350px)" }}
-        >
-          {loading && (
-            <div className="flex items-center justify-center py-20 bg-[#1D1D1D]">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00DBDC]"></div>
-            </div>
-          )}
-
-          {error && (
-            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg mx-10 my-4">
-              <p className="text-red-400 text-sm">{error}</p>
-            </div>
-          )}
-
-          {!loading && !error && data.length === 0 && (
-            <div className="py-20 text-center text-[#8A8A8A] bg-[#1D1D1D]">
-              No data found
-            </div>
-          )}
-
-          {!loading && !error && data.length > 0 && <div>{renderTable()}</div>}
-        </div>
-
-        <div
-          className="bg-[#333333] px-6 py-4 border-t border-[#333333] rounded-b-2xl flex-shrink-0"
+          className="bg-[#333333] px-6 py-4 border-t border-[#333333] rounded-b-2xl"
           style={{
             width: "100%",
           }}
