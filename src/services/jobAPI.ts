@@ -1,15 +1,25 @@
 import { JobPosting } from "@/types/database";
 
 // Get the base URL for API requests
-// In server-side rendering, we need an absolute URL
-// In client-side, we can use relative URLs
 const getBaseUrl = () => {
-  if (typeof window === "undefined") {
-    // Server-side: use absolute URL
-    return process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  if (typeof window !== "undefined") {
+    // Client-side: use relative URL (works in browser)
+    return "";
   }
-  // Client-side: use relative URL
-  return "";
+  
+  // Server-side: construct absolute URL
+  // Priority: env variable > vercel URL > localhost (dev)
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
+  
+  // In Vercel production/preview, use the deployment URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  
+  // Fallback for local development
+  return "http://localhost:3000";
 };
 
 export const jobAPI = {
