@@ -9,9 +9,17 @@ import { jobAPI } from "@/services/jobAPI";
 
 const fetchJob = async (id: string): Promise<JobPosting> => {
   try {
+    console.log(`[JobDetailPage] Fetching job with ID: ${id}`);
     const job = await jobAPI.getById(Number(id));
+    console.log(`[JobDetailPage] Successfully fetched job:`, { 
+      id: job.id, 
+      title: job.title, 
+      status: job.status,
+      is_visible: job.is_visible 
+    });
     return job;
-  } catch {
+  } catch (error) {
+    console.error(`[JobDetailPage] Failed to fetch job ${id}:`, error);
     // If job not found or not accessible, trigger the not-found page
     notFound();
   }

@@ -4,21 +4,32 @@ import { JobPosting } from "@/types/database";
 const getBaseUrl = () => {
   if (typeof window !== "undefined") {
     // Client-side: use relative URL (works in browser)
+    console.log('[getBaseUrl] Client-side: using relative URL');
     return "";
   }
   
   // Server-side: construct absolute URL
   // Priority: env variable > vercel URL > localhost (dev)
+  console.log('[getBaseUrl] Server-side - ENV CHECK:', {
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'NOT SET',
+    VERCEL_URL: process.env.VERCEL_URL || 'NOT SET',
+    NODE_ENV: process.env.NODE_ENV
+  });
+  
   if (process.env.NEXT_PUBLIC_APP_URL) {
+    console.log(`[getBaseUrl] Using NEXT_PUBLIC_APP_URL: ${process.env.NEXT_PUBLIC_APP_URL}`);
     return process.env.NEXT_PUBLIC_APP_URL;
   }
   
   // In Vercel production/preview, use the deployment URL
   if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+    const url = `https://${process.env.VERCEL_URL}`;
+    console.log(`[getBaseUrl] Using VERCEL_URL: ${url}`);
+    return url;
   }
   
   // Fallback for local development
+  console.log('[getBaseUrl] Using fallback: http://localhost:3000');
   return "http://localhost:3000";
 };
 
