@@ -50,8 +50,23 @@ export async function GET(
     const result = await executeQuery<any[]>(query, [jobId, JOB_STATUS.ACTIVE]);
 
     if (result.length === 0) {
+      console.log(`Job not found: id=${jobId}, checking if job exists at all...`);
+      // Check if job exists but doesn't meet criteria
+      const checkQuery = `SELECT id, status, is_visible FROM job_postings WHERE id = ?`;
+      const checkResult = await executeQuery<any[]>(checkQuery, [jobId]);
+      
+      if (checkResult.length > 0) {
+        console.log(`Job ${jobId} exists but status=${checkResult[0].status}, is_visible=${checkResult[0].is_visible}`);
+      } else {
+        console.log(`Job ${jobId} does not exist in database`);
+      }
+      
       return NextResponse.json(
-        { error: "Job posting not found" },
+        { 
+          status: false,
+          data: null,
+          error: "Job posting not found or not available" 
+        },
         { status: 404 }
       );
     }

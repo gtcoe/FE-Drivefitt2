@@ -53,12 +53,27 @@ export const jobAPI = {
   },
 
   async getById(id: number): Promise<JobPosting> {
-    const res = await fetch(`${getBaseUrl()}/api/job-postings/${id}`, {
+    const url = `${getBaseUrl()}/api/job-postings/${id}`;
+    console.log(`[jobAPI.getById] Fetching job ${id} from: ${url}`);
+    
+    const res = await fetch(url, {
       cache: "no-store",
     });
+    
     const json = await res.json();
-    if (!res.ok || !json?.status)
-      throw new Error(json?.error || "Fetch failed");
+    console.log(`[jobAPI.getById] Response for job ${id}:`, {
+      ok: res.ok,
+      status: res.status,
+      hasStatusField: !!json?.status,
+      jsonStatus: json?.status,
+      error: json?.error,
+    });
+    
+    if (!res.ok || !json?.status) {
+      const errorMsg = json?.error || "Fetch failed";
+      console.error(`[jobAPI.getById] Failed to fetch job ${id}: ${errorMsg}`);
+      throw new Error(errorMsg);
+    }
     return json.data as JobPosting;
   },
 
