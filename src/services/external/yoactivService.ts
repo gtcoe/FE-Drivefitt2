@@ -140,8 +140,8 @@ class YoActivService {
         responseData !== null &&
         "Data" in responseData &&
         typeof (responseData as { Data?: unknown }).Data === "object" &&
-        (responseData as { Data?: { Member_Id?: unknown } }).Data
-          ?.Member_Id !== undefined;
+        (responseData as { Data?: { Member_Id?: unknown } }).Data?.Member_Id !==
+          undefined;
 
       console.log("✅ [YoActiv] AddMember Success:", {
         duration: `${duration}ms`,
@@ -238,9 +238,7 @@ class YoActivService {
       TransactionID: data.transactionId,
       Purchagedate: formatDate(data.purchaseDate),
       SalesStfid:
-        data.salesStaffId ||
-        Number(process.env.YOACTIV_SALES_STAFF_ID) ||
-        136,
+        data.salesStaffId || Number(process.env.YOACTIV_SALES_STAFF_ID) || 136,
       PtStfid: 0,
       CountryCode: data.countryCode || "+91",
       Mobile: data.mobile,
@@ -361,7 +359,9 @@ class YoActivService {
    * Async wrapper for addMember - fire and forget
    * Logs errors but doesn't throw them
    */
-  async addMemberAsync(data: Parameters<typeof this.addMember>[0]): Promise<void> {
+  async addMemberAsync(
+    data: Parameters<typeof this.addMember>[0],
+  ): Promise<void> {
     this.addMember(data).catch((error) => {
       console.error("❌ [YoActiv] Async AddMember failed:", error);
     });
@@ -371,7 +371,9 @@ class YoActivService {
    * Async wrapper for saveBill - fire and forget
    * Logs errors but doesn't throw them
    */
-  async saveBillAsync(data: Parameters<typeof this.saveBill>[0]): Promise<void> {
+  async saveBillAsync(
+    data: Parameters<typeof this.saveBill>[0],
+  ): Promise<void> {
     this.saveBill(data).catch((error) => {
       console.error("❌ [YoActiv] Async SaveBill failed:", error);
     });

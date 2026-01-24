@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
           success: false,
           message: "All fields are required.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
           success: false,
           message: "Invalid phone number.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
           success: false,
           message: "Invalid email address.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
           success: false,
           message: "User with this phone number already exists.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
           success: false,
           message: "User with this email already exists.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -87,14 +87,16 @@ export async function POST(request: NextRequest) {
     await userService.storeUserSession(user.id, tokenHash, expiresAt);
 
     // Sync member to YoActiv (async - don't wait for completion)
-    yoActivService.addMemberAsync({
-      name: user.name || name,
-      email: user.email,
-      phone: user.phone,
-      countryCode: "+91",
-    }).catch((error) => {
-      console.error("❌ Failed to sync user to YoActiv:", error);
-    });
+    yoActivService
+      .addMemberAsync({
+        name: user.name || name,
+        email: user.email,
+        phone: user.phone,
+        countryCode: "+91",
+      })
+      .catch((error) => {
+        console.error("❌ Failed to sync user to YoActiv:", error);
+      });
 
     return NextResponse.json<AuthResponse>(
       {
@@ -112,7 +114,7 @@ export async function POST(request: NextRequest) {
           },
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error in register:", error);
@@ -121,7 +123,7 @@ export async function POST(request: NextRequest) {
         success: false,
         message: "Internal server error. Please try again.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

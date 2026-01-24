@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       // Add timeout wrapper for email sending
       const emailPromise = sendContactFormEmail(body);
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Email sending timeout")), 25000)
+        setTimeout(() => reject(new Error("Email sending timeout")), 25000),
       );
 
       await Promise.race([emailPromise, timeoutPromise]);
@@ -39,24 +39,28 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       console.error(
         "Error sending contact form email notification:",
-        emailError
+        emailError,
       );
     }
 
     // Sync to YoActiv (async - don't wait for completion)
-    yoActivService.addMemberAsync({
-      name: `${body.first_name || ''} ${body.last_name || ''}`.trim() || 'Contact Form User',
-      email: body.email || '',
-      phone: body.phone || '',
-      countryCode: "+91",
-    }).catch((error) => {
-      console.error("❌ Failed to sync contact form to YoActiv:", error);
-    });
+    yoActivService
+      .addMemberAsync({
+        name:
+          `${body.first_name || ""} ${body.last_name || ""}`.trim() ||
+          "Contact Form User",
+        email: body.email || "",
+        phone: body.phone || "",
+        countryCode: "+91",
+      })
+      .catch((error) => {
+        console.error("❌ Failed to sync contact form to YoActiv:", error);
+      });
 
     // Return success immediately
     const response = NextResponse.json(
       { success: true, message: "Contact form submitted successfully" },
-      { status: 201 }
+      { status: 201 },
     );
 
     return response;
@@ -64,7 +68,7 @@ export async function POST(request: NextRequest) {
     console.error("Error processing contact form:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

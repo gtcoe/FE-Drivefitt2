@@ -51,9 +51,7 @@ class ExternalApiLogger {
    * Async wrapper - fire and forget
    * Use this to log without waiting for completion
    */
-  logApiCallAsync(
-    data: Parameters<typeof this.logApiCall>[0]
-  ): void {
+  logApiCallAsync(data: Parameters<typeof this.logApiCall>[0]): void {
     this.logApiCall(data).catch((error) => {
       console.error("❌ [ExternalApiLogger] Async logging failed:", error);
     });
@@ -69,7 +67,7 @@ class ExternalApiLogger {
       status?: ExternalApiStatus;
       errorMessage?: string | null;
       durationMs?: number;
-    }
+    },
   ): Promise<void> {
     try {
       const updates: string[] = [];
@@ -119,7 +117,7 @@ class ExternalApiLogger {
    */
   async getRecentLogs(
     type: ExternalApiType,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<ExternalApiLog[]> {
     try {
       const query = `
