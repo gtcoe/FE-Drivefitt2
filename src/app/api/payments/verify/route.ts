@@ -18,6 +18,7 @@ import { generateInvoiceBuffer } from "@/utils/invoiceGenerator";
 import { sendMembershipSuccessEmail } from "@/utils/brevo";
 import { s3Service } from "@/lib/s3Service";
 import { whatsappService } from "@/lib/whatsappService";
+import { yoActivService } from "@/services/external/yoactivService";
 
 export async function POST(request: NextRequest) {
   try {
@@ -369,6 +370,21 @@ export async function POST(request: NextRequest) {
             } catch (whatsappError) {
               console.error("❌ WhatsApp service error:", whatsappError);
             }
+
+            // Sync billing to YoActiv (async - don't wait for completion)
+            yoActivService.saveBillAsync({
+              mobile: user.phone,
+              countryCode: "+91",
+              transactionId: paymentId,
+              purchaseDate: new Date(),
+              startDate: new Date(membership.start_date),
+              endDate: new Date(membership.end_date),
+              amount: order.amount,
+              discountAmount: 0, // Add discount logic if applicable
+              paidAmount: order.amount,
+            }).catch((error) => {
+              console.error("❌ Failed to sync bill to YoActiv:", error);
+            });
           } else {
             console.error(
               "❌ User not found for invoice generation, user_id:",

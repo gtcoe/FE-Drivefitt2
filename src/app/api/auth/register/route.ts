@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { userService } from "@/lib/userService";
 import { jwtService } from "@/lib/jwtService";
 import { UserRegistrationData, AuthResponse } from "@/types/auth";
+import { yoActivService } from "@/services/external/yoactivService";
 
 export async function POST(request: NextRequest) {
   try {
@@ -84,6 +85,16 @@ export async function POST(request: NextRequest) {
     const tokenHash = jwtService.hashToken(token);
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
     await userService.storeUserSession(user.id, tokenHash, expiresAt);
+
+    // Sync member to YoActiv (async - don't wait for completion)
+    yoActivService.addMemberAsync({
+      name: user.name || name,
+      email: user.email,
+      phone: user.phone,
+      countryCode: "+91",
+    }).catch((error) => {
+      console.error("❌ Failed to sync user to YoActiv:", error);
+    });
 
     return NextResponse.json<AuthResponse>(
       {

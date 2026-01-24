@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { sendLeadGenFormEmail } from "@/utils/brevo";
+import { yoActivService } from "@/services/external/yoactivService";
 
 interface LeadGenFormData {
   name: string;
@@ -65,6 +66,16 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       console.error("Error sending lead gen email notification:", emailError);
     }
+
+    // Sync to YoActiv (async - don't wait for completion)
+    yoActivService.addMemberAsync({
+      name: body.name || 'Lead Gen User',
+      email: '', // Lead gen form doesn't capture email
+      phone: body.phone || '',
+      countryCode: "+91",
+    }).catch((error) => {
+      console.error("❌ Failed to sync lead gen to YoActiv:", error);
+    });
 
     // Return success immediately
     const response = NextResponse.json(

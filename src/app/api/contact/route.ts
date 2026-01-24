@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { executeQuery } from "@/lib/database";
 import { ContactUsFormData } from "@/types/database";
 import { sendContactFormEmail } from "@/utils/brevo";
+import { yoActivService } from "@/services/external/yoactivService";
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,6 +42,16 @@ export async function POST(request: NextRequest) {
         emailError
       );
     }
+
+    // Sync to YoActiv (async - don't wait for completion)
+    yoActivService.addMemberAsync({
+      name: `${body.first_name || ''} ${body.last_name || ''}`.trim() || 'Contact Form User',
+      email: body.email || '',
+      phone: body.phone || '',
+      countryCode: "+91",
+    }).catch((error) => {
+      console.error("❌ Failed to sync contact form to YoActiv:", error);
+    });
 
     // Return success immediately
     const response = NextResponse.json(
