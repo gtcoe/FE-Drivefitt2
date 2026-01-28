@@ -2,7 +2,7 @@
 
 -- Add vendor_response column if it doesn't exist
 ALTER TABLE otp_verification 
-ADD COLUMN IF NOT EXISTS vendor_response TEXT NULL COMMENT 'Stores Gupshup API response';
+ADD COLUMN IF NOT EXISTS vendor_response TEXT NULL COMMENT 'Stores WhatsApp OTP vendor API response';
 
 -- Update existing records to have NULL vendor_response
 UPDATE otp_verification 

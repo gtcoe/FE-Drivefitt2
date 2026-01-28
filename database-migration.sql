@@ -1,4 +1,4 @@
--- Database Migration Script for Gupshup OTP Authentication System
+-- Database Migration Script for WhatsApp OTP Authentication System
 -- Run this script to set up the required tables
 
 -- Create OTP verification table with integer enum for purpose
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS otp_verification (
     attempts INT DEFAULT 0,
     is_verified BOOLEAN DEFAULT FALSE,
     expires_at TIMESTAMP NOT NULL,
-    vendor_response TEXT NULL COMMENT 'Stores Gupshup API response',
+    vendor_response TEXT NULL COMMENT 'Stores WhatsApp OTP vendor API response',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     verified_at TIMESTAMP NULL,
     INDEX idx_otp_phone (phone),

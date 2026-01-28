@@ -1,11 +1,11 @@
 import crypto from "crypto";
 import { executeQuery } from "./database";
-import { gupshupService } from "./gupshupService";
+import { easySocialService } from "./easySocialService";
 import { OTPVerification, OTPPurpose } from "@/types/auth";
 
 class OTPService {
   private readonly OTP_EXPIRY_MINUTES = parseInt(
-    process.env.OTP_EXPIRY_MINUTES || "5"
+    process.env.OTP_EXPIRY_MINUTES || "5",
   );
   private readonly MAX_ATTEMPTS = parseInt(process.env.OTP_MAX_ATTEMPTS || "3");
 
@@ -16,14 +16,14 @@ class OTPService {
   async sendOTP(phone: string, purpose: OTPPurpose): Promise<boolean> {
     const otp = this.generateOTP();
     const expiresAt = new Date(
-      Date.now() + this.OTP_EXPIRY_MINUTES * 60 * 1000
+      Date.now() + this.OTP_EXPIRY_MINUTES * 60 * 1000,
     );
 
     try {
       // Store OTP in database first (without vendor response)
       const otpId = await this.storeOTP(phone, otp, purpose, expiresAt);
 
-      // Send via Gupshup asynchronously
+      // Send via WhatsApp asynchronously
       this.sendOTPAsync(phone, otp, otpId);
 
       // Return success immediately (optimistic response)
@@ -37,11 +37,11 @@ class OTPService {
 
   async generateAndStoreOTP(
     phone: string,
-    purpose: OTPPurpose
+    purpose: OTPPurpose,
   ): Promise<{ success: boolean; otpId?: number; otp?: string }> {
     const otp = this.generateOTP();
     const expiresAt = new Date(
-      Date.now() + this.OTP_EXPIRY_MINUTES * 60 * 1000
+      Date.now() + this.OTP_EXPIRY_MINUTES * 60 * 1000,
     );
 
     try {
@@ -57,11 +57,11 @@ class OTPService {
   private async sendOTPAsync(
     phone: string,
     otp: string,
-    otpId: number
+    otpId: number,
   ): Promise<void> {
     try {
-      // Send via Gupshup
-      const result = await gupshupService.sendOTP(phone, otp);
+      // Send via EasySocial WhatsApp
+      const result = await easySocialService.sendOTP(phone, otp);
 
       // Update vendor response in database
       await this.updateVendorResponse(otpId, result);
@@ -86,7 +86,7 @@ class OTPService {
   async verifyOTP(
     phone: string,
     otp: string,
-    purpose: OTPPurpose
+    purpose: OTPPurpose,
   ): Promise<boolean> {
     try {
       const otpRecord = await this.getOTPRecord(phone, purpose);
@@ -122,7 +122,7 @@ class OTPService {
     phone: string,
     otp: string,
     purpose: OTPPurpose,
-    expiresAt: Date
+    expiresAt: Date,
   ): Promise<number> {
     const query = `
       INSERT INTO otp_verification (phone, otp, purpose, expires_at) 
@@ -141,7 +141,7 @@ class OTPService {
 
   async updateVendorResponse(
     otpId: number,
-    result: { success: boolean; response: string }
+    result: { success: boolean; response: string },
   ): Promise<void> {
     const query = `
       UPDATE otp_verification 
@@ -155,7 +155,7 @@ class OTPService {
 
   async getOTPRecord(
     phone: string,
-    purpose: OTPPurpose
+    purpose: OTPPurpose,
   ): Promise<OTPVerification | null> {
     const query = `
       SELECT * FROM otp_verification 
@@ -172,7 +172,7 @@ class OTPService {
 
   private async incrementAttempts(
     phone: string,
-    purpose: OTPPurpose
+    purpose: OTPPurpose,
   ): Promise<void> {
     const query = `
       UPDATE otp_verification 
@@ -186,7 +186,7 @@ class OTPService {
 
   private async markAsVerified(
     phone: string,
-    purpose: OTPPurpose
+    purpose: OTPPurpose,
   ): Promise<void> {
     const query = `
       UPDATE otp_verification 
