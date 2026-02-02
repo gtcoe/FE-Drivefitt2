@@ -383,6 +383,7 @@ export async function POST(request: NextRequest) {
                 amount: order.amount,
                 discountAmount: 0, // Add discount logic if applicable
                 paidAmount: order.amount,
+                serviceVariationId: membership.membership_type === 1 ? "144449" : "147252",
               })
               .catch((error) => {
                 console.error("❌ Failed to sync bill to YoActiv:", error);
