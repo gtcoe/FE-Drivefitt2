@@ -24,13 +24,14 @@ class EasySocialService {
       this.config = {
         apiKey: process.env.EASYSOCIAL_API_KEY || "",
         baseURL: "https://api.easysocial.in",
-        templatePath: "/api/v1/wa-templates/send/cmkxk2e2b5mzddixph7xiajy6/16318/3661/API",
+        templatePath:
+          "/api/v1/wa-templates/send/cmkxk2e2b5mzddixph7xiajy6/16318/3661/API",
         timeout: 15000, // 15 seconds
       };
 
       if (!this.config.apiKey) {
         console.warn(
-          "⚠️ EASYSOCIAL_API_KEY not configured. WhatsApp OTP delivery will fail."
+          "⚠️ EASYSOCIAL_API_KEY not configured. WhatsApp OTP delivery will fail.",
         );
       }
     }
@@ -46,7 +47,7 @@ class EasySocialService {
   async sendOTP(phone: string, otp: string): Promise<SendOTPResponse> {
     try {
       const config = this.getConfig();
-      
+
       // Validate inputs
       if (!phone || !/^\d{10}$/.test(phone)) {
         return {
@@ -69,10 +70,7 @@ class EasySocialService {
 
       // Setup request with timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(
-        () => controller.abort(),
-        config.timeout
-      );
+      const timeoutId = setTimeout(() => controller.abort(), config.timeout);
 
       const response = await fetch(url, {
         method: "GET",
@@ -133,7 +131,8 @@ class EasySocialService {
       // Handle other errors
       return {
         success: false,
-        response: error instanceof Error ? error.message : "Unknown error occurred",
+        response:
+          error instanceof Error ? error.message : "Unknown error occurred",
       };
     }
   }
