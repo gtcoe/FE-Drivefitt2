@@ -17,7 +17,10 @@ class SMSService {
    * @param otp - 4-digit OTP code
    * @returns Promise with success status and response details
    */
-  async sendOTP(phone: string, otp: string): Promise<SendOTPResponse> {
+  async sendOTP(
+    phone: string,
+    otp: string
+  ): Promise<SendOTPResponse> {
     // Delegate to EasySocial WhatsApp service
     return easySocialService.sendOTP(phone, otp);
   }
